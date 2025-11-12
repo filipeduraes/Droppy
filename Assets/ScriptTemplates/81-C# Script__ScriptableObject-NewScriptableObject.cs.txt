@@ -1,5 +1,4 @@
 using UnityEngine;
-using Sirenix.OdinInspector;
 
 #ROOTNAMESPACEBEGIN#
     [CreateAssetMenu(menuName = "Droppy/#SCRIPTNAME#", fileName = "#SCRIPTNAME#")]
