@@ -1,3 +1,16 @@
 {
-	"name": "Droppy.StatSystem"
+    "name": "Droppy.StatSystem",
+    "rootNamespace": "",
+    "references": [
+        "GUID:44028a378a1450b448cb91813706e965"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }
