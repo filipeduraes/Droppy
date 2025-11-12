@@ -1,0 +1,16 @@
+{
+    "name": "Droppy.SpawnSystem",
+    "rootNamespace": "",
+    "references": [
+        "GUID:cbd241c69fba31f4699fe18ca25a53b4"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
