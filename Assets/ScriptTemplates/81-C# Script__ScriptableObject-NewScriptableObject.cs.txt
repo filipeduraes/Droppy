@@ -1,0 +1,9 @@
+using UnityEngine;
+using Sirenix.OdinInspector;
+
+#ROOTNAMESPACEBEGIN#
+    [CreateAssetMenu(menuName = "Droppy/#SCRIPTNAME#", fileName = "#SCRIPTNAME#")]
+    public class #SCRIPTNAME# : ScriptableObject 
+    {
+    }
+#ROOTNAMESPACEEND#
