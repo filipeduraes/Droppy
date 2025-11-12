@@ -1,9 +1,7 @@
 {
-    "name": "Droppy.StatSystem",
-    "rootNamespace": "Droppy.StatSystem",
-    "references": [
-        "GUID:44028a378a1450b448cb91813706e965"
-    ],
+    "name": "Droppy.InteractionSystem",
+    "rootNamespace": "Droppy.InteractionSystem",
+    "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
