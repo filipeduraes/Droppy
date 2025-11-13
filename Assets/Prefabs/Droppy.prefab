@@ -117,6 +117,7 @@ GameObject:
   - component: {fileID: 2801751713023186816}
   - component: {fileID: 5137857369064640567}
   - component: {fileID: 3081259400468177472}
+  - component: {fileID: 813464574288390244}
   m_Layer: 6
   m_Name: Droppy
   m_TagString: Untagged
@@ -178,3 +179,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0920d79a16a5dc4983c780aada6b4e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &813464574288390244
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2801751713023186817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4140f6622dd08674e87d5be6880a9ac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 5
