@@ -5,16 +5,14 @@
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "692fbd7ee0b68995ee0f4a1718aa6069ce3aa1ad"
+      "hash": "2531ddcdee4d51a9e0398ecf697adfc1f5d576e8"
     },
     "com.ideatogame.persistence-system": {
       "version": "https://github.com/filipeduraes/PersistenceSystem.git",
       "depth": 0,
       "source": "git",
-      "dependencies": {
-        "com.unity.nuget.newtonsoft-json": ""
-      },
-      "hash": "9310f1e7b498907755bb1f872d9b7ce1383381c0"
+      "dependencies": {},
+      "hash": "d7d0b84747825b335675a13abafb40cad87ee161"
     },
     "com.unity.2d.animation": {
       "version": "7.1.1",
