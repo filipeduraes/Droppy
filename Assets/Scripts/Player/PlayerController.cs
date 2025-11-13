@@ -6,7 +6,7 @@ namespace Droppy.Player
 {
     public class PlayerController : MonoBehaviour
     {
-        [SerializeField] private DroppyInput input;
+        [SerializeField] protected DroppyInput input;
         [SerializeField] private InteractionAgent interactionAgent;
         
         private void OnEnable()
