@@ -295,5 +295,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Droppy
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 813464574288390244, guid: 50a7b45fcc1bf1f48973844b50ea5c2e, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 50a7b45fcc1bf1f48973844b50ea5c2e, type: 3}
