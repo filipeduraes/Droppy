@@ -7,20 +7,24 @@ namespace Droppy.Input
     {
         [SerializeField] private float speed = 5f;
         private DroppyControls controls; 
-        private Vector2 moveInput;       
-       
+        private Vector2 moveInput; 
+        private void Awake()
+        {
+            controls = new DroppyControls();
+        }
+
 
         private void OnEnable()
         {
-            controls.Player.Mover.performed += PerformMovement;
-            controls.Player.Mover.canceled += StopMovement;
+            controls.Player.HorizontalMove.performed += PerformMovement;
+            controls.Player.HorizontalMove.canceled += StopMovement;
             controls.Enable();
         }
 
         private void OnDisable()
         {
-            controls.Player.Mover.performed -= PerformMovement;
-            controls.Player.Mover.canceled -= StopMovement;
+            controls.Player.HorizontalMove.performed -= PerformMovement;
+            controls.Player.HorizontalMove.canceled -= StopMovement;
             controls.Disable();
         }
 

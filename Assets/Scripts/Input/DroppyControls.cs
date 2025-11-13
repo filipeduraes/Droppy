@@ -30,12 +30,12 @@ namespace Droppy.Input
             ""id"": ""9a9a77b5-51c8-4a34-b6ec-47eaeb0790a6"",
             ""actions"": [
                 {
-                    ""name"": ""Mover"",
+                    ""name"": ""HorizontalMove"",
                     ""type"": ""Value"",
                     ""id"": ""c0a02190-8d8a-4d5c-a781-df6c09e3d5e4"",
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
-                    ""interactions"": """",
+                    ""interactions"": ""Press"",
                     ""initialStateCheck"": true
                 }
             ],
@@ -47,7 +47,7 @@ namespace Droppy.Input
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Mover"",
+                    ""action"": ""HorizontalMove"",
                     ""isComposite"": true,
                     ""isPartOfComposite"": false
                 },
@@ -58,7 +58,7 @@ namespace Droppy.Input
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Mover"",
+                    ""action"": ""HorizontalMove"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -69,7 +69,7 @@ namespace Droppy.Input
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Mover"",
+                    ""action"": ""HorizontalMove"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -80,7 +80,7 @@ namespace Droppy.Input
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Mover"",
+                    ""action"": ""HorizontalMove"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -91,7 +91,7 @@ namespace Droppy.Input
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Mover"",
+                    ""action"": ""HorizontalMove"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 }
@@ -102,7 +102,7 @@ namespace Droppy.Input
 }");
             // Player
             m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
-            m_Player_Mover = m_Player.FindAction("Mover", throwIfNotFound: true);
+            m_Player_HorizontalMove = m_Player.FindAction("HorizontalMove", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -164,12 +164,12 @@ namespace Droppy.Input
         // Player
         private readonly InputActionMap m_Player;
         private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
-        private readonly InputAction m_Player_Mover;
+        private readonly InputAction m_Player_HorizontalMove;
         public struct PlayerActions
         {
             private @DroppyControls m_Wrapper;
             public PlayerActions(@DroppyControls wrapper) { m_Wrapper = wrapper; }
-            public InputAction @Mover => m_Wrapper.m_Player_Mover;
+            public InputAction @HorizontalMove => m_Wrapper.m_Player_HorizontalMove;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -179,16 +179,16 @@ namespace Droppy.Input
             {
                 if (instance == null || m_Wrapper.m_PlayerActionsCallbackInterfaces.Contains(instance)) return;
                 m_Wrapper.m_PlayerActionsCallbackInterfaces.Add(instance);
-                @Mover.started += instance.OnMover;
-                @Mover.performed += instance.OnMover;
-                @Mover.canceled += instance.OnMover;
+                @HorizontalMove.started += instance.OnHorizontalMove;
+                @HorizontalMove.performed += instance.OnHorizontalMove;
+                @HorizontalMove.canceled += instance.OnHorizontalMove;
             }
 
             private void UnregisterCallbacks(IPlayerActions instance)
             {
-                @Mover.started -= instance.OnMover;
-                @Mover.performed -= instance.OnMover;
-                @Mover.canceled -= instance.OnMover;
+                @HorizontalMove.started -= instance.OnHorizontalMove;
+                @HorizontalMove.performed -= instance.OnHorizontalMove;
+                @HorizontalMove.canceled -= instance.OnHorizontalMove;
             }
 
             public void RemoveCallbacks(IPlayerActions instance)
@@ -208,7 +208,7 @@ namespace Droppy.Input
         public PlayerActions @Player => new PlayerActions(this);
         public interface IPlayerActions
         {
-            void OnMover(InputAction.CallbackContext context);
+            void OnHorizontalMove(InputAction.CallbackContext context);
         }
     }
 }
