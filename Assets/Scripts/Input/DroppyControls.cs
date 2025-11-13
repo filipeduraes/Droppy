@@ -44,7 +44,7 @@ namespace Droppy.Input
                     ""name"": ""2D Vector"",
                     ""id"": ""7500fd2b-6d63-475f-9440-978796635540"",
                     ""path"": ""2DVector"",
-                    ""interactions"": """",
+                    ""interactions"": ""Press"",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""HorizontalMove"",
