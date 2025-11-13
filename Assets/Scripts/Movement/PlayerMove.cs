@@ -1,37 +1,37 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+
 namespace Droppy.Input
 {
-
     public class PlayerMove : MonoBehaviour
     {
         [SerializeField] private float speed = 5f;
+        
         private DroppyControls controls; 
         private Vector2 moveInput; 
+
         private void Awake()
         {
             controls = new DroppyControls();
         }
 
-
         private void OnEnable()
         {
-            controls.Player.HorizontalMove.performed += PerformMovement;
-            controls.Player.HorizontalMove.canceled += StopMovement;
+            controls.Player.Move.performed += PerformMovement;
+            controls.Player.Move.canceled += StopMovement;
             controls.Enable();
         }
 
         private void OnDisable()
         {
-            controls.Player.HorizontalMove.performed -= PerformMovement;
-            controls.Player.HorizontalMove.canceled -= StopMovement;
+            controls.Player.Move.performed -= PerformMovement;
+            controls.Player.Move.canceled -= StopMovement;
             controls.Disable();
         }
 
         private void Update()
         {
-
-            Vector3 movement = new Vector3(moveInput.x, 0, 0);
+            Vector3 movement = new(moveInput.x, 0, 0);
             transform.Translate(movement * (speed * Time.deltaTime));
         }
 
