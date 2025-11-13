@@ -8,7 +8,7 @@ namespace Droppy.Input
         [SerializeField] private float speed = 5f;
         
         private DroppyControls controls; 
-        private Vector2 moveInput; 
+        private Vector2 moveInput;
 
         private void Awake()
         {

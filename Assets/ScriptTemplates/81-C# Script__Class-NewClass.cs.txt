@@ -1,6 +1,7 @@
-#ROOTNAMESPACEBEGIN# 
+namespace Droppy
+{
     public class #SCRIPTNAME# 
     {
 
     }
-#ROOTNAMESPACEEND#
+}
