@@ -55,28 +55,16 @@ namespace Droppy.SpawnSystem
                 return;
             }
 
-
-            Transform prefabTransform = prefabToSpawn.transform;
-
-
-            Transform spawnedTransform = ObjectPool.GetFromPool(prefabTransform);
-
-            GameObject spawnedObject = spawnedTransform.gameObject;
-
-
-            if (spawnedObject != null)
+            Transform spawnedTransform = ObjectPool.GetFromPool(prefabToSpawn.transform);
+            if (spawnedTransform != null)
             {
-                spawnedObject.transform.position = spawnPoint.position;
-                spawnedObject.transform.rotation = spawnPoint.rotation;
-                spawnedObject.SetActive(true);
+                spawnedTransform.SetPositionAndRotation(spawnPoint.position, spawnPoint.rotation);
             }
             else
             {
                 Debug.LogWarning($"Pool não conseguiu fornecer um objeto para o prefab: {prefabToSpawn.name}", this);
-                return;
+                return; 
             }
-
-
 
             float interval = Random.Range(data.MinSpawnInterval, data.MaxSpawnInterval);
             lastSpawnTime = Time.time + interval;
