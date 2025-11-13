@@ -1,0 +1,4 @@
+{
+	"name": "Droppy.Player",
+	"references":[ "GUID:73e01b9957cafa846bac66e174b2e0dd", "GUID:716b1a0c855727848a15597efd36e8c3" ]
+}

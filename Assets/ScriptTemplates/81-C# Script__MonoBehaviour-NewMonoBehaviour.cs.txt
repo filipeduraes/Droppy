@@ -1,7 +1,8 @@
 using UnityEngine;
 
-#ROOTNAMESPACEBEGIN# 
+namespace Droppy
+{
     public class #SCRIPTNAME# : MonoBehaviour 
     {
     }
-#ROOTNAMESPACEEND#
+}
