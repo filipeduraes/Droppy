@@ -1,35 +1,43 @@
 using UnityEngine;
-using UnityEngine.InputSystem; // precisa disso pro novo sistema de input
-
-public class PlayerMove : MonoBehaviour
+using UnityEngine.InputSystem;
+namespace Droppy.Input
 {
-    private DroppyControls controls; // referência pro input
-    private Vector2 moveInput;       // armazena o valor do input
-    public float speed = 5f;         // velocidade horizontal
 
-    private void Awake()
+    public class PlayerMove : MonoBehaviour
     {
-        controls = new DroppyControls();
+        [SerializeField] private DroppyControls controls; // referência pro input
+        [SerializeField] private Vector2 moveInput;       // armazena o valor do input
+        [SerializeField] private float speed = 5f;
 
-        // Quando a ação "Mover" for usada, pega o valor
-        controls.Player.Mover.performed += ctx => moveInput = ctx.ReadValue<Vector2>();
-        controls.Player.Mover.canceled += ctx => moveInput = Vector2.zero;
-    }
+        private void OnEnable()
+        {
+            controls.Player.Mover.performed += PerformMovement;
+            controls.Player.Mover.canceled += StopMovement;
+            controls.Enable();
+        }
 
-    private void OnEnable()
-    {
-        controls.Enable();
-    }
+        private void OnDisable()
+        {
+            controls.Player.Mover.performed -= PerformMovement;
+            controls.Player.Mover.canceled -= StopMovement;
+            controls.Disable();
+        }
 
-    private void OnDisable()
-    {
-        controls.Disable();
-    }
+        void Update()
+        {
 
-    void Update()
-    {
-        // Movimento apenas no eixo X
-        Vector3 movement = new Vector3(moveInput.x, 0, 0);
-        transform.Translate(movement * speed * Time.deltaTime);
+            Vector3 movement = new Vector3(moveInput.x, 0, 0);
+            transform.Translate(movement * speed * Time.deltaTime);
+        }
+
+        private void PerformMovement(InputAction.CallbackContext context)
+        {
+            moveInput = context.ReadValue<Vector2>();
+        }
+
+        private void StopMovement(InputAction.CallbackContext context)
+        {
+            moveInput = Vector2.zero;
+        }
     }
 }
