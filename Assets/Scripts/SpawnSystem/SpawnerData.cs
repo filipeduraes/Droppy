@@ -18,6 +18,10 @@ namespace Droppy.SpawnSystem
         public float MaxSpawnInterval => maxSpawnInterval;
         public float SpawnGap => spawnGap;
 
-        public float LastSpawnTime => lastSpawnTime;
+        public float LastSpawnTime
+        {
+            get { return lastSpawnTime; }
+            set { lastSpawnTime = value; }
+        }
     }
 }
