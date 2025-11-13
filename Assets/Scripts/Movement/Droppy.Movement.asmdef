@@ -1,0 +1,17 @@
+{
+    "name": "Droppy.Movement",
+    "rootNamespace": "Droppy.Movement",
+    "references": [
+        "GUID:dce3a941da3f0f34ab28f9bd4224c66b",
+        "GUID:75469ad4d38634e559750d17036d5f7c"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

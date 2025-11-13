@@ -5,9 +5,10 @@ namespace Droppy.Input
 
     public class PlayerMove : MonoBehaviour
     {
-        [SerializeField] private DroppyControls controls; // referência pro input
-        [SerializeField] private Vector2 moveInput;       // armazena o valor do input
         [SerializeField] private float speed = 5f;
+        private DroppyControls controls; 
+        private Vector2 moveInput;       
+       
 
         private void OnEnable()
         {
@@ -23,11 +24,11 @@ namespace Droppy.Input
             controls.Disable();
         }
 
-        void Update()
+        private void Update()
         {
 
             Vector3 movement = new Vector3(moveInput.x, 0, 0);
-            transform.Translate(movement * speed * Time.deltaTime);
+            transform.Translate(movement * (speed * Time.deltaTime));
         }
 
         private void PerformMovement(InputAction.CallbackContext context)
