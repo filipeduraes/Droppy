@@ -1,5 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
+using IdeaToGame.ObjectPooling;
+
 
 namespace Droppy.SpawnSystem
 {
@@ -8,9 +10,24 @@ namespace Droppy.SpawnSystem
         [SerializeField] private SpawnerData data;
         [SerializeField] private List<Transform> spawnPoints = new();
 
-        private void Update() 
+        private float lastSpawnTime;
+        private float totalWeight;
+
+        private void Awake()
         {
-            if (Time.time > data.LastSpawnTime)
+            totalWeight = 0;
+            if (data.Spawnables != null)
+            {
+                foreach (Spawnable spawnable in data.Spawnables)
+                {
+                    totalWeight += spawnable.Weight;
+                }
+            }
+        }
+
+        private void Update()
+        {
+            if (Time.time > lastSpawnTime)
             {
                 SpawnObject();
             }
@@ -21,7 +38,13 @@ namespace Droppy.SpawnSystem
             GameObject prefabToSpawn = ChooseSpawnable();
             if (prefabToSpawn == null)
             {
-                Debug.LogWarning("Não foi possível escolher um prefab. A lista de Spawnables está vazia?", this);
+                if (totalWeight <= 0)
+                {
+                    Debug.LogWarning("Não é possível spawnar. Lista de Spawnables está vazia ou o peso total é zero.", this);
+                    enabled = false;
+                    return;
+                }
+                Debug.LogWarning("Não foi possível escolher um prefab. (ChooseSpawnable retornou null)", this);
                 return;
             }
 
@@ -32,22 +55,36 @@ namespace Droppy.SpawnSystem
                 return;
             }
 
-            Instantiate(prefabToSpawn, spawnPoint.position, spawnPoint.rotation);
+
+            Transform prefabTransform = prefabToSpawn.transform;
+
+
+            Transform spawnedTransform = ObjectPool.GetFromPool(prefabTransform);
+
+            GameObject spawnedObject = spawnedTransform.gameObject;
+
+
+            if (spawnedObject != null)
+            {
+                spawnedObject.transform.position = spawnPoint.position;
+                spawnedObject.transform.rotation = spawnPoint.rotation;
+                spawnedObject.SetActive(true);
+            }
+            else
+            {
+                Debug.LogWarning($"Pool não conseguiu fornecer um objeto para o prefab: {prefabToSpawn.name}", this);
+                return;
+            }
+
+
 
             float interval = Random.Range(data.MinSpawnInterval, data.MaxSpawnInterval);
-            data.LastSpawnTime = Time.time + interval;
+            lastSpawnTime = Time.time + interval;
         }
-
         private GameObject ChooseSpawnable()
         {
-            if (data.Spawnables == null || data.Spawnables.Count == 0)
+            if (totalWeight <= 0)
                 return null;
-
-            float totalWeight = 0;
-            foreach (Spawnable spawnable in data.Spawnables)
-            {
-                totalWeight += spawnable.Weight;
-            }
 
             float randomValue = Random.Range(0, totalWeight);
 
@@ -60,7 +97,10 @@ namespace Droppy.SpawnSystem
                 randomValue -= spawnable.Weight;
             }
 
-            return data.Spawnables[data.Spawnables.Count - 1].Prefab;
+            if (data.Spawnables.Count > 0)
+                return data.Spawnables[data.Spawnables.Count - 1].Prefab;
+
+            return null;
         }
 
         private Transform ChooseSpawnPoint()
