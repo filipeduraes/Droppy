@@ -1,6 +1,6 @@
 {
-    "name": "Droppy.PieceMinigame",
-    "rootNamespace": "Droppy.PieceMinigame",
+    "name": "Droppy.Shared",
+    "rootNamespace": "Droppy.Shared",
     "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
