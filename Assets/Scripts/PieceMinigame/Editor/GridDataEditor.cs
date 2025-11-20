@@ -23,11 +23,7 @@ namespace Droppy.PieceMinigame.Editor
 
             EditorGUILayout.Space(10);
 
-            scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition);
-            {
-                DrawGrid(gridData);
-            }
-            EditorGUILayout.EndScrollView();
+            DrawGrid(gridData);
         }
 
         private static void DrawSizeField(GridData gridData)
@@ -46,18 +42,22 @@ namespace Droppy.PieceMinigame.Editor
             }
         }
 
-        private static void DrawGrid(GridData gridData)
+        private void DrawGrid(GridData gridData)
         {
-            EditorGUILayout.BeginVertical();
+            scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition);
             {
-                for (int y = gridData.Size.y - 1; y >= 0; y--)
+                EditorGUILayout.BeginVertical();
                 {
-                    EditorGUILayout.Space(CellPaddingSize);
-                    DrawRow(gridData, y);
-                    EditorGUILayout.Space(CellPaddingSize);
+                    for (int y = gridData.Size.y - 1; y >= 0; y--)
+                    {
+                        EditorGUILayout.Space(CellPaddingSize);
+                        DrawRow(gridData, y);
+                        EditorGUILayout.Space(CellPaddingSize);
+                    }
                 }
+                EditorGUILayout.EndVertical();
             }
-            EditorGUILayout.EndVertical();
+            EditorGUILayout.EndScrollView();
         }
 
         private static void DrawRow(GridData gridData, int y)
