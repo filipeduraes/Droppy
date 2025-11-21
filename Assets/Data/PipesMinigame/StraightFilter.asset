@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 19aa306fea8440de8911607f424a433a, type: 3}
-  m_Name: DoubleCrossPiece
+  m_Name: StraightFilter
   m_EditorClassIdentifier: 
   sprite: {fileID: 0}
-  defaultDirections: 11
+  defaultDirections: 10
   isLocked: 0

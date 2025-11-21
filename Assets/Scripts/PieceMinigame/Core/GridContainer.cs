@@ -11,6 +11,30 @@ namespace Droppy.PieceMinigame
 
         public GridData Grid => grid;
         public float CellSize => cellSize;
+
+        public Vector3 GetPortBorderPosition(GridPort port)
+        {
+            return port.Direction switch
+            {
+                PieceDirection.Right => GetBorderPosition(Grid.Size.x - 1, port.Offset, port.Direction),
+                PieceDirection.Bottom => GetBorderPosition(port.Offset, 0, port.Direction),
+                PieceDirection.Left => GetBorderPosition(0, port.Offset, port.Direction),
+                PieceDirection.Top => GetBorderPosition(port.Offset, Grid.Size.y - 1, port.Direction),
+                _ =>  Vector3.zero
+            };
+        }
+        
+        public Vector3 GetBorderPosition(int x, int y, PieceDirection direction)
+        {
+            Vector3 centerPosition = GetCellCenterPosition(x, y);
+            
+            foreach (Vector3 directionOffset in direction.ToVectors())
+            {
+                centerPosition += directionOffset * CellSize * 0.5f;
+            }
+
+            return centerPosition;
+        }
         
         public Vector3 GetCellCenterPosition(int x, int y)
         {

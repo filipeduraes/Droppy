@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Droppy.PieceMinigame
 {
@@ -18,6 +19,20 @@ namespace Droppy.PieceMinigame
 
             DrawGridLinesGizmos();
             DrawGridPiecesGizmos();
+
+            Gizmos.color = Color.magenta;
+            
+            foreach (GridPort entryPort in Grid.Entries)
+            {
+                Gizmos.DrawSphere(container.GetPortBorderPosition(entryPort), 0.2f);
+            }
+            
+            Gizmos.color = Color.red;
+            
+            foreach (GridPort exitPort in Grid.Exits)
+            {
+                Gizmos.DrawSphere(container.GetPortBorderPosition(exitPort), 0.2f);
+            }
         }
 
         private void DrawGridLinesGizmos()

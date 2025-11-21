@@ -9,18 +9,25 @@ namespace Droppy.PieceMinigame
     [CreateAssetMenu(menuName = "Droppy/Piece Minigame/Grid", fileName = "GridData")]
     public class GridData : ScriptableObject
     {
-        [SerializeField] private Vector2Int size = new Vector2Int(4, 4);
+        [SerializeField] private Vector2Int size = new(4, 4);
         [SerializeField] private List<GridRow> grid;
-        [SerializeField] private List<Vector2Int> entries;
-        [SerializeField] private List<Vector2Int> exits;
+        [SerializeField] private List<GridPort> entries;
+        [SerializeField] private List<GridPort> exits;
 
-        public List<GridRow> Grid
+        public List<GridRow> Grid => grid;
+        public Vector2Int Size => size;
+
+        public List<GridPort> Entries
         {
-            get => grid;
-            set => grid = value;
+            get => entries;
+            set => entries = value;
         }
 
-        public Vector2Int Size => size;
+        public List<GridPort> Exits
+        {
+            get => exits;
+            set => exits = value;
+        }
 
         public CellData[,] ConvertRowsToGrid()
         {

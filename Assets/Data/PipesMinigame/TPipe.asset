@@ -9,8 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f2ecb72bb02837244906e33ef8edc63d, type: 3}
-  m_Name: GridData
+  m_Script: {fileID: 11500000, guid: 19aa306fea8440de8911607f424a433a, type: 3}
+  m_Name: TPipe
   m_EditorClassIdentifier: 
-  size: {x: 0, y: 0}
-  grid: []
+  sprite: {fileID: 0}
+  defaultDirections: 11
+  isLocked: 0

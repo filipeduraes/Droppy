@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
@@ -24,6 +25,76 @@ namespace Droppy.PieceMinigame.Editor
             EditorGUILayout.Space(10);
 
             DrawGrid(gridData);
+            
+            EditorGUILayout.Space(20);
+
+            EditorGUILayout.BeginVertical();
+            {
+                DrawPortsList(gridData, gridData.Entries, "Entry Ports");
+                EditorGUILayout.Space(10);
+                DrawPortsList(gridData, gridData.Exits, "Exit Ports");
+                
+            }
+            EditorGUILayout.EndVertical();
+        }
+
+        private static void DrawPortsList(GridData gridData, List<GridPort> ports, string label)
+        {
+            EditorGUILayout.LabelField(label);
+
+            foreach (GridPort port in ports)
+            {
+                DrawGridPortField(gridData, port);
+                EditorGUILayout.Space(CellPaddingSize);
+            }
+            
+            EditorGUILayout.BeginHorizontal();
+            {
+                if (GUILayout.Button("+"))
+                {
+                    ports.Add(new GridPort());
+                    EditorUtility.SetDirty(gridData);
+                }
+
+                if (ports.Count > 0 && GUILayout.Button("-"))
+                {
+                    ports.RemoveAt(gridData.Entries.Count - 1);
+                    EditorUtility.SetDirty(gridData);
+                }
+            }
+            EditorGUILayout.EndHorizontal();
+        }
+
+        private static void DrawGridPortField(GridData gridData, GridPort port)
+        {
+            EditorGUILayout.BeginHorizontal();
+            {
+                bool isHorizontalDirection = (port.Direction & (PieceDirection.Top | PieceDirection.Bottom)) != 0;
+                PieceDirection newDirection = (PieceDirection) EditorGUILayout.EnumPopup(port.Direction);
+                        
+                if (newDirection == PieceDirection.None)
+                {
+                    newDirection = port.Direction;
+                }
+                        
+                int newOffset = EditorGUILayout.IntSlider(port.Offset, 0, (isHorizontalDirection ? gridData.Size.x : gridData.Size.y) - 1);
+
+                bool isDirty = newDirection != port.Direction || newOffset != port.Offset;
+
+                port.Direction = newDirection;
+                port.Offset = newOffset;
+
+                if (port.Direction == PieceDirection.None)
+                {
+                    port.Direction = PieceDirection.Left;
+                }
+
+                if (isDirty)
+                {
+                    EditorUtility.SetDirty(gridData);
+                }
+            }
+            EditorGUILayout.EndHorizontal();
         }
 
         private static void DrawSizeField(GridData gridData)
