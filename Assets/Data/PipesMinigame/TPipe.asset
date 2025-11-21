@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: TPipe
   m_EditorClassIdentifier: 
   sprite: {fileID: -287930506, guid: 852d98bcaaedab74587bfb170bc13df9, type: 3}
-  defaultDirections: 11
+  defaultDirections: 7
   isLocked: 0
