@@ -1,16 +1,48 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Droppy.PieceMinigame
 {
     public class GridContainer : MonoBehaviour
     {
+        [Header("Grid")]
         [SerializeField] private GridData grid;
         [SerializeField, Min(0)] private float cellSize = 1.0f;
         [SerializeField] private Vector2 offset;
         [SerializeField] private bool applyCenterOffset;
 
+        [Header("Prefabs")] 
+        [SerializeField] private Piece piecePrefab;
+
         public GridData Grid => grid;
         public float CellSize => cellSize;
+        
+        private CellData[,] runtimeGrid;
+
+        private void Awake()
+        {
+            SpawnGrid();
+        }
+
+        private void SpawnGrid()
+        {
+            runtimeGrid = Grid.ConvertRowsToGrid();
+            
+            for (int y = 0; y < Grid.Size.y; y++)
+            {
+                for (int x = 0; x < Grid.Size.x; x++)
+                {
+                    CellData cell = runtimeGrid[x, y];
+                    
+                    if (cell.Piece != null)
+                    {
+                        Vector3 position = GetCellCenterPosition(x, y);
+                        Piece pieceInstance = Instantiate(piecePrefab, position, Quaternion.identity, transform);
+                        pieceInstance.Populate(cell, new Vector2Int(x, y));
+                    }
+                }
+            }
+        }
 
         public Vector3 GetPortBorderPosition(GridPort port)
         {

@@ -5,39 +5,50 @@ namespace Droppy.InteractionSystem
 {
     public class InteractionAgent : MonoBehaviour
     {
-        private HashSet<IInteractable> currentInteractables = new();
+        private HashSet<IInteractableArea> currentInteractables = new();
         
         private void OnTriggerEnter2D(Collider2D other)
         {
-            if (other.TryGetComponent(out IInteractable interactable) && !currentInteractables.Contains(interactable))
+            if (other.TryGetComponent(out IInteractableArea interactable) && !currentInteractables.Contains(interactable))
             {
-                interactable.EnterInteraction(this);
+                interactable.EnterInteraction(gameObject);
                 currentInteractables.Add(interactable);
             }
         }
 
         private void OnTriggerExit2D(Collider2D other)
         {
-            if (other.TryGetComponent(out IInteractable interactable) && !currentInteractables.Contains(interactable))
+            if (other.TryGetComponent(out IInteractableArea interactable) && !currentInteractables.Contains(interactable))
             {
-                interactable.ExitInteraction(this);
+                interactable.ExitInteraction(gameObject);
                 currentInteractables.Remove(interactable);
             }
         }
 
         public void StartInteraction()
         {
-            foreach (IInteractable interactable in currentInteractables)
+            foreach (IInteractableArea interactable in currentInteractables)
             {
-                interactable.StartInteraction(this);
+                if (interactable is IHoldInteractable holdInteractable)
+                {
+                    holdInteractable.StartInteraction(gameObject);
+                }
+                
+                if (interactable is IInteractable simpleInteractable)
+                {
+                    simpleInteractable.Interact(gameObject);
+                }
             }
         }
 
         public void EndInteraction()
         {
-            foreach (IInteractable interactable in currentInteractables)
+            foreach (IInteractableArea interactable in currentInteractables)
             {
-                interactable.EndInteraction(this);
+                if (interactable is IHoldInteractable holdInteractable)
+                {
+                    holdInteractable.EndInteraction(gameObject);
+                }
             }
         }
     }
