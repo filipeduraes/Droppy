@@ -6,6 +6,8 @@ namespace Droppy.Input
 {
     public class DroppyInput : MonoBehaviour
     {
+        public event Action<Vector2> OnPointerStarted = delegate { };
+        
         public event Action OnMoveStarted = delegate { };
         public event Action OnMoveCanceled = delegate { };
         
@@ -33,6 +35,8 @@ namespace Droppy.Input
             
             controls.Player.Interact.started += SendInteractStarted;
             controls.Player.Interact.canceled += SendInteractCanceled;
+
+            controls.Player.Pointer.started += SendPointerStarted;
             
             controls.Enable();
         }
@@ -45,9 +49,11 @@ namespace Droppy.Input
             controls.Player.Interact.started -= SendInteractStarted;
             controls.Player.Interact.canceled -= SendInteractCanceled;
             
+            controls.Player.Pointer.started -= SendPointerStarted;
+            
             controls.Disable();
         }
-        
+
 
         private void SendMoveStarted(InputAction.CallbackContext context)
         {
@@ -68,6 +74,13 @@ namespace Droppy.Input
         private void SendInteractCanceled(InputAction.CallbackContext context)
         {
             OnInteractCanceled();
+        }
+        
+        
+        private void SendPointerStarted(InputAction.CallbackContext context)
+        {
+            Vector2 position = controls.Player.PointerPosition.ReadValue<Vector2>();
+            OnPointerStarted(position);
         }
     }
 }

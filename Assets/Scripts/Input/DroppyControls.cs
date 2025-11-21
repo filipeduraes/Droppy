@@ -46,6 +46,24 @@ namespace Droppy.Input
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PointerPosition"",
+                    ""type"": ""Value"",
+                    ""id"": ""0137c45d-bf73-45ea-9d2c-4d5c3381a280"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Pointer"",
+                    ""type"": ""Button"",
+                    ""id"": ""a878db39-8961-4460-92fb-b9b842ce374b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -202,6 +220,28 @@ namespace Droppy.Input
                     ""action"": ""Interact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1f257276-a282-4565-a9be-bc3b6cb27ba4"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PointerPosition"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b622254a-c435-4bcd-9328-bfbbc4925386"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pointer"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -212,6 +252,8 @@ namespace Droppy.Input
             m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
             m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
             m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
+            m_Player_PointerPosition = m_Player.FindAction("PointerPosition", throwIfNotFound: true);
+            m_Player_Pointer = m_Player.FindAction("Pointer", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -275,12 +317,16 @@ namespace Droppy.Input
         private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
         private readonly InputAction m_Player_Move;
         private readonly InputAction m_Player_Interact;
+        private readonly InputAction m_Player_PointerPosition;
+        private readonly InputAction m_Player_Pointer;
         public struct PlayerActions
         {
             private @DroppyControls m_Wrapper;
             public PlayerActions(@DroppyControls wrapper) { m_Wrapper = wrapper; }
             public InputAction @Move => m_Wrapper.m_Player_Move;
             public InputAction @Interact => m_Wrapper.m_Player_Interact;
+            public InputAction @PointerPosition => m_Wrapper.m_Player_PointerPosition;
+            public InputAction @Pointer => m_Wrapper.m_Player_Pointer;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -296,6 +342,12 @@ namespace Droppy.Input
                 @Interact.started += instance.OnInteract;
                 @Interact.performed += instance.OnInteract;
                 @Interact.canceled += instance.OnInteract;
+                @PointerPosition.started += instance.OnPointerPosition;
+                @PointerPosition.performed += instance.OnPointerPosition;
+                @PointerPosition.canceled += instance.OnPointerPosition;
+                @Pointer.started += instance.OnPointer;
+                @Pointer.performed += instance.OnPointer;
+                @Pointer.canceled += instance.OnPointer;
             }
 
             private void UnregisterCallbacks(IPlayerActions instance)
@@ -306,6 +358,12 @@ namespace Droppy.Input
                 @Interact.started -= instance.OnInteract;
                 @Interact.performed -= instance.OnInteract;
                 @Interact.canceled -= instance.OnInteract;
+                @PointerPosition.started -= instance.OnPointerPosition;
+                @PointerPosition.performed -= instance.OnPointerPosition;
+                @PointerPosition.canceled -= instance.OnPointerPosition;
+                @Pointer.started -= instance.OnPointer;
+                @Pointer.performed -= instance.OnPointer;
+                @Pointer.canceled -= instance.OnPointer;
             }
 
             public void RemoveCallbacks(IPlayerActions instance)
@@ -327,6 +385,8 @@ namespace Droppy.Input
         {
             void OnMove(InputAction.CallbackContext context);
             void OnInteract(InputAction.CallbackContext context);
+            void OnPointerPosition(InputAction.CallbackContext context);
+            void OnPointer(InputAction.CallbackContext context);
         }
     }
 }
