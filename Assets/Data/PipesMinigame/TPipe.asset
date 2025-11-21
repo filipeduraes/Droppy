@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19aa306fea8440de8911607f424a433a, type: 3}
   m_Name: TPipe
   m_EditorClassIdentifier: 
-  sprite: {fileID: 0}
+  sprite: {fileID: -287930506, guid: 852d98bcaaedab74587bfb170bc13df9, type: 3}
   defaultDirections: 11
   isLocked: 0

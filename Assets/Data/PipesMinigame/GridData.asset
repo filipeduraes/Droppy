@@ -69,5 +69,17 @@ MonoBehaviour:
       rotationSteps: 1
     - piece: {fileID: 11400000, guid: 08ff31f54b37e734798d3598b48307c9, type: 2}
       rotationSteps: 2
-  entries: []
-  exits: []
+  entries:
+  - direction: 8
+    offset: 4
+  - direction: 4
+    offset: 3
+  - direction: 1
+    offset: 2
+  - direction: 2
+    offset: 3
+  exits:
+  - direction: 4
+    offset: 0
+  - direction: 1
+    offset: 3
