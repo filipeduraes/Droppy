@@ -5,7 +5,7 @@ using Droppy.InteractionSystem;
 
 namespace Droppy.Obstacle
 {
-    public class StatDrainer : MonoBehaviour, IInteractableArea
+    public class StatModifierTrigger : MonoBehaviour, IInteractableArea
     {
         [Header("StatSettings")]
         [SerializeField]
@@ -17,17 +17,13 @@ namespace Droppy.Obstacle
         public void EnterInteraction(GameObject agent)
         {
             StatManager.Modify(statToModify, statModifier);
+            gameObject.SetActive(false);
 
-            ReturnToPool();
         }
 
         public void ExitInteraction(GameObject agent)
         {
 
-        }
-        public void ReturnToPool()
-        {
-            gameObject.SetActive(false);
         }
 
     }

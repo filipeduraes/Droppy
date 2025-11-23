@@ -2,7 +2,6 @@ using UnityEngine;
 
 namespace Droppy.Obstacle
 {
-    [RequireComponent(typeof(Rigidbody2D))]
     public class ObstacleMovement : MonoBehaviour 
     {
         [Header("Movement Settings")]
@@ -13,13 +12,13 @@ namespace Droppy.Obstacle
         [SerializeField]
         private Transform maxHeightMarker;
 
+        [Header("Component References")]
+        [SerializeField]
         private Rigidbody2D rb;
-        private StatDrainer statDrainer;
 
         private void Awake()
         {
-            rb = GetComponent<Rigidbody2D>();
-            statDrainer = GetComponent<StatDrainer>();
+           
         }
 
         private void OnEnable()
@@ -32,11 +31,8 @@ namespace Droppy.Obstacle
             if (maxHeightMarker !=null && rb.position.y >= maxHeightMarker.position.y)
             {
                 rb.velocity = Vector2.zero;
+                gameObject.SetActive(false);
 
-                if(statDrainer != null)
-                {
-                    statDrainer.ReturnToPool();
-                }
             }
         }
     }
