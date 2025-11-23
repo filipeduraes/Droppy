@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Droppy.PieceMinigame.Data;
 using UnityEngine;
 
@@ -76,6 +77,75 @@ namespace Droppy.PieceMinigame.Shared
             }
 
             return vectors;
+        }
+
+        public static Vector3 ToVector(this PieceDirection pieceDirection)
+        {
+            return pieceDirection switch
+            {
+                PieceDirection.Right => Vector3.right,
+                PieceDirection.Bottom => Vector3.down,
+                PieceDirection.Left => Vector3.left,
+                PieceDirection.Top => Vector3.up,
+                _ => Vector3.zero
+            };
+        }
+
+        public static Vector3 ToOppositeVector(this PieceDirection pieceDirection)
+        {
+            return -pieceDirection.ToVector();
+        }
+
+        public static PieceDirection Opposite(this PieceDirection pieceDirection)
+        {
+            PieceDirection oppositeDirection = PieceDirection.None;
+            
+            if ((pieceDirection & PieceDirection.Right) != 0)
+            {
+                oppositeDirection |= PieceDirection.Left;
+            }
+            
+            if ((pieceDirection & PieceDirection.Bottom) != 0)
+            {
+                oppositeDirection |= PieceDirection.Top;
+            }
+            
+            if ((pieceDirection & PieceDirection.Left) != 0)
+            {
+                oppositeDirection |= PieceDirection.Right;
+            }
+            
+            if ((pieceDirection & PieceDirection.Top) != 0)
+            {
+                oppositeDirection |= PieceDirection.Bottom;
+            }
+
+            return oppositeDirection;
+        }
+
+        public static PieceDirection ToPieceDirection(this Vector2Int direction)
+        {
+            if (direction == Vector2Int.right)
+            {
+                return PieceDirection.Right;
+            }
+            
+            if (direction == Vector2Int.down)
+            {
+                return PieceDirection.Bottom;
+            }
+            
+            if (direction == Vector2Int.left)
+            {
+                return PieceDirection.Left;
+            }
+            
+            if (direction == Vector2Int.up)
+            {
+                return PieceDirection.Top;
+            }
+
+            return PieceDirection.None;
         }
     }
 }

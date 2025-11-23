@@ -29,6 +29,11 @@ namespace Droppy.PieceMinigame.Data
             set => exits = value;
         }
 
+        public bool IsValidGridIndex(Vector2Int index)
+        {
+            return index.x >= 0 && index.y >= 0 && index.x < size.x && index.y < size.y;
+        }
+
         public CellData[,] ConvertRowsToGrid()
         {
             CellData[,] convertedGrid = new CellData[Size.x, Size.y];

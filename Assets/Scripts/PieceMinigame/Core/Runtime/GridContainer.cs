@@ -16,37 +16,15 @@ namespace Droppy.PieceMinigame.Runtime
         [Header("Prefabs")] 
         [SerializeField] private Piece piecePrefab;
 
+        public Dictionary<Vector2Int, Piece> Pieces { get; } = new();
+        public CellData[,] RuntimeGrid { get; private set; }
         public GridData Grid => grid;
         public float CellSize => cellSize;
 
-        private CellData[,] runtimeGrid;
-        private readonly Dictionary<Vector2Int, Piece> pieces = new();
 
         private void Awake()
         {
             SpawnGrid();
-        }
-
-        private void SpawnGrid()
-        {
-            runtimeGrid = Grid.ConvertRowsToGrid();
-            
-            for (int y = 0; y < Grid.Size.y; y++)
-            {
-                for (int x = 0; x < Grid.Size.x; x++)
-                {
-                    CellData cell = runtimeGrid[x, y];
-                    
-                    if (cell.Piece != null)
-                    {
-                        Vector3 position = GetCellCenterPosition(x, y);
-                        Piece pieceInstance = Instantiate(piecePrefab, position, Quaternion.identity, transform);
-                        pieceInstance.Populate(cell, new Vector2Int(x, y));
-                        
-                        pieces[new Vector2Int(x, y)] = pieceInstance;
-                    }
-                }
-            }
         }
 
         public Vector3 GetPortBorderPosition(GridPort port)
@@ -89,6 +67,28 @@ namespace Droppy.PieceMinigame.Runtime
             }
             
             return cellPosition;
+        }
+        
+        private void SpawnGrid()
+        {
+            RuntimeGrid = Grid.ConvertRowsToGrid();
+            
+            for (int y = 0; y < Grid.Size.y; y++)
+            {
+                for (int x = 0; x < Grid.Size.x; x++)
+                {
+                    CellData cell = RuntimeGrid[x, y];
+                    
+                    if (cell.Piece != null)
+                    {
+                        Vector3 position = GetCellCenterPosition(x, y);
+                        Piece pieceInstance = Instantiate(piecePrefab, position, Quaternion.identity, transform);
+                        pieceInstance.Populate(cell, new Vector2Int(x, y));
+                        
+                        Pieces[new Vector2Int(x, y)] = pieceInstance;
+                    }
+                }
+            }
         }
     }
 }

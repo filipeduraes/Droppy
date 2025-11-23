@@ -185,8 +185,15 @@ namespace Droppy.PieceMinigame.Editor
             }
                     
             EditorGUILayout.Space(CellPaddingSize);
-                    
+
             DrawRotationSteps(gridData, cellData);
+            
+            if (GUILayout.Button("Clear"))
+            {
+                cellData.Piece = null;
+                cellData.RotationSteps = 0;
+                EditorUtility.SetDirty(gridData);
+            }
         }
 
         private static void DrawRotationSteps(GridData gridData, CellData cellData)
