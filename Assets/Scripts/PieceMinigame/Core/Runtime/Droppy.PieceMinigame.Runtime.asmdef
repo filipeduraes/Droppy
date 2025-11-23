@@ -1,0 +1,14 @@
+{
+    "name": "Droppy.PieceMinigame.Runtime",
+    "rootNamespace": "Droppy.PieceMinigame.Runtime",
+    "references": ["GUID:716b1a0c855727848a15597efd36e8c3","GUID:0782169d440d78b4eb50baae90d68002","GUID:369fc0baf45392444ab5dec5d40bc951"],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

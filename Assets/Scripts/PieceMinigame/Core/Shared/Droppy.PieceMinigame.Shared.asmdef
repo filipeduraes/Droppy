@@ -1,20 +1,16 @@
 {
-    "name": "Droppy.PieceMinigame.Editor",
-    "rootNamespace": "Droppy.PieceMinigame.Editor",
+    "name": "Droppy.PieceMinigame.Shared",
+    "rootNamespace": "Droppy.PieceMinigame.Shared",
     "references": [
         "GUID:0782169d440d78b4eb50baae90d68002"
     ],
-    "includePlatforms": [
-        "Editor"
-    ],
+    "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,
     "precompiledReferences": [],
     "autoReferenced": true,
-    "defineConstraints": [
-        "UNITY_EDITOR"
-    ],
+    "defineConstraints": [],
     "versionDefines": [],
     "noEngineReferences": false
 }
