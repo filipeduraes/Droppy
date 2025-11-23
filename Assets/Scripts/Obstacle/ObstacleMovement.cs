@@ -5,34 +5,38 @@ namespace Droppy.Obstacle
     public class ObstacleMovement : MonoBehaviour 
     {
         [Header("Movement Settings")]
-        [SerializeField]
-        private float movementSpeed = 5f;
+        [SerializeField] private float movementSpeed = 5f;
 
         [Header("Pool Settings")]
-        [SerializeField]
-        private Transform maxHeightMarker;
+        [SerializeField] private Transform maxHeightMarker;
 
         [Header("Component References")]
-        [SerializeField]
-        private Rigidbody2D rb;
+        [SerializeField] private Rigidbody2D body;
 
-        private void Awake()
+        private float markerY = 0.0f;
+        
+        private void Start()
         {
-           
+            if (maxHeightMarker != null)
+            {
+                markerY = maxHeightMarker.position.y;
+            }
         }
 
         private void OnEnable()
         {
-            rb.velocity = Vector2.up * movementSpeed;
+            body.velocity = Vector2.up * movementSpeed;
         }
 
         private void FixedUpdate()
         {
-            if (maxHeightMarker !=null && rb.position.y >= maxHeightMarker.position.y)
+            bool isAboveMarker = movementSpeed > 0.0f && body.position.y >= markerY;
+            bool isBelowMarker = movementSpeed < 0.0f && body.position.y <= markerY;
+            
+            if (isAboveMarker || isBelowMarker)
             {
-                rb.velocity = Vector2.zero;
+                body.velocity = Vector2.zero;
                 gameObject.SetActive(false);
-
             }
         }
     }
