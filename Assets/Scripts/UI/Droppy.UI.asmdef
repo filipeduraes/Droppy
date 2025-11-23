@@ -1,9 +1,7 @@
 {
-    "name": "Droppy.Player",
+    "name": "Droppy.UI",
     "rootNamespace": "",
     "references": [
-        "GUID:73e01b9957cafa846bac66e174b2e0dd",
-        "GUID:716b1a0c855727848a15597efd36e8c3",
         "GUID:29d42cea2fe0ea647ab647f1cb95cf68"
     ],
     "includePlatforms": [],
