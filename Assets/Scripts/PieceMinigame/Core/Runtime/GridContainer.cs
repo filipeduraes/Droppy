@@ -1,7 +1,9 @@
-﻿using System;
+﻿using System.Collections.Generic;
+using Droppy.PieceMinigame.Data;
+using Droppy.PieceMinigame.Shared;
 using UnityEngine;
 
-namespace Droppy.PieceMinigame
+namespace Droppy.PieceMinigame.Runtime
 {
     public class GridContainer : MonoBehaviour
     {
@@ -16,8 +18,9 @@ namespace Droppy.PieceMinigame
 
         public GridData Grid => grid;
         public float CellSize => cellSize;
-        
+
         private CellData[,] runtimeGrid;
+        private readonly Dictionary<Vector2Int, Piece> pieces = new();
 
         private void Awake()
         {
@@ -39,6 +42,8 @@ namespace Droppy.PieceMinigame
                         Vector3 position = GetCellCenterPosition(x, y);
                         Piece pieceInstance = Instantiate(piecePrefab, position, Quaternion.identity, transform);
                         pieceInstance.Populate(cell, new Vector2Int(x, y));
+                        
+                        pieces[new Vector2Int(x, y)] = pieceInstance;
                     }
                 }
             }

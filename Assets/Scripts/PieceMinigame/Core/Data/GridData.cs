@@ -4,7 +4,7 @@ using System.Linq;
 using Droppy.Shared;
 using UnityEngine;
 
-namespace Droppy.PieceMinigame
+namespace Droppy.PieceMinigame.Data
 {
     [CreateAssetMenu(menuName = "Droppy/Piece Minigame/Grid", fileName = "GridData")]
     public class GridData : ScriptableObject

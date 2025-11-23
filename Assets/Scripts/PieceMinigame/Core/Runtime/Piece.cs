@@ -1,7 +1,9 @@
 ﻿using Droppy.InteractionSystem;
+using Droppy.PieceMinigame.Data;
+using Droppy.PieceMinigame.Shared;
 using UnityEngine;
 
-namespace Droppy.PieceMinigame
+namespace Droppy.PieceMinigame.Runtime
 {
     public class Piece : MonoBehaviour, IInteractable
     {

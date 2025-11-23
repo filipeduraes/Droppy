@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
+using Droppy.PieceMinigame.Data;
 using UnityEngine;
 
-namespace Droppy.PieceMinigame
+namespace Droppy.PieceMinigame.Shared
 {
     public static class PieceUtils
     {
