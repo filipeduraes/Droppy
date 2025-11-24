@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77101eda14e02524c956dc2087055318, type: 3}
   m_Name: Purity
   m_EditorClassIdentifier: 
-  id: 
+  id: Purity
   displayName: 
-  initialAmount: 0
+  initialAmount: 100
