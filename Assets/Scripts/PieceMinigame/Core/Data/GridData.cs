@@ -4,7 +4,7 @@ using System.Linq;
 using Droppy.Shared;
 using UnityEngine;
 
-namespace Droppy.PieceMinigame
+namespace Droppy.PieceMinigame.Data
 {
     [CreateAssetMenu(menuName = "Droppy/Piece Minigame/Grid", fileName = "GridData")]
     public class GridData : ScriptableObject
@@ -27,6 +27,11 @@ namespace Droppy.PieceMinigame
         {
             get => exits;
             set => exits = value;
+        }
+
+        public bool IsValidGridIndex(Vector2Int index)
+        {
+            return index.x >= 0 && index.y >= 0 && index.x < size.x && index.y < size.y;
         }
 
         public CellData[,] ConvertRowsToGrid()

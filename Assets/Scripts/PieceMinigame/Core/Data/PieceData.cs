@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Droppy.PieceMinigame
+namespace Droppy.PieceMinigame.Data
 {
     [CreateAssetMenu(fileName = "PieceData", menuName = "Droppy/Piece Minigame/Piece")]
     public class PieceData : ScriptableObject

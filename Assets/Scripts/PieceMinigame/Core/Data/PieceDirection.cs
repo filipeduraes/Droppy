@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Droppy.PieceMinigame
+namespace Droppy.PieceMinigame.Data
 {
     [Flags]
     public enum PieceDirection

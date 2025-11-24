@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Droppy.PieceMinigame
+namespace Droppy.PieceMinigame.Data
 {
     [Serializable]
     public class CellData
