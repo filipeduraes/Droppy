@@ -8,7 +8,13 @@ namespace Droppy.Player
     public class PiecePlayerController : MonoBehaviour 
     {
         [SerializeField] private DroppyInput input;
-        [SerializeField] private Camera mainCamera;
+        
+        private Camera mainCamera;
+
+        private void Awake()
+        {
+            mainCamera = FindObjectOfType<Camera>();
+        }
 
         private void OnEnable()
         {
