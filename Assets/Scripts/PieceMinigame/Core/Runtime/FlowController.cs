@@ -27,8 +27,13 @@ namespace Droppy.PieceMinigame.Runtime
 
             foreach (GridPort entry in entries)
             {
-                searchHeads.Enqueue(entry.GetAdjacentIndex(gridContainer.Grid.Size));
-                yield return new WaitForSeconds(0.5f);
+                Vector2Int index = entry.GetAdjacentIndex(gridContainer.Grid.Size);
+
+                if(!IsEmptyOrInvalidCell(index))
+                {
+                    searchHeads.Enqueue(index);
+                    yield return new WaitForSeconds(0.5f);
+                }
             }
 
             while (searchHeads.Count > 0)
@@ -42,13 +47,7 @@ namespace Droppy.PieceMinigame.Runtime
                     {
                         Vector2Int adjacentIndex = head + new Vector2Int(i, j);
 
-                        bool isEmptyOrInvalidCell = i == j
-                                                    || !gridContainer.Grid.IsValidGridIndex(adjacentIndex) 
-                                                    || adjacentIndex == head 
-                                                    || !gridContainer.Pieces.ContainsKey(adjacentIndex)
-                                                    || visited.Contains(adjacentIndex);
-                        
-                        if (isEmptyOrInvalidCell)
+                        if (i == j || adjacentIndex == head || IsEmptyOrInvalidCell(adjacentIndex))
                         {
                             continue;
                         }
@@ -73,6 +72,13 @@ namespace Droppy.PieceMinigame.Runtime
             }
             
             yield return null;
+        }
+
+        private bool IsEmptyOrInvalidCell(Vector2Int adjacentIndex)
+        {
+            return !gridContainer.Grid.IsValidGridIndex(adjacentIndex) 
+                   || !gridContainer.Pieces.ContainsKey(adjacentIndex)
+                   || visited.Contains(adjacentIndex);
         }
 
         private void OnDrawGizmos()

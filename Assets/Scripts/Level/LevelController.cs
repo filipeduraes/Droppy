@@ -30,6 +30,35 @@ namespace Droppy.Level
 
         private IEnumerator StartNextLevelRoutine()
         {
+            yield return HideCurrentLevel();
+            
+            currentLevelIndex++;
+
+            if (currentLevelIndex >= levelSequence.Count)
+            {
+                OnLevelSequenceFinished();
+                yield break;
+            }
+
+            yield return ShowCurrentLevel();
+
+            currentLevel.StartLevel();
+        }
+
+        private IEnumerator ShowCurrentLevel()
+        {
+            AsyncInstantiateOperation<Level> instantiateOperation = InstantiateAsync(levelSequence[currentLevelIndex], 1, transform.position, Quaternion.identity);
+            yield return instantiateOperation;
+            
+            currentLevel = instantiateOperation.Result[0];
+            currentLevel.transform.SetParent(transform);
+            currentLevel.OnFinished += StartNextLevel;
+            
+            yield return FadeTransition(1.0f, 0.0f);
+        }
+
+        private IEnumerator HideCurrentLevel()
+        {
             if (currentLevel != null)
             {
                 yield return FadeTransition(0.0f, 1.0f);
@@ -40,25 +69,6 @@ namespace Droppy.Level
             {
                 SetFadeImageAlpha(1.0f);
             }
-            
-            currentLevelIndex++;
-
-            if (currentLevelIndex >= levelSequence.Count)
-            {
-                OnLevelSequenceFinished();
-                yield break;
-            }
-            
-            AsyncInstantiateOperation<Level> instantiateOperation = InstantiateAsync(levelSequence[currentLevelIndex], 1, transform.position, Quaternion.identity);
-            yield return instantiateOperation;
-            
-            currentLevel = instantiateOperation.Result[0];
-            currentLevel.transform.SetParent(transform);
-            currentLevel.OnFinished += StartNextLevel;
-            
-            yield return FadeTransition(1.0f, 0.0f);
-
-            currentLevel.StartLevel();
         }
 
         private IEnumerator FadeTransition(float initialAlpha, float finalAlpha)
