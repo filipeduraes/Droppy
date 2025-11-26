@@ -2,13 +2,20 @@ using System;
 using UnityEngine;
 using Droppy.Input;
 using Droppy.InteractionSystem;
+using Droppy.ServiceLocatorSystem;
 
 namespace Droppy.Player
 {
     public class PiecePlayerController : MonoBehaviour 
     {
         [SerializeField] private DroppyInput input;
-        [SerializeField] private Camera mainCamera;
+        
+        private Camera mainCamera;
+
+        private void Start()
+        {
+            ServiceLocator.TryGetService(out mainCamera);
+        }
 
         private void OnEnable()
         {
@@ -22,6 +29,11 @@ namespace Droppy.Player
 
         private void TryInteract(Vector2 pointerPosition)
         {
+            if (mainCamera == null)
+            {
+                return;
+            }
+            
             Ray ray = mainCamera.ScreenPointToRay(pointerPosition);
             RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
 
