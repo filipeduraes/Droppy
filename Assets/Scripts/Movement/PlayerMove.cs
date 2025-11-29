@@ -12,11 +12,19 @@ namespace Droppy.Input
         private DroppyControls controls; 
         private Vector2 moveInput;
         private Camera mainCamera;
+        private Rigidbody2D rb;
 
         private void Awake()
         {
             controls = new DroppyControls();
             mainCamera = Camera.main;
+            
+            rb = GetComponent<Rigidbody2D>();
+            
+            if (rb == null)
+            {
+                enabled = false;
+            }
         }
 
         private void OnEnable()
@@ -35,14 +43,18 @@ namespace Droppy.Input
 
         private void Update()
         {
-            Move();
             ClampPosition();
+        }
+        
+        private void FixedUpdate()
+        {
+            Move();
         }
         
         private void Move()
         {
-            Vector3 movement = new(moveInput.x, 0, 0);
-            transform.Translate(movement * (speed * Time.deltaTime));
+            Vector2 targetVelocity = new Vector2(moveInput.x * speed, rb.velocity.y);
+            rb.velocity = targetVelocity;
         }
         
         private void ClampPosition()
