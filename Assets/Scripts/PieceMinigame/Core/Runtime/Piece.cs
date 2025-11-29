@@ -13,6 +13,7 @@ namespace Droppy.PieceMinigame.Runtime
         
         public Vector2Int Index { get; private set; }
         private PieceData pieceData;
+        private bool isFull = false;
 
         public void Populate(CellData cellData, Vector2Int pieceIndex)
         {
@@ -23,10 +24,19 @@ namespace Droppy.PieceMinigame.Runtime
             Direction = pieceData.DefaultDirections.RotateClockwise(cellData.RotationSteps);
             transform.Rotate(-Vector3.forward, cellData.RotationSteps * 90.0f);
         }
+
+        public void Fill()
+        {
+            visual.sprite = pieceData.FullSprite;
+            isFull = true;
+        }
         
         public void Interact(GameObject agent)
         {
-            RotateClockwise();
+            if (!isFull)
+            {
+                RotateClockwise();
+            }
         }
 
         private void RotateClockwise()
