@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Droppy.Obstacle
 {
-    public class ObstacleMovement : MonoBehaviour 
+    public class ObstacleMovement : MonoBehaviour
     {
         [Header("Movement Settings")]
         [SerializeField] private float movementSpeed = 5f;
@@ -12,9 +12,13 @@ namespace Droppy.Obstacle
 
         [Header("Component References")]
         [SerializeField] private Rigidbody2D body;
+        [SerializeField] private Animator anim;
+
+        [Header("Animation Settings")]
+        [SerializeField] private string deathTriggerName = "Death";
 
         private float markerY = 0.0f;
-        
+
         private void Start()
         {
             if (maxHeightMarker != null)
@@ -25,6 +29,11 @@ namespace Droppy.Obstacle
 
         private void OnEnable()
         {
+            Collider2D col = GetComponent<Collider2D>();
+            if (col != null)
+            {
+                col.enabled = true;
+            }
             body.velocity = Vector2.up * movementSpeed;
         }
 
@@ -32,12 +41,42 @@ namespace Droppy.Obstacle
         {
             bool isAboveMarker = movementSpeed > 0.0f && body.position.y >= markerY;
             bool isBelowMarker = movementSpeed < 0.0f && body.position.y <= markerY;
-            
+
             if (isAboveMarker || isBelowMarker)
             {
-                body.velocity = Vector2.zero;
-                gameObject.SetActive(false);
+                DeactivateAndReturnToPool();
             }
+        }
+
+        private void OnTriggerEnter2D(Collider2D other)
+        {
+            if (other.CompareTag("Player"))
+            {
+                body.velocity = Vector2.zero;
+
+                if (anim != null)
+                {
+                    anim.SetTrigger(deathTriggerName);
+                }
+                Collider2D col = GetComponent<Collider2D>();
+                if (col != null)
+                {
+                    col.enabled = false;
+                }
+            }
+        }
+
+        public void DeactivateAndReturnToPool()
+        {
+            body.velocity = Vector2.zero;
+
+            Collider2D col = GetComponent<Collider2D>();
+            if (col != null)
+            {
+                col.enabled = true;
+            }
+
+            gameObject.SetActive(false);
         }
     }
 }
