@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-
+using Droppy.ServiceLocatorSystem;
 namespace Droppy.Input
 {
     public class PlayerMove : MonoBehaviour
@@ -16,9 +16,12 @@ namespace Droppy.Input
         private void Awake()
         {
             controls = new DroppyControls();
-            mainCamera = Camera.main;
+            
         }
-
+        private void Start()
+        {
+            ServiceLocator.TryGetService(out mainCamera);
+        }
         private void OnEnable()
         {
             controls.Player.Move.performed += PerformMovement;
@@ -36,7 +39,10 @@ namespace Droppy.Input
         private void Update()
         {
             Move();
-            ClampPosition();
+            if (mainCamera != null)
+            {
+                ClampPosition();
+            }
         }
         
         private void Move()
