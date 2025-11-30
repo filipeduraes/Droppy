@@ -7,7 +7,7 @@ namespace Droppy.Obstacle
 {
     public class StatModifierTrigger : MonoBehaviour, IInteractableArea
     {
-        public static event Action<GameObject> OnStatModified;
+        public Action OnStatApplied;
 
         [Header("StatSettings")]
         [SerializeField]
@@ -19,13 +19,13 @@ namespace Droppy.Obstacle
         public void EnterInteraction(GameObject agent)
         {
             StatManager.Modify(statToModify, statModifier);
-            OnStatModified?.Invoke(agent);
+            OnStatApplied?.Invoke();
+
             enabled = false;
         }
 
         public void ExitInteraction(GameObject agent)
         {
-
         }
     }
 }
