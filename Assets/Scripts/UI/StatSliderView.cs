@@ -4,19 +4,15 @@ using UnityEngine.UI;
 
 namespace Droppy.UI
 {
-    public class PurityView : MonoBehaviour
+    public class StatSliderView : MonoBehaviour
     {
-        [SerializeField] private Stat purityStat;
-        [SerializeField] private Slider purityBar;
-
-        private void Awake()
-        {
-            UpdatePurityBar(purityStat.ID);
-        }
+        [SerializeField] private Stat stat;
+        [SerializeField] private Slider slider;
 
         private void OnEnable()
         {
             StatManager.OnStatModified += UpdatePurityBar;
+            UpdatePurityBar(stat.ID);
         }
 
         private void OnDisable()
@@ -26,10 +22,10 @@ namespace Droppy.UI
 
         private void UpdatePurityBar(string statID)
         {
-            if (statID == purityStat.ID)
+            if (statID == stat.ID)
             {
-                float purity = StatManager.Read(purityStat);
-                purityBar.value = purity / 100.0f;
+                float purity = StatManager.Read(stat);
+                slider.value = purity / stat.InitialAmount;
             }
         }
     }
