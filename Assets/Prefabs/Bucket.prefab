@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1668520475060785575}
-  - component: {fileID: -6947591627210399026}
   - component: {fileID: 7081137573684886184}
   m_Layer: 0
   m_Name: Bucket
@@ -33,20 +32,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-6947591627210399026
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7498999198283856302}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 88fa3bbf4e179114f946f1c063af82c7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  data: {fileID: 11400000, guid: 78b92c369955f5242aeace1630013883, type: 2}
-  spawnPoints: []
 --- !u!95 &7081137573684886184
 Animator:
   serializedVersion: 5
@@ -57,7 +42,7 @@ Animator:
   m_GameObject: {fileID: 7498999198283856302}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: f6fd4a77120b3b849a1d85c7cd7623a7, type: 2}
+  m_Controller: {fileID: 9100000, guid: 7830df34ea9b05940a519d9c1bace3fc, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
