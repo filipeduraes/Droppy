@@ -18,6 +18,7 @@ namespace Droppy.Obstacle
         [SerializeField] private string deathTriggerName = "Death";
 
         private float markerY = 0.0f;
+        private Collider2D obstacleCollider;
 
         private void Start()
         {
@@ -25,16 +26,23 @@ namespace Droppy.Obstacle
             {
                 markerY = maxHeightMarker.position.y;
             }
+            obstacleCollider = GetComponent<Collider2D>();
         }
 
         private void OnEnable()
         {
-            Collider2D col = GetComponent<Collider2D>();
-            if (col != null)
+            StatModifierTrigger.OnStatModified += HitByPlayer;
+
+            if (obstacleCollider != null)
             {
-                col.enabled = true;
+                obstacleCollider.enabled = true;
             }
             body.velocity = Vector2.up * movementSpeed;
+        }
+
+        private void OnDisable()
+        {
+            StatModifierTrigger.OnStatModified -= HitByPlayer;
         }
 
         private void FixedUpdate()
@@ -47,10 +55,9 @@ namespace Droppy.Obstacle
                 DeactivateAndReturnToPool();
             }
         }
-
-        private void OnTriggerEnter2D(Collider2D other)
+        private void HitByPlayer(GameObject agent)
         {
-            if (other.CompareTag("Player"))
+            if (agent.CompareTag("Player"))
             {
                 body.velocity = Vector2.zero;
 
@@ -58,10 +65,9 @@ namespace Droppy.Obstacle
                 {
                     anim.SetTrigger(deathTriggerName);
                 }
-                Collider2D col = GetComponent<Collider2D>();
-                if (col != null)
+                if (obstacleCollider != null)
                 {
-                    col.enabled = false;
+                    obstacleCollider.enabled = false;
                 }
             }
         }
@@ -69,12 +75,6 @@ namespace Droppy.Obstacle
         public void DeactivateAndReturnToPool()
         {
             body.velocity = Vector2.zero;
-
-            Collider2D col = GetComponent<Collider2D>();
-            if (col != null)
-            {
-                col.enabled = true;
-            }
 
             gameObject.SetActive(false);
         }
