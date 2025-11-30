@@ -2,9 +2,17 @@ using UnityEngine;
 
 namespace Droppy.InteractionSystem
 {
-    public interface IInteractableArea
+    public interface IInteractableArea : IEnterInteractableArea, IExitInteractableArea
+    {
+    }
+
+    public interface IEnterInteractableArea
     {
         void EnterInteraction(GameObject agent);
+    }
+    
+    public interface IExitInteractableArea
+    {
         void ExitInteraction(GameObject agent);
     }
 

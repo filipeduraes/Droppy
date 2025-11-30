@@ -1,118 +1,78 @@
+using System.Collections;
+using Droppy.Shared;
 using UnityEngine;
-using System;
 
 namespace Droppy.Obstacle
 {
     public class ObstacleMovement : MonoBehaviour
     {
-        [Header("Movement Settings")]
+        [Header("Movement")]
         [SerializeField] private float minSpeed = 4f;
         [SerializeField] private float maxSpeed = 7f;
 
         [Header("Pool Settings")]
         [SerializeField] private Transform maxHeightMarker;
 
-        [Header("Interaction Reference")]
+        [Header("Interaction")]
         [SerializeField] private StatModifierTrigger statModifierTrigger;
+        [SerializeField] private Collider2D obstacleCollider;
 
-        [Header("Component References")]
+        [Header("Dependencies")]
         [SerializeField] private Rigidbody2D body;
-        [SerializeField] private Animator anim;
+        [SerializeField] private Animator animator;
 
-        [Header("Animation Settings")]
-        [SerializeField] private string deathTriggerName = "Death";
+        [Header("Animations")]
+        [SerializeField] private string deathAnimationStateName = "Death";
 
+        private bool isDuringDeathSequence = false;
         private float markerY = 0.0f;
-<<<<<<< Updated upstream
         private float currentSpeed;
-
-=======
-        private Collider2D obstacleCollider;
-
->>>>>>> Stashed changes
-        private void Start()
-        {
-            if (maxHeightMarker != null)
-            {
-                markerY = maxHeightMarker.position.y;
-            }
-
-            obstacleCollider = GetComponent<Collider2D>();
-
-            if (statModifierTrigger == null)
-            {
-                statModifierTrigger = GetComponent<StatModifierTrigger>();
-            }
-        }
 
         private void OnEnable()
         {
-<<<<<<< Updated upstream
-            // Sorteia uma velocidade aleatória entre o Mínimo e o Máximo
+            markerY = maxHeightMarker.position.y;
             currentSpeed = Random.Range(minSpeed, maxSpeed);
-            body.velocity = Vector2.up * currentSpeed;
-=======
-            if (statModifierTrigger != null)
-            {
-                statModifierTrigger.OnStatApplied += HitByPlayer;
-            }
 
-            if (obstacleCollider != null)
-            {
-                obstacleCollider.enabled = true;
-            }
-            body.velocity = Vector2.up * movementSpeed;
->>>>>>> Stashed changes
+            statModifierTrigger.OnStatApplied += HitByPlayer;
+            statModifierTrigger.enabled = true;
+            obstacleCollider.enabled = true;
+            
+            body.velocity = Vector2.up * currentSpeed;
         }
 
         private void OnDisable()
         {
-            if (statModifierTrigger != null)
-            {
-                statModifierTrigger.OnStatApplied -= HitByPlayer;
-            }
+            statModifierTrigger.OnStatApplied -= HitByPlayer;
+            isDuringDeathSequence = false;
         }
 
         private void FixedUpdate()
         {
-<<<<<<< Updated upstream
             bool isAboveMarker = currentSpeed > 0.0f && body.position.y >= markerY;
             bool isBelowMarker = currentSpeed < 0.0f && body.position.y <= markerY;
-
-=======
-            bool isAboveMarker = movementSpeed > 0.0f && body.position.y >= markerY;
-            bool isBelowMarker = movementSpeed < 0.0f && body.position.y <= markerY;
-
->>>>>>> Stashed changes
-            if (isAboveMarker || isBelowMarker)
+            
+            if ((isAboveMarker || isBelowMarker) && !isDuringDeathSequence)
             {
-                DeactivateAndReturnToPool();
+                gameObject.SetActive(false);
             }
         }
 
         private void HitByPlayer()
         {
-            body.velocity = Vector2.zero;
-
-            if (anim != null)
+            if (!isDuringDeathSequence)
             {
-                anim.SetTrigger(deathTriggerName);
-            }
-
-            if (obstacleCollider != null)
-            {
-                obstacleCollider.enabled = false;
+                isDuringDeathSequence = true;
+                StartCoroutine(PlayDeathAnimationAndReturnToPool());
             }
         }
 
-        public void DeactivateAndReturnToPool()
+        private IEnumerator PlayDeathAnimationAndReturnToPool()
         {
+            obstacleCollider.enabled = false;
+            
+            yield return animator.PlayAnimationAndWait(deathAnimationStateName);
+            
             body.velocity = Vector2.zero;
-            if (statModifierTrigger != null)
-            {
-                statModifierTrigger.enabled = true;
-            }
-
             gameObject.SetActive(false);
         }
     }
