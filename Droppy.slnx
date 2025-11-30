@@ -1,6 +1,5 @@
 ﻿<Solution>
   <Project Path="Droppy.SpawnSystem.csproj" />
-  <Project Path="Droppy.StatSystem.csproj" />
   <Project Path="Droppy.PieceMinigame.Shared.csproj" />
   <Project Path="Droppy.Player.csproj" />
   <Project Path="Droppy.ServiceLocatorSystem.csproj" />
@@ -12,6 +11,7 @@
   <Project Path="Droppy.PieceMinigame.Runtime.csproj" />
   <Project Path="Droppy.UI.csproj" />
   <Project Path="Droppy.Obstacle.csproj" />
+  <Project Path="Droppy.StatSystem.csproj" />
   <Project Path="Droppy.PieceMinigame.Editor.csproj" />
   <Project Path="Droppy.Shared.csproj" />
 </Solution>
