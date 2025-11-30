@@ -1,43 +1,79 @@
+using System.Collections;
+using Droppy.Shared;
 using UnityEngine;
 
 namespace Droppy.Obstacle
 {
-    public class ObstacleMovement : MonoBehaviour 
+    public class ObstacleMovement : MonoBehaviour
     {
-        [Header("Movement Settings")]
-        [SerializeField] private float movementSpeed = 5f;
+        [Header("Movement")]
+        [SerializeField] private float minSpeed = 4f;
+        [SerializeField] private float maxSpeed = 7f;
 
         [Header("Pool Settings")]
         [SerializeField] private Transform maxHeightMarker;
 
-        [Header("Component References")]
-        [SerializeField] private Rigidbody2D body;
+        [Header("Interaction")]
+        [SerializeField] private StatModifierTrigger statModifierTrigger;
+        [SerializeField] private Collider2D obstacleCollider;
 
+        [Header("Dependencies")]
+        [SerializeField] private Rigidbody2D body;
+        [SerializeField] private Animator animator;
+
+        [Header("Animations")]
+        [SerializeField] private string deathAnimationStateName = "Death";
+
+        private bool isDuringDeathSequence = false;
         private float markerY = 0.0f;
-        
-        private void Start()
-        {
-            if (maxHeightMarker != null)
-            {
-                markerY = maxHeightMarker.position.y;
-            }
-        }
+        private float currentSpeed;
 
         private void OnEnable()
         {
-            body.velocity = Vector2.up * movementSpeed;
+            markerY = maxHeightMarker.position.y;
+            currentSpeed = Random.Range(minSpeed, maxSpeed);
+
+            statModifierTrigger.OnStatApplied += HitByPlayer;
+            statModifierTrigger.enabled = true;
+            obstacleCollider.enabled = true;
+            
+            body.velocity = Vector2.up * currentSpeed;
+        }
+
+        private void OnDisable()
+        {
+            statModifierTrigger.OnStatApplied -= HitByPlayer;
+            isDuringDeathSequence = false;
         }
 
         private void FixedUpdate()
         {
-            bool isAboveMarker = movementSpeed > 0.0f && body.position.y >= markerY;
-            bool isBelowMarker = movementSpeed < 0.0f && body.position.y <= markerY;
+            bool isAboveMarker = currentSpeed > 0.0f && body.position.y >= markerY;
+            bool isBelowMarker = currentSpeed < 0.0f && body.position.y <= markerY;
             
-            if (isAboveMarker || isBelowMarker)
+            if ((isAboveMarker || isBelowMarker) && !isDuringDeathSequence)
             {
-                body.velocity = Vector2.zero;
                 gameObject.SetActive(false);
             }
+        }
+
+        private void HitByPlayer()
+        {
+            if (!isDuringDeathSequence)
+            {
+                isDuringDeathSequence = true;
+                StartCoroutine(PlayDeathAnimationAndReturnToPool());
+            }
+        }
+
+        private IEnumerator PlayDeathAnimationAndReturnToPool()
+        {
+            obstacleCollider.enabled = false;
+            
+            yield return animator.PlayAnimationAndWait(deathAnimationStateName);
+            
+            body.velocity = Vector2.zero;
+            gameObject.SetActive(false);
         }
     }
 }
