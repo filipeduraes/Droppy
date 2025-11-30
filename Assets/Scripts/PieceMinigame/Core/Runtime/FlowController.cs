@@ -7,6 +7,18 @@ using UnityEngine;
 
 namespace Droppy.PieceMinigame.Runtime
 {
+    public struct FlowLeakInformation
+    {
+        public Vector2Int headIndex;
+        public Vector2Int adjacentIndex;
+
+        public FlowLeakInformation(Vector2Int headIndex, Vector2Int adjacentIndex)
+        {
+            this.headIndex = headIndex;
+            this.adjacentIndex = adjacentIndex;
+        }
+    }
+    
     public class FlowController : MonoBehaviour
     {
         [SerializeField] private GridContainer gridContainer;
@@ -14,19 +26,29 @@ namespace Droppy.PieceMinigame.Runtime
         [SerializeField] private float secondsBetweenUpdates = 1.0f;
 
         public event Action OnFlowUpdate = delegate { };
+        public event Action<FlowLeakInformation> OnFlowLeaked = delegate { };
         public IEnumerable<Vector2Int> Visited => visited;
-        public Queue<Vector2Int> SearchHeads { get; private set; }
 
+        private Queue<Vector2Int> searchHeads;
         private HashSet<Vector2Int> visited;
+        private Coroutine flowCoroutine;
 
         private void Start()
         {
-            StartCoroutine(FlowThroughGrid());
+            flowCoroutine = StartCoroutine(FlowThroughGrid());
+        }
+        
+        public void Stop()
+        {
+            if (flowCoroutine != null)
+            {
+                StopCoroutine(flowCoroutine);
+            }
         }
 
         private IEnumerator FlowThroughGrid()
         {
-            SearchHeads = new Queue<Vector2Int>();
+            searchHeads = new Queue<Vector2Int>();
             visited = new HashSet<Vector2Int>();
 
             yield return new WaitForSeconds(secondsBeforeStartFlow);
@@ -35,13 +57,13 @@ namespace Droppy.PieceMinigame.Runtime
             
             yield return new WaitForSeconds(secondsBetweenUpdates);
 
-            while (SearchHeads.Count > 0)
+            while (searchHeads.Count > 0)
             {
                 List<Vector2Int> currentHeads = new();
 
-                while (SearchHeads.Count > 0)
+                while (searchHeads.Count > 0)
                 {
-                    Vector2Int head = SearchHeads.Dequeue();
+                    Vector2Int head = searchHeads.Dequeue();
                     visited.Add(head);
                     currentHeads.Add(head);
                 }
@@ -77,7 +99,7 @@ namespace Droppy.PieceMinigame.Runtime
 
                     if (isValidDirection)
                     {
-                        SearchHeads.Enqueue(adjacentIndex);
+                        searchHeads.Enqueue(adjacentIndex);
                     }
                 }
             }
@@ -107,10 +129,17 @@ namespace Droppy.PieceMinigame.Runtime
                     
                     bool headPieceIsConnected = (headPiece.Direction & direction) != 0;
                     bool adjacentPieceIsConnected = (oppositeDirection & adjacentPiece.Direction) != 0;
-                        
-                    if (headPieceIsConnected && adjacentPieceIsConnected)
+
+                    if (headPieceIsConnected)
                     {
-                        SearchHeads.Enqueue(adjacentIndex);
+                        if (adjacentPieceIsConnected)
+                        {
+                            searchHeads.Enqueue(adjacentIndex);
+                        }
+                        else
+                        {
+                            OnFlowLeaked(new FlowLeakInformation(headPiece.Index, adjacentPiece.Index));
+                        }
                     }
                 }
             }
@@ -125,7 +154,7 @@ namespace Droppy.PieceMinigame.Runtime
 
         private void OnDrawGizmos()
         {
-            if (visited == null || SearchHeads == null)
+            if (visited == null || searchHeads == null)
             {
                 return;
             }
@@ -134,7 +163,7 @@ namespace Droppy.PieceMinigame.Runtime
             
             foreach (Vector2Int visitedIndex in visited)
             {
-                if (!SearchHeads.Contains(visitedIndex))
+                if (!searchHeads.Contains(visitedIndex))
                 {
                     Gizmos.DrawSphere(gridContainer.GetCellCenterPosition(visitedIndex.x, visitedIndex.y), 0.1f);
                 }
@@ -142,7 +171,7 @@ namespace Droppy.PieceMinigame.Runtime
             
             Gizmos.color = Color.green;
             
-            foreach (Vector2Int head in SearchHeads)
+            foreach (Vector2Int head in searchHeads)
             {
                 Gizmos.DrawSphere(gridContainer.GetCellCenterPosition(head.x, head.y), 0.15f);
             }

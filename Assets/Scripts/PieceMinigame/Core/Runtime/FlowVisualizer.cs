@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Droppy.PieceMinigame.Runtime
 {
@@ -12,13 +10,15 @@ namespace Droppy.PieceMinigame.Runtime
         private void OnEnable()
         {
             flowController.OnFlowUpdate += UpdateView;
+            flowController.OnFlowLeaked += ShowFlowLeak;
         }
 
         private void OnDisable()
         {
             flowController.OnFlowUpdate -= UpdateView;
+            flowController.OnFlowLeaked -= ShowFlowLeak;
         }
-        
+
         private void UpdateView()
         {
             foreach (Vector2Int visitedIndex in flowController.Visited)
@@ -28,6 +28,12 @@ namespace Droppy.PieceMinigame.Runtime
                     piece.Fill();
                 }
             }
+        }
+        
+        private void ShowFlowLeak(FlowLeakInformation leak)
+        {
+            flowController.Stop();
+            Debug.Log($"Leaked: {leak.headIndex}, {leak.adjacentIndex}");
         }
     }
 }
