@@ -24,8 +24,13 @@ namespace Droppy.Obstacle
 
         private float markerY = 0.0f;
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         private float currentSpeed;
         
+=======
+        private Collider2D obstacleCollider;
+
+>>>>>>> Stashed changes
 =======
         private Collider2D obstacleCollider;
 
@@ -48,10 +53,13 @@ namespace Droppy.Obstacle
         private void OnEnable()
         {
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
             // Sorteia uma velocidade aleatória entre o Mínimo e o Máximo
             currentSpeed = Random.Range(minSpeed, maxSpeed);
             body.velocity = Vector2.up * currentSpeed;
 =======
+=======
+>>>>>>> Stashed changes
             if (statModifierTrigger != null)
             {
                 statModifierTrigger.OnStatApplied += HitByPlayer;
@@ -73,6 +81,14 @@ namespace Droppy.Obstacle
             }
         }
 
+        private void OnDisable()
+        {
+            if (statModifierTrigger != null)
+            {
+                statModifierTrigger.OnStatApplied -= HitByPlayer;
+            }
+        }
+
         private void FixedUpdate()
         {
 <<<<<<< Updated upstream
@@ -83,6 +99,9 @@ namespace Droppy.Obstacle
             bool isAboveMarker = movementSpeed > 0.0f && body.position.y >= markerY;
             bool isBelowMarker = movementSpeed < 0.0f && body.position.y <= markerY;
 
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
             if (isAboveMarker || isBelowMarker)
             {
