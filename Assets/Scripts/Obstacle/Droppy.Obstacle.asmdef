@@ -3,7 +3,8 @@
 	"rootNamespace": "Droppy.Obstacle",
 	"references": [
 		"Droppy.StatSystem",
-		"Droppy.InteractionSystem"
+		"Droppy.InteractionSystem",
+		"Droppy.Shared"
 	],
 	"includePlatforms":[],
 	"excludePlatforms": [],

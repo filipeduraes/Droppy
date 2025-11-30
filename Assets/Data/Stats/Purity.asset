@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Purity
   m_EditorClassIdentifier: 
   id: Purity
-  displayName: 
+  displayName: Pureza
   initialAmount: 100

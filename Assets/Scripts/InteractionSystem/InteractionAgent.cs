@@ -5,47 +5,62 @@ namespace Droppy.InteractionSystem
 {
     public class InteractionAgent : MonoBehaviour
     {
-        private HashSet<IInteractableArea> currentInteractables = new();
+        private readonly HashSet<GameObject> currentInteractables = new();
         
         private void OnTriggerEnter2D(Collider2D other)
         {
-            if (other.TryGetComponent(out IInteractableArea interactable) && !currentInteractables.Contains(interactable))
+            if (currentInteractables.Add(other.gameObject))
             {
-                interactable.EnterInteraction(gameObject);
-                currentInteractables.Add(interactable);
+                IEnterInteractableArea[] enterInteractables = other.GetComponents<IEnterInteractableArea>();
+
+                foreach (IEnterInteractableArea enterInteractable in enterInteractables)
+                {
+                    enterInteractable.EnterInteraction(gameObject);
+                }
             }
         }
 
         private void OnTriggerExit2D(Collider2D other)
         {
-            if (other.TryGetComponent(out IInteractableArea interactable) && !currentInteractables.Contains(interactable))
+            if (currentInteractables.Contains(other.gameObject))
             {
-                interactable.ExitInteraction(gameObject);
-                currentInteractables.Remove(interactable);
+                IExitInteractableArea[] exitInteractables = other.GetComponents<IExitInteractableArea>();
+
+                foreach (IExitInteractableArea enterInteractable in exitInteractables)
+                {
+                    enterInteractable.ExitInteraction(gameObject);
+                }
+                
+                currentInteractables.Remove(gameObject);
             }
         }
 
         public void StartInteraction()
         {
-            foreach (IInteractableArea interactable in currentInteractables)
+            foreach (GameObject interactableObject in currentInteractables)
             {
-                if (interactable is IHoldInteractable holdInteractable)
+                IHoldInteractable[] holdInteractables = interactableObject.GetComponents<IHoldInteractable>();
+                IInteractable[] interactables = interactableObject.GetComponents<IInteractable>();
+
+                foreach (IHoldInteractable holdInteractable in holdInteractables)
                 {
                     holdInteractable.StartInteraction(gameObject);
                 }
                 
-                if (interactable is IInteractable simpleInteractable)
+                foreach (IInteractable interactable in interactables)
                 {
-                    simpleInteractable.Interact(gameObject);
+                    interactable.Interact(gameObject);
                 }
             }
         }
 
         public void EndInteraction()
         {
-            foreach (IInteractableArea interactable in currentInteractables)
+            foreach (GameObject interactableObject in currentInteractables)
             {
-                if (interactable is IHoldInteractable holdInteractable)
+                IHoldInteractable[] holdInteractables = interactableObject.GetComponents<IHoldInteractable>();
+
+                foreach (IHoldInteractable holdInteractable in holdInteractables)
                 {
                     holdInteractable.EndInteraction(gameObject);
                 }
