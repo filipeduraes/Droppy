@@ -1,36 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &2171459549015837259
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5766123066303534263}
-  m_Layer: 0
-  m_Name: MaxHeightMarker
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &5766123066303534263
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2171459549015837259}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 15, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2801751713023186816}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2801751712236884263
 GameObject:
   m_ObjectHideFlags: 0
@@ -42,7 +11,6 @@ GameObject:
   - component: {fileID: 2801751712236884262}
   - component: {fileID: 2801751712236884260}
   - component: {fileID: 2801751712236884261}
-  - component: {fileID: 4742407147655157609}
   m_Layer: 6
   m_Name: Visual
   m_TagString: Untagged
@@ -138,20 +106,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &4742407147655157609
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2801751712236884263}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c5bd7dec66f79fa479216baec54f7f99, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  purityStat: {fileID: 11400000, guid: e4605c35162d1ff4c8a0091de356df1b, type: 2}
-  spriteRenderer: {fileID: 2801751712236884260}
 --- !u!1 &2801751713023186817
 GameObject:
   m_ObjectHideFlags: 0
@@ -165,10 +119,10 @@ GameObject:
   - component: {fileID: 5752634696768853846}
   - component: {fileID: 6418123335356367300}
   - component: {fileID: 3081259400468177472}
+  - component: {fileID: 2448916623563112923}
   - component: {fileID: 5137857369064640567}
-  - component: {fileID: 321047892442342652}
   m_Layer: 6
-  m_Name: Droppy
+  m_Name: VerticalDroppy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -188,7 +142,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2801751712236884262}
-  - {fileID: 5766123066303534263}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6230666024822151651
@@ -242,6 +195,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0920d79a16a5dc4983c780aada6b4e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2448916623563112923
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2801751713023186817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5bd7dec66f79fa479216baec54f7f99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stat: {fileID: 11400000, guid: e4605c35162d1ff4c8a0091de356df1b, type: 2}
+  spriteRenderer: {fileID: 2801751712236884260}
+  fullColor: {r: 1, g: 1, b: 1, a: 1}
+  lowColor: {r: 0.3018868, g: 0.3018868, b: 0.3018868, a: 1}
 --- !u!61 &5137857369064640567
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -287,17 +256,3 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.27, y: 0.25}
   m_EdgeRadius: 0
---- !u!114 &321047892442342652
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2801751713023186817}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c5bd7dec66f79fa479216baec54f7f99, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  purityStat: {fileID: 11400000, guid: e4605c35162d1ff4c8a0091de356df1b, type: 2}
-  spriteRenderer: {fileID: 0}

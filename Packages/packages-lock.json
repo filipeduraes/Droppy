@@ -5,7 +5,7 @@
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "2531ddcdee4d51a9e0398ecf697adfc1f5d576e8"
+      "hash": "902929c475d2d5cb4da6532e62bfc14a2bfe738e"
     },
     "com.ideatogame.persistence-system": {
       "version": "https://github.com/filipeduraes/PersistenceSystem.git",
