@@ -1,4 +1,5 @@
-﻿using Droppy.PieceMinigame.Data;
+﻿using System.Collections.Generic;
+using Droppy.PieceMinigame.Data;
 using Droppy.PieceMinigame.Shared;
 using UnityEngine;
 
@@ -7,6 +8,10 @@ namespace Droppy.PieceMinigame.Runtime
     public class GridVisualizer : MonoBehaviour
     {
         [SerializeField] private GridContainer container;
+        [SerializeField] private FlowController flowController;
+        [SerializeField] private float portSize = 0.15f;
+        [SerializeField] private float visitedPortSize = 0.35f;
+        [SerializeField] private float fontSize = 15f;
 
         private float CellSize => container != null ? container.CellSize : 1.0f;
         private GridData Grid => container != null ? container.Grid : null;
@@ -21,18 +26,25 @@ namespace Droppy.PieceMinigame.Runtime
             DrawGridLinesGizmos();
             DrawGridPiecesGizmos();
 
-            Gizmos.color = Color.magenta;
-            
-            foreach (GridPort entryPort in Grid.Entries)
-            {
-                Gizmos.DrawSphere(container.GetPortBorderPosition(entryPort), 0.2f);
-            }
+            Gizmos.color = Color.blue;
+            DrawPorts(Grid.Entries);
             
             Gizmos.color = Color.red;
-            
-            foreach (GridPort exitPort in Grid.Exits)
+            DrawPorts(Grid.Exits);
+        }
+
+        private void DrawPorts(List<GridPort> ports)
+        {
+            foreach (GridPort port in ports)
             {
-                Gizmos.DrawSphere(container.GetPortBorderPosition(exitPort), 0.2f);
+                float radius = portSize;
+                
+                if (flowController != null && flowController.VisitedPorts != null && flowController.VisitedPorts.Contains(port.GetPortIndex(Grid.Size)))
+                {
+                    radius = visitedPortSize;
+                }
+                
+                Gizmos.DrawSphere(container.GetPortBorderPosition(port), radius);
             }
         }
 
@@ -42,11 +54,21 @@ namespace Droppy.PieceMinigame.Runtime
             
             for (int y = 0; y <= Grid.Size.y; y++)
             {
+                if (y != Grid.Size.y)
+                {
+                    DrawLabelGizmos(y.ToString(), container.GetCellCenterPosition(-1, y), Color.green, Vector2.zero, fontSize);
+                }
+                
                 Gizmos.DrawLine(container.GetCellPosition(0, y), container.GetCellPosition(Grid.Size.x, y));
             }
             
             for (int x = 0; x <= Grid.Size.x; x++)
             {
+                if (x != Grid.Size.y)
+                {
+                    DrawLabelGizmos(x.ToString(), container.GetCellCenterPosition(x, -1), Color.green, Vector2.zero, fontSize);
+                }
+                
                 Gizmos.DrawLine(container.GetCellPosition(x, 0), container.GetCellPosition(x, Grid.Size.y));
             }
         }
@@ -79,6 +101,39 @@ namespace Droppy.PieceMinigame.Runtime
             {
                 Gizmos.DrawLine(centerPosition, centerPosition + direction * CellSize * 0.5f);
             }
+        }
+        
+        private static void DrawLabelGizmos(string text, Vector3 worldPosition, Color textColor, Vector2 anchor, float textSize = 15f)
+        {
+        #if UNITY_EDITOR
+            UnityEditor.SceneView view = UnityEditor.SceneView.currentDrawingSceneView;
+            
+            if (!view)
+            {
+                return;
+            }
+            
+            Vector3 screenPosition = view.camera.WorldToScreenPoint(worldPosition);
+
+            if (screenPosition.y < 0 || screenPosition.y > view.camera.pixelHeight || screenPosition.x < 0 || screenPosition.x > view.camera.pixelWidth || screenPosition.z < 0)
+            {
+                return;
+            }
+            
+            float pixelRatio = UnityEditor.HandleUtility.GUIPointToScreenPixelCoordinate(Vector2.right).x - UnityEditor.HandleUtility.GUIPointToScreenPixelCoordinate(Vector2.zero).x;
+            UnityEditor.Handles.BeginGUI();
+            
+            GUIStyle style = new(GUI.skin.label)
+            {
+                fontSize = (int)textSize,
+                normal = new GUIStyleState { textColor = textColor }
+            };
+            
+            Vector2 size = style.CalcSize(new GUIContent(text)) * pixelRatio;
+            Vector2 alignedPosition = ((Vector2)screenPosition + size * ((anchor + Vector2.left + Vector2.up) / 2f)) * (Vector2.right + Vector2.down) + Vector2.up * view.camera.pixelHeight;
+            GUI.Label(new Rect(alignedPosition / pixelRatio, size / pixelRatio), text, style);
+            UnityEditor.Handles.EndGUI();
+        #endif
         }
     }
 }
