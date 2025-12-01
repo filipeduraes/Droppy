@@ -1,8 +1,9 @@
 using UnityEngine;
 using Droppy.UI.ViewModel;
 using Droppy.StatSystem;
+using System;
 
-namespace Droppy.Level
+namespace Droppy.VerticalGame
 {
     public class VerticalGameController : MonoBehaviour
     {
@@ -18,20 +19,33 @@ namespace Droppy.Level
 
         private bool isLevelFinished = false;
 
+        private void OnEnable()
+        {
+            StatManager.OnStatModified += OnStatChanged;
+        }
+
+        private void OnDisable()
+        {
+            StatManager.OnStatModified -= OnStatChanged;
+        }
+
+        private void OnStatChanged(string statID)
+        {
+            if (isLevelFinished || purityStat == null || statID != purityStat.ID)
+            {
+                return;
+            }
+            if (StatManager.Read(purityStat) <= 0f)
+            {
+                HandleLevelFinished(false);
+            }
+        }
+
         public void ReportGoalReached()
         {
             HandleLevelFinished(true);
         }
 
-        private void Update()
-        {
-            if (isLevelFinished) return;
-
-            if (purityStat != null && purityStat.CurrentValue <= 0f)
-            {
-                HandleLevelFinished(false);
-            }
-        }
 
         private void HandleLevelFinished(bool isVictory)
         {
@@ -56,20 +70,22 @@ namespace Droppy.Level
                 viewModel.RequestVictory(endScreenQuotes, 1);
                 return;
             }
-            float finalPurity = purityStat.CurrentValue;
 
+            float finalPurity = StatManager.Read(purityStat);
             int starCount = 1;
 
             if (finalPurity >= secondaryPurityThreshold)
             {
-                starCount++; 
+                starCount++;
             }
             if (finalPurity >= tertiaryPurityThreshold)
             {
-                starCount++; 
+                starCount++;
             }
+
             viewModel.RequestVictory(endScreenQuotes, starCount);
         }
+
         private void GameOverWithDefeat()
         {
             viewModel.RequestDefeat(endScreenQuotes);
