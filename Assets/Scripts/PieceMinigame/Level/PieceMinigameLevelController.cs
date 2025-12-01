@@ -59,7 +59,6 @@ namespace Droppy.PieceMinigame.Level
             }
             
             viewModel.RequestVictory(endScreenQuotes, starCount);
-            viewModel.RequestShowEndScreen();
             return;
 
             bool PortWasVisited(GridPort port)
@@ -71,7 +70,6 @@ namespace Droppy.PieceMinigame.Level
         private void GameOverWithRetry()
         {
             viewModel.RequestDefeat(endScreenQuotes);
-            viewModel.RequestShowEndScreen();
         }
     }
 }

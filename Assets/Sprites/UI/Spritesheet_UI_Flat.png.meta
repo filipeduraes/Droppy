@@ -1407,13 +1407,13 @@ TextureImporter:
       name: Spritesheet_UI_Flat_84
       rect:
         serializedVersion: 2
-        x: 480
-        y: 96
-        width: 32
-        height: 32
+        x: 481
+        y: 107
+        width: 30
+        height: 10
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 5, y: 14, z: 5, w: 14}
+      border: {x: 5, y: 5, z: 5, w: 5}
       outline: []
       physicsShape: []
       tessellationDetail: 0

@@ -160,7 +160,7 @@ MonoBehaviour:
   input: {fileID: 6418123335356367300}
   interactionAgent: {fileID: 3081259400468177472}
   movementSpeed: 7
-  screenPadding: 0.5
+  screenPadding: 1
 --- !u!114 &6418123335356367300
 MonoBehaviour:
   m_ObjectHideFlags: 0
