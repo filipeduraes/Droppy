@@ -1,6 +1,5 @@
-using System;
 using Droppy.Level;
-using Droppy.UI;
+using Droppy.UI.ViewModel;
 using UnityEngine;
 
 namespace Droppy.UIBridge

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Droppy.UI.ViewModel;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -45,14 +46,14 @@ namespace Droppy.UI
 
         private void Populate()
         {
-            endQuoteText.SetText(viewModel.Quote);
+            endQuoteText.SetText(viewModel.GetRandomQuote());
             
             for (int i = 0; i < stars.Count; i++)
             {
                 stars[i].sprite = i < viewModel.StarCount ? fullStarSprite : emptyStarSprite;
             }
 
-            continueButton.enabled = viewModel.IsContinueEnabled;
+            continueButton.enabled = viewModel.IsVictory;
         }
         
         private void RequestRetry()
