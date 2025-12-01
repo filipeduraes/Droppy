@@ -114,20 +114,30 @@ namespace Droppy.PieceMinigame.Runtime
                     Vector2Int adjacentIndex = head + new Vector2Int(i, j);
                     bool isDiagonal = i != 0 && j != 0;
 
-                    if (isDiagonal || adjacentIndex == head || IsEmptyOrInvalidCell(adjacentIndex))
+                    if (isDiagonal || adjacentIndex == head)
                     {
                         continue;
                     }
-
+                    
                     Piece headPiece = gridContainer.Pieces[head];
-                    Piece adjacentPiece = gridContainer.Pieces[adjacentIndex];
-
-                    Vector2Int directionToAdjacent = adjacentPiece.Index - headPiece.Index;
-
+                    Vector2Int directionToAdjacent = adjacentIndex - head;
+                    
                     PieceDirection direction = directionToAdjacent.ToPieceDirection();
+                    bool headPieceIsConnected = (headPiece.Direction & direction) != 0;
+
+                    if (IsEmptyOrInvalidCell(adjacentIndex))
+                    {
+                        if (headPieceIsConnected && !visited.Contains(adjacentIndex) && !gridContainer.Grid.IsPortIndex(adjacentIndex))
+                        {
+                            OnFlowLeaked(new FlowLeakInformation(head, adjacentIndex));
+                        }
+                        
+                        continue;
+                    }
+
+                    Piece adjacentPiece = gridContainer.Pieces[adjacentIndex];
                     PieceDirection oppositeDirection = direction.Opposite();
                     
-                    bool headPieceIsConnected = (headPiece.Direction & direction) != 0;
                     bool adjacentPieceIsConnected = (oppositeDirection & adjacentPiece.Direction) != 0;
 
                     if (headPieceIsConnected)
@@ -138,7 +148,7 @@ namespace Droppy.PieceMinigame.Runtime
                         }
                         else
                         {
-                            OnFlowLeaked(new FlowLeakInformation(headPiece.Index, adjacentPiece.Index));
+                            OnFlowLeaked(new FlowLeakInformation(head, adjacentIndex));
                         }
                     }
                 }
@@ -148,8 +158,7 @@ namespace Droppy.PieceMinigame.Runtime
         private bool IsEmptyOrInvalidCell(Vector2Int adjacentIndex)
         {
             return !gridContainer.Grid.IsValidGridIndex(adjacentIndex) 
-                   || !gridContainer.Pieces.ContainsKey(adjacentIndex)
-                   || visited.Contains(adjacentIndex);
+                   || !gridContainer.Pieces.ContainsKey(adjacentIndex);
         }
 
         private void OnDrawGizmos()
