@@ -32,6 +32,7 @@ namespace Droppy.PieceMinigame.Runtime
         
         public IEnumerable<Vector2Int> Visited => visited;
         public HashSet<Vector2Int> VisitedPorts { get; private set; }
+        public bool Leaked { get; private set; }
 
         private Queue<Vector2Int> searchHeads;
         private HashSet<Vector2Int> visited;
@@ -111,7 +112,8 @@ namespace Droppy.PieceMinigame.Runtime
                     }
                     else
                     {
-                        OnFlowLeaked(new FlowInformation(portIndex, adjacentIndex));
+                        FlowInformation flowInformation = new(portIndex, adjacentIndex);
+                        Leak(flowInformation);
                     }
                 }
             }
@@ -126,7 +128,7 @@ namespace Droppy.PieceMinigame.Runtime
                     Vector2Int adjacentIndex = head + new Vector2Int(i, j);
                     bool isDiagonal = i != 0 && j != 0;
 
-                    if (isDiagonal || adjacentIndex == head || visited.Contains(adjacentIndex))
+                    if (isDiagonal || adjacentIndex == head)
                     {
                         continue;
                     }
@@ -147,7 +149,7 @@ namespace Droppy.PieceMinigame.Runtime
                     {
                         if (!gridContainer.Grid.IsPortIndex(adjacentIndex))
                         {
-                            OnFlowLeaked(flowInformation);
+                            Leak(flowInformation);
                         }
 
                         OnPortFlow(flowInformation);
@@ -162,14 +164,23 @@ namespace Droppy.PieceMinigame.Runtime
 
                     if (adjacentPieceIsConnected)
                     {
-                        searchHeads.Enqueue(adjacentIndex);
+                        if (!visited.Contains(adjacentIndex))
+                        {
+                            searchHeads.Enqueue(adjacentIndex);
+                        }
                     }
                     else
                     {
-                        OnFlowLeaked(flowInformation);
+                        Leak(flowInformation);
                     }
                 }
             }
+        }
+        
+        private void Leak(FlowInformation flowInformation)
+        {
+            Leaked = true;
+            OnFlowLeaked(flowInformation);
         }
 
         private bool IsEmptyOrInvalidCell(Vector2Int adjacentIndex)

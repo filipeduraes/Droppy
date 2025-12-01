@@ -1,10 +1,7 @@
 {
-    "name": "Droppy.UIBridge",
-    "rootNamespace": "",
-    "references": [
-        "GUID:270a0727451ff224bba670c78283e56a",
-        "GUID:9fb82ef2d318c08419447efd7cce5e85"
-    ],
+    "name": "Droppy.UI.ViewModel",
+    "rootNamespace": "Droppy.UI.ViewModel",
+    "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

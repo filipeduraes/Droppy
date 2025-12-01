@@ -1,9 +1,10 @@
 {
-    "name": "Droppy.UIBridge",
+    "name": "Droppy.PieceMinigame.Level",
     "rootNamespace": "",
     "references": [
         "GUID:270a0727451ff224bba670c78283e56a",
-        "GUID:9fb82ef2d318c08419447efd7cce5e85"
+        "GUID:dac5de47dff05554b801ee99c80a3c9b",
+        "GUID:0782169d440d78b4eb50baae90d68002"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

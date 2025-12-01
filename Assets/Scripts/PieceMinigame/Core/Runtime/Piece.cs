@@ -11,6 +11,7 @@ namespace Droppy.PieceMinigame.Runtime
 
         public PieceDirection Direction { get; private set; }
         public bool IsFull { get; private set; }
+        public bool IsLocked => pieceData.IsLocked;
         
         public Vector2Int Index { get; private set; }
         private PieceData pieceData;
