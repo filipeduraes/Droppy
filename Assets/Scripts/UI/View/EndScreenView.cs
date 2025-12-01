@@ -53,7 +53,7 @@ namespace Droppy.UI
                 stars[i].sprite = i < viewModel.StarCount ? fullStarSprite : emptyStarSprite;
             }
 
-            continueButton.enabled = viewModel.IsVictory;
+            continueButton.gameObject.SetActive(viewModel.IsVictory);
         }
         
         private void RequestRetry()
