@@ -798,7 +798,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: {fileID: 7376326952383829783}
   interactionAgent: {fileID: 1553441130833032339}
-  movementSpeed: 3
+  movementSpeed: 4
 --- !u!4 &1850391438259601747 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2801751713023186816, guid: 50a7b45fcc1bf1f48973844b50ea5c2e, type: 3}

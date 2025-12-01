@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.InputSystem; 
 
 namespace Droppy.Player 
 {
@@ -27,27 +26,36 @@ namespace Droppy.Player
         {
             base.OnEnable(); 
             
-            input.Controls.Player.Move.performed += ReadMovementInput;
-            input.Controls.Player.Move.canceled += ReadMovementInput;
+            input.OnMoveStarted += OnMovementStart;
+            input.OnMoveCanceled += OnMovementEnd;
         }
 
         protected override void OnDisable()
         {
-            input.Controls.Player.Move.performed -= ReadMovementInput;
-            input.Controls.Player.Move.canceled -= ReadMovementInput;
+            input.OnMoveStarted -= OnMovementStart;
+            input.OnMoveCanceled -= OnMovementEnd;
 
             base.OnDisable(); 
         }
-        
-        
-        private void ReadMovementInput(InputAction.CallbackContext context)
+
+        private void OnMovementStart()
         {
-            _horizontalInputValue = context.ReadValue<Vector2>().x;
+            
         }
 
+        private void OnMovementEnd()
+        {
+            _horizontalInputValue = 0f;
+        }
+        
         private void ApplyHorizontalMovement()
         {
             if (!_rigidbody2D) return; 
+            
+            if (input.MoveInput.x != 0)
+            {
+                _horizontalInputValue = input.MoveInput.x;
+            }
 
             Vector2 targetVelocity = new Vector2(
                 _horizontalInputValue * movementSpeed, 
