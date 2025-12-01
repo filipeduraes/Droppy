@@ -33,6 +33,17 @@ namespace Droppy.PieceMinigame.Data
         {
             return index.x >= 0 && index.y >= 0 && index.x < size.x && index.y < size.y;
         }
+        
+        public bool IsPortIndex(Vector2Int index)
+        {
+            if (IsValidGridIndex(index))
+            {
+                return false;
+            }
+
+            return entries.Any(entry => entry.GetPortIndex(Size) == index) 
+                   || exits.Any(exit => exit.GetPortIndex(Size) == index);
+        }
 
         public CellData[,] ConvertRowsToGrid()
         {

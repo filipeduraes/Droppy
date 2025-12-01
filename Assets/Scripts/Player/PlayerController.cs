@@ -9,13 +9,13 @@ namespace Droppy.Player
         [SerializeField] protected DroppyInput input;
         [SerializeField] private InteractionAgent interactionAgent;
         
-        private void OnEnable()
+        protected virtual void OnEnable()
         {
             input.OnInteractStarted += interactionAgent.StartInteraction;
             input.OnInteractCanceled += interactionAgent.EndInteraction;
         }
 
-        private void OnDisable()
+        protected virtual void OnDisable()
         {
             input.OnInteractStarted -= interactionAgent.StartInteraction;
             input.OnInteractCanceled -= interactionAgent.EndInteraction;

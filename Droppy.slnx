@@ -1,13 +1,17 @@
 ﻿<Solution>
-  <Project Path="Droppy.Player.csproj" />
-  <Project Path="Droppy.Obstacle.csproj" />
-  <Project Path="Droppy.Input.csproj" />
-  <Project Path="Droppy.Shared.csproj" />
   <Project Path="Droppy.SpawnSystem.csproj" />
-  <Project Path="Droppy.Movement.csproj" />
-  <Project Path="Droppy.UI.csproj" />
   <Project Path="Droppy.StatSystem.csproj" />
-  <Project Path="Droppy.PieceMinigame.csproj" />
+  <Project Path="Droppy.PieceMinigame.Shared.csproj" />
+  <Project Path="Droppy.Player.csproj" />
+  <Project Path="Droppy.ServiceLocatorSystem.csproj" />
   <Project Path="Droppy.InteractionSystem.csproj" />
+  <Project Path="Droppy.PieceMinigame.Data.csproj" />
+  <Project Path="Droppy.Level.csproj" />
+  <Project Path="Droppy.Input.csproj" />
+  <Project Path="Droppy.Movement.csproj" />
+  <Project Path="Droppy.PieceMinigame.Runtime.csproj" />
+  <Project Path="Droppy.Obstacle.csproj" />
+  <Project Path="Droppy.UI.csproj" />
   <Project Path="Droppy.PieceMinigame.Editor.csproj" />
+  <Project Path="Droppy.Shared.csproj" />
 </Solution>

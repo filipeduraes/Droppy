@@ -1,12 +1,14 @@
 {
-	"name": "Droppy.Obstacle",
-	"rootNamespace": "Droppy.Obstacle",
-	"references": [
-		"Droppy.StatSystem",
-		"Droppy.InteractionSystem"
-	],
-	"includePlatforms":[],
-	"excludePlatforms": [],
+    "name": "Droppy.Obstacle",
+    "rootNamespace": "Droppy.Obstacle",
+    "references": [
+        "Droppy.StatSystem",
+        "Droppy.InteractionSystem",
+        "Droppy.Shared",
+        "IdeaToGame.ObjectPooling"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,
     "precompiledReferences": [],

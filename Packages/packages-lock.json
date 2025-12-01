@@ -5,7 +5,7 @@
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "2531ddcdee4d51a9e0398ecf697adfc1f5d576e8"
+      "hash": "bd9dd7efd2d9549061a6a3ccff42798f27cff4f2"
     },
     "com.ideatogame.persistence-system": {
       "version": "https://github.com/filipeduraes/PersistenceSystem.git",
@@ -317,6 +317,16 @@
         "com.unity.modules.director": "1.0.0",
         "com.unity.modules.animation": "1.0.0",
         "com.unity.modules.particlesystem": "1.0.0"
+      },
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.toolchain.linux-x86_64": {
+      "version": "2.0.11",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.sysroot": "2.0.10",
+        "com.unity.sysroot.linux-x86_64": "2.0.9"
       },
       "url": "https://packages.unity.com"
     },

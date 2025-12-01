@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Droppy.Shared;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -23,16 +24,21 @@ namespace Droppy.Level
         }
         
         [ContextMenu("Start Next Level")]
-        private void StartNextLevel()
+        public void StartNextLevel()
         {
-            StartCoroutine(StartNextLevelRoutine());
+            currentLevelIndex++;
+            StartCoroutine(StartLevelRoutine());
         }
 
-        private IEnumerator StartNextLevelRoutine()
+        [ContextMenu("Restart Level")]
+        public void RestartLevel()
+        {
+            StartCoroutine(StartLevelRoutine());
+        }
+
+        private IEnumerator StartLevelRoutine()
         {
             yield return HideCurrentLevel();
-            
-            currentLevelIndex++;
 
             if (currentLevelIndex >= levelSequence.Count)
             {
@@ -52,48 +58,23 @@ namespace Droppy.Level
             
             currentLevel = instantiateOperation.Result[0];
             currentLevel.transform.SetParent(transform);
-            currentLevel.OnFinished += StartNextLevel;
-            
-            yield return FadeTransition(1.0f, 0.0f);
+
+            yield return fadeImage.InterpolateAlpha(1.0f, 0.0f, fadeDuration);
+            fadeImage.gameObject.SetActive(false);
         }
 
         private IEnumerator HideCurrentLevel()
         {
             if (currentLevel != null)
             {
-                yield return FadeTransition(0.0f, 1.0f);
-                currentLevel.OnFinished -= StartNextLevel;
+                fadeImage.gameObject.SetActive(true);
+                yield return fadeImage.InterpolateAlpha(0.0f, 1.0f, fadeDuration);
                 Destroy(currentLevel.gameObject);
             }
             else
             {
-                SetFadeImageAlpha(1.0f);
+                fadeImage.SetAlpha(1.0f);
             }
-        }
-
-        private IEnumerator FadeTransition(float initialAlpha, float finalAlpha)
-        {
-            float timer = 0.0f;
-            
-            SetFadeImageAlpha(initialAlpha);
-            
-            while (timer < fadeDuration)
-            {
-                float alpha = Mathf.Lerp(initialAlpha, finalAlpha, timer / fadeDuration);
-                SetFadeImageAlpha(alpha);
-
-                timer += Time.deltaTime;
-                yield return null;
-            }
-            
-            SetFadeImageAlpha(finalAlpha);
-        }
-
-        private void SetFadeImageAlpha(float alpha)
-        {
-            Color fadeImageColor = fadeImage.color;
-            fadeImageColor.a = alpha;
-            fadeImage.color = fadeImageColor;
         }
     }
 }
