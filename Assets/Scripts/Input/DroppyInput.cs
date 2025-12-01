@@ -16,6 +16,8 @@ namespace Droppy.Input
         
         public Vector2 MoveInput => controls.Player.Move.ReadValue<Vector2>();
         
+        public DroppyControls Controls => controls; 
+        
         private DroppyControls controls;
 
         private void Awake()
