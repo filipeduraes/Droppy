@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -1598445967865235479}
   - component: {fileID: -1281271083008275559}
   m_Layer: 7
-  m_Name: Smoke_Base
+  m_Name: Fall_Smoke
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
