@@ -1,4 +1,5 @@
-﻿using Droppy.PieceMinigame.Data;
+﻿using System.Collections.Generic;
+using Droppy.PieceMinigame.Data;
 using Droppy.PieceMinigame.Shared;
 using UnityEngine;
 
@@ -7,6 +8,10 @@ namespace Droppy.PieceMinigame.Runtime
     public class GridVisualizer : MonoBehaviour
     {
         [SerializeField] private GridContainer container;
+        [SerializeField] private FlowController flowController;
+        [SerializeField] private float portSize = 0.15f;
+        [SerializeField] private float visitedPortSize = 0.35f;
+        [SerializeField] private float fontSize = 15f;
 
         private float CellSize => container != null ? container.CellSize : 1.0f;
         private GridData Grid => container != null ? container.Grid : null;
@@ -21,18 +26,25 @@ namespace Droppy.PieceMinigame.Runtime
             DrawGridLinesGizmos();
             DrawGridPiecesGizmos();
 
-            Gizmos.color = Color.magenta;
-            
-            foreach (GridPort entryPort in Grid.Entries)
-            {
-                Gizmos.DrawSphere(container.GetPortBorderPosition(entryPort), 0.2f);
-            }
+            Gizmos.color = Color.blue;
+            DrawPorts(Grid.Entries);
             
             Gizmos.color = Color.red;
-            
-            foreach (GridPort exitPort in Grid.Exits)
+            DrawPorts(Grid.Exits);
+        }
+
+        private void DrawPorts(List<GridPort> ports)
+        {
+            foreach (GridPort port in ports)
             {
-                Gizmos.DrawSphere(container.GetPortBorderPosition(exitPort), 0.2f);
+                float radius = portSize;
+                
+                if (flowController != null && flowController.VisitedPorts != null && flowController.VisitedPorts.Contains(port.GetPortIndex(Grid.Size)))
+                {
+                    radius = visitedPortSize;
+                }
+                
+                Gizmos.DrawSphere(container.GetPortBorderPosition(port), radius);
             }
         }
 
@@ -44,7 +56,7 @@ namespace Droppy.PieceMinigame.Runtime
             {
                 if (y != Grid.Size.y)
                 {
-                    DrawLabelGizmos(y.ToString(), container.GetCellCenterPosition(-1, y), Color.green, Vector2.zero);
+                    DrawLabelGizmos(y.ToString(), container.GetCellCenterPosition(-1, y), Color.green, Vector2.zero, fontSize);
                 }
                 
                 Gizmos.DrawLine(container.GetCellPosition(0, y), container.GetCellPosition(Grid.Size.x, y));
@@ -54,7 +66,7 @@ namespace Droppy.PieceMinigame.Runtime
             {
                 if (x != Grid.Size.y)
                 {
-                    DrawLabelGizmos(x.ToString(), container.GetCellCenterPosition(x, -1), Color.green, Vector2.zero);
+                    DrawLabelGizmos(x.ToString(), container.GetCellCenterPosition(x, -1), Color.green, Vector2.zero, fontSize);
                 }
                 
                 Gizmos.DrawLine(container.GetCellPosition(x, 0), container.GetCellPosition(x, Grid.Size.y));

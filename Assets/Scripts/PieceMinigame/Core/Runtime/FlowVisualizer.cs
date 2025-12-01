@@ -30,7 +30,7 @@ namespace Droppy.PieceMinigame.Runtime
             }
         }
         
-        private void ShowFlowLeak(FlowLeakInformation leak)
+        private void ShowFlowLeak(FlowInformation leak)
         {
             flowController.Stop();
             Debug.Log($"Leaked: {leak.headIndex}, {leak.adjacentIndex}");

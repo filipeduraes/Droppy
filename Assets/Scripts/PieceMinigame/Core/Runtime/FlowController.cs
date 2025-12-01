@@ -7,12 +7,12 @@ using UnityEngine;
 
 namespace Droppy.PieceMinigame.Runtime
 {
-    public struct FlowLeakInformation
+    public struct FlowInformation
     {
         public Vector2Int headIndex;
         public Vector2Int adjacentIndex;
 
-        public FlowLeakInformation(Vector2Int headIndex, Vector2Int adjacentIndex)
+        public FlowInformation(Vector2Int headIndex, Vector2Int adjacentIndex)
         {
             this.headIndex = headIndex;
             this.adjacentIndex = adjacentIndex;
@@ -26,8 +26,12 @@ namespace Droppy.PieceMinigame.Runtime
         [SerializeField] private float secondsBetweenUpdates = 1.0f;
 
         public event Action OnFlowUpdate = delegate { };
-        public event Action<FlowLeakInformation> OnFlowLeaked = delegate { };
+        public event Action<FlowInformation> OnFlowLeaked = delegate { };
+        public event Action<FlowInformation> OnPortFlow = delegate { };
+        public event Action OnFlowFinished = delegate { };
+        
         public IEnumerable<Vector2Int> Visited => visited;
+        public HashSet<Vector2Int> VisitedPorts { get; private set; }
 
         private Queue<Vector2Int> searchHeads;
         private HashSet<Vector2Int> visited;
@@ -43,6 +47,7 @@ namespace Droppy.PieceMinigame.Runtime
             if (flowCoroutine != null)
             {
                 StopCoroutine(flowCoroutine);
+                OnFlowFinished();
             }
         }
 
@@ -50,6 +55,7 @@ namespace Droppy.PieceMinigame.Runtime
         {
             searchHeads = new Queue<Vector2Int>();
             visited = new HashSet<Vector2Int>();
+            VisitedPorts = new HashSet<Vector2Int>();
 
             yield return new WaitForSeconds(secondsBeforeStartFlow);
             FindHeadsFromPorts();
@@ -78,7 +84,8 @@ namespace Droppy.PieceMinigame.Runtime
                 OnFlowUpdate();
                 yield return new WaitForSeconds(secondsBetweenUpdates);
             }
-            
+
+            OnFlowFinished();
             yield return null;
         }
 
@@ -100,6 +107,11 @@ namespace Droppy.PieceMinigame.Runtime
                     if (isValidDirection)
                     {
                         searchHeads.Enqueue(adjacentIndex);
+                        VisitedPorts.Add(portIndex);
+                    }
+                    else
+                    {
+                        OnFlowLeaked(new FlowInformation(portIndex, adjacentIndex));
                     }
                 }
             }
@@ -114,7 +126,7 @@ namespace Droppy.PieceMinigame.Runtime
                     Vector2Int adjacentIndex = head + new Vector2Int(i, j);
                     bool isDiagonal = i != 0 && j != 0;
 
-                    if (isDiagonal || adjacentIndex == head)
+                    if (isDiagonal || adjacentIndex == head || visited.Contains(adjacentIndex))
                     {
                         continue;
                     }
@@ -124,14 +136,22 @@ namespace Droppy.PieceMinigame.Runtime
                     
                     PieceDirection direction = directionToAdjacent.ToPieceDirection();
                     bool headPieceIsConnected = (headPiece.Direction & direction) != 0;
+                    FlowInformation flowInformation = new(head, adjacentIndex);
 
+                    if (!headPieceIsConnected)
+                    {
+                        continue;
+                    }
+                    
                     if (IsEmptyOrInvalidCell(adjacentIndex))
                     {
-                        if (headPieceIsConnected && !visited.Contains(adjacentIndex) && !gridContainer.Grid.IsPortIndex(adjacentIndex))
+                        if (!gridContainer.Grid.IsPortIndex(adjacentIndex))
                         {
-                            OnFlowLeaked(new FlowLeakInformation(head, adjacentIndex));
+                            OnFlowLeaked(flowInformation);
                         }
-                        
+
+                        OnPortFlow(flowInformation);
+                        VisitedPorts.Add(adjacentIndex);
                         continue;
                     }
 
@@ -140,16 +160,13 @@ namespace Droppy.PieceMinigame.Runtime
                     
                     bool adjacentPieceIsConnected = (oppositeDirection & adjacentPiece.Direction) != 0;
 
-                    if (headPieceIsConnected)
+                    if (adjacentPieceIsConnected)
                     {
-                        if (adjacentPieceIsConnected)
-                        {
-                            searchHeads.Enqueue(adjacentIndex);
-                        }
-                        else
-                        {
-                            OnFlowLeaked(new FlowLeakInformation(head, adjacentIndex));
-                        }
+                        searchHeads.Enqueue(adjacentIndex);
+                    }
+                    else
+                    {
+                        OnFlowLeaked(flowInformation);
                     }
                 }
             }

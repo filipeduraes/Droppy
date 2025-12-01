@@ -10,10 +10,10 @@ namespace Droppy.PieceMinigame.Runtime
         [SerializeField] private SpriteRenderer visual;
 
         public PieceDirection Direction { get; private set; }
+        public bool IsFull { get; private set; }
         
         public Vector2Int Index { get; private set; }
         private PieceData pieceData;
-        private bool isFull = false;
 
         public void Populate(CellData cellData, Vector2Int pieceIndex)
         {
@@ -28,12 +28,12 @@ namespace Droppy.PieceMinigame.Runtime
         public void Fill()
         {
             visual.sprite = pieceData.FullSprite;
-            isFull = true;
+            IsFull = true;
         }
         
         public void Interact(GameObject agent)
         {
-            if (!isFull)
+            if (!IsFull)
             {
                 RotateClockwise();
             }
