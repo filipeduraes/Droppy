@@ -33,7 +33,6 @@ namespace Droppy.Obstacle
             markerY = maxHeightMarker.position.y;
             currentSpeed = Random.Range(minSpeed, maxSpeed);
 
-            statModifierTrigger.OnStatApplied += HitByPlayer;
             statModifierTrigger.enabled = true;
             obstacleCollider.enabled = true;
             
@@ -42,7 +41,6 @@ namespace Droppy.Obstacle
 
         private void OnDisable()
         {
-            statModifierTrigger.OnStatApplied -= HitByPlayer;
             isDuringDeathSequence = false;
         }
 
@@ -55,25 +53,6 @@ namespace Droppy.Obstacle
             {
                 gameObject.SetActive(false);
             }
-        }
-
-        private void HitByPlayer()
-        {
-            if (!isDuringDeathSequence)
-            {
-                isDuringDeathSequence = true;
-                StartCoroutine(PlayDeathAnimationAndReturnToPool());
-            }
-        }
-
-        private IEnumerator PlayDeathAnimationAndReturnToPool()
-        {
-            obstacleCollider.enabled = false;
-            
-            yield return animator.PlayAnimationAndWait(deathAnimationStateName);
-            
-            body.velocity = Vector2.zero;
-            gameObject.SetActive(false);
         }
     }
 }

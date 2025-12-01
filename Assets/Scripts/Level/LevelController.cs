@@ -23,16 +23,21 @@ namespace Droppy.Level
         }
         
         [ContextMenu("Start Next Level")]
-        private void StartNextLevel()
+        public void StartNextLevel()
         {
-            StartCoroutine(StartNextLevelRoutine());
+            currentLevelIndex++;
+            StartCoroutine(StartLevelRoutine());
         }
 
-        private IEnumerator StartNextLevelRoutine()
+        [ContextMenu("Restart Level")]
+        public void RestartLevel()
+        {
+            StartCoroutine(StartLevelRoutine());
+        }
+
+        private IEnumerator StartLevelRoutine()
         {
             yield return HideCurrentLevel();
-            
-            currentLevelIndex++;
 
             if (currentLevelIndex >= levelSequence.Count)
             {
@@ -52,17 +57,17 @@ namespace Droppy.Level
             
             currentLevel = instantiateOperation.Result[0];
             currentLevel.transform.SetParent(transform);
-            currentLevel.OnFinished += StartNextLevel;
             
             yield return FadeTransition(1.0f, 0.0f);
+            fadeImage.gameObject.SetActive(false);
         }
 
         private IEnumerator HideCurrentLevel()
         {
             if (currentLevel != null)
             {
+                fadeImage.gameObject.SetActive(true);
                 yield return FadeTransition(0.0f, 1.0f);
-                currentLevel.OnFinished -= StartNextLevel;
                 Destroy(currentLevel.gameObject);
             }
             else

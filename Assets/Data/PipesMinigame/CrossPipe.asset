@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: CrossPipe
   m_EditorClassIdentifier: 
   sprite: {fileID: -1879313655, guid: 852d98bcaaedab74587bfb170bc13df9, type: 3}
+  fullSprite: {fileID: -1920998056, guid: 852d98bcaaedab74587bfb170bc13df9, type: 3}
   defaultDirections: -1
   isLocked: 0

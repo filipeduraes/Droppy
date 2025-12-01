@@ -1,9 +1,9 @@
 {
-    "name": "Droppy.Movement",
-    "rootNamespace": "Droppy.Movement",
+    "name": "Droppy.UIBridge",
+    "rootNamespace": "",
     "references": [
-        "GUID:75469ad4d38634e559750d17036d5f7c",
-        "GUID:73e01b9957cafa846bac66e174b2e0dd"
+        "GUID:270a0727451ff224bba670c78283e56a",
+        "GUID:9fb82ef2d318c08419447efd7cce5e85"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
