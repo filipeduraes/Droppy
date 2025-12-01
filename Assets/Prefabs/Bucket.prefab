@@ -124,8 +124,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   statToModify: {fileID: 11400000, guid: 555ec35f118fc614fb81064d04bd9f07, type: 2}
   statModifier:
-    type: 0
-    amount: 0
+    type: 2
+    amount: -5
 --- !u!50 &6881662518879556185
 Rigidbody2D:
   serializedVersion: 4
