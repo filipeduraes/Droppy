@@ -10,16 +10,10 @@ namespace Droppy.Player
         [SerializeField] private float movementSpeed = 7f;
         
         private Rigidbody2D _rigidbody2D; 
-        private float _horizontalInputValue; 
         
         protected void Awake()
         {
             _rigidbody2D = GetComponent<Rigidbody2D>();
-        }
-
-        private void FixedUpdate()
-        {
-            ApplyHorizontalMovement();
         }
         
         protected override void OnEnable()
@@ -40,26 +34,19 @@ namespace Droppy.Player
 
         private void OnMovementStart()
         {
-            
+            ApplyHorizontalMovement();
         }
 
         private void OnMovementEnd()
         {
-            _horizontalInputValue = 0f;
+            _rigidbody2D.velocity = Vector2.zero;
         }
         
         private void ApplyHorizontalMovement()
         {
-            if (!_rigidbody2D) return; 
-            
-            if (input.MoveInput.x != 0)
-            {
-                _horizontalInputValue = input.MoveInput.x;
-            }
-
             Vector2 targetVelocity = new Vector2(
-                _horizontalInputValue * movementSpeed, 
-                _rigidbody2D.velocity.y
+                input.MoveInput.x * movementSpeed, 
+                _rigidbody2D.velocity.y 
             );
             
             _rigidbody2D.velocity = targetVelocity;
