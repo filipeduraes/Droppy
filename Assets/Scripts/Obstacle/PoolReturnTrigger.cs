@@ -1,55 +1,29 @@
 using UnityEngine;
 using System.Collections;
-using IdeaToGame.ObjectPooling;
+using Droppy.InteractionSystem;
+using Droppy.Shared;
 
 namespace Droppy.Obstacle
 {
-    public class PoolReturnTrigger : MonoBehaviour
+    public class PoolReturnTrigger : MonoBehaviour, IEnterInteractableArea
     {
-        [SerializeField]
-        private string animationStateName = "StartAnimation";
+        [SerializeField] private string animationStateName = "StartAnimation";
+        [SerializeField] private Animator animator;
+        [SerializeField] private Collider2D objectCollider;
 
-        private Animator _animator;
-        private Component _prefab;
-
-        [Header("Configuração da Animação")]
-        public float animationDuration = 1.0f;
-
-        public void Initialize<T>(T prefab) where T : Component
+        public void EnterInteraction(GameObject agent)
         {
-            _prefab = prefab;
+            StartCoroutine(PlayVanishAnimationAndReturnToPool());
         }
-
-        private void Awake()
+        
+        private IEnumerator PlayVanishAnimationAndReturnToPool()
         {
-            _animator = GetComponent<Animator>();
-            if (_animator == null)
-            {
-                Debug.LogError("Componente 'Animator' não encontrado em " + gameObject.name + ". O script não funcionará corretamente.");
-            }
-        }
-        public void PlayAnimationAndReturn()
-        {
-            if (_animator != null)
-            {
-                _animator.Play(animationStateName, 0, 0f);
-            }
-            StartCoroutine(WaitAndReturnToPool(animationDuration));
-        }
-
-        private IEnumerator WaitAndReturnToPool(float waitTime)
-        {
-            yield return new WaitForSeconds(waitTime);
-
-            if (_prefab != null)
-            {
-                ObjectPool.ReturnToPool(_prefab, this.gameObject);
-            }
-            else
-            {
-                Debug.LogWarning("Prefab não inicializado no PoolReturnTrigger. Destruindo o objeto ao invés de retornar ao Pool.");
-                Destroy(this.gameObject);
-            }
+            objectCollider.enabled = false;
+            
+            yield return animator.PlayAnimationAndWait(animationStateName);
+            
+            gameObject.SetActive(false);
+            objectCollider.enabled = true;
         }
     }
 }
