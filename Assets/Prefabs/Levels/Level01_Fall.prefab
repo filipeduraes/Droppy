@@ -408,6 +408,7 @@ GameObject:
   m_Component:
   - component: {fileID: 989079832946548018}
   - component: {fileID: 4158045264625507649}
+  - component: {fileID: 2003711062951703725}
   m_Layer: 0
   m_Name: Level01_Fall
   m_TagString: Untagged
@@ -446,6 +447,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 314fbeff3b864138bb6cfd7946d01a3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2003711062951703725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6523549400735856041}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d749409d640741f4b2132d7e08d051aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stat: {fileID: 11400000, guid: e4605c35162d1ff4c8a0091de356df1b, type: 2}
+  modifier:
+    type: 0
+    amount: 100
 --- !u!1 &6597330772710121504
 GameObject:
   m_ObjectHideFlags: 0
@@ -533,6 +550,7 @@ MonoBehaviour:
   - {fileID: 3027893645593152343}
   - {fileID: 3912756520713135742}
   - {fileID: 9102185492134571032}
+  destroyAllOnDisable: 1
 --- !u!1 &9014415596672837094
 GameObject:
   m_ObjectHideFlags: 0
