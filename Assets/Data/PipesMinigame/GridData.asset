@@ -34,7 +34,7 @@ MonoBehaviour:
       rotationSteps: 1
     - piece: {fileID: 11400000, guid: 507735d65178bdb46af70e1d36ed0346, type: 2}
       rotationSteps: 1
-    - piece: {fileID: 11400000, guid: 08ff31f54b37e734798d3598b48307c9, type: 2}
+    - piece: {fileID: 11400000, guid: 0dddee3c6470c0847a63622eaf076838, type: 2}
       rotationSteps: 2
   - rowCells:
     - piece: {fileID: 11400000, guid: 0dddee3c6470c0847a63622eaf076838, type: 2}
@@ -48,16 +48,16 @@ MonoBehaviour:
     - piece: {fileID: 11400000, guid: 507735d65178bdb46af70e1d36ed0346, type: 2}
       rotationSteps: 0
   - rowCells:
-    - piece: {fileID: 11400000, guid: 507735d65178bdb46af70e1d36ed0346, type: 2}
-      rotationSteps: 0
+    - piece: {fileID: 11400000, guid: 0dddee3c6470c0847a63622eaf076838, type: 2}
+      rotationSteps: 1
     - piece: {fileID: 11400000, guid: 08ff31f54b37e734798d3598b48307c9, type: 2}
       rotationSteps: 0
     - piece: {fileID: 11400000, guid: 507735d65178bdb46af70e1d36ed0346, type: 2}
       rotationSteps: 1
     - piece: {fileID: 11400000, guid: 08ff31f54b37e734798d3598b48307c9, type: 2}
       rotationSteps: 1
-    - piece: {fileID: 11400000, guid: 507735d65178bdb46af70e1d36ed0346, type: 2}
-      rotationSteps: 0
+    - piece: {fileID: 11400000, guid: 0dddee3c6470c0847a63622eaf076838, type: 2}
+      rotationSteps: 3
   - rowCells:
     - piece: {fileID: 11400000, guid: 08ff31f54b37e734798d3598b48307c9, type: 2}
       rotationSteps: 0
@@ -70,14 +70,10 @@ MonoBehaviour:
     - piece: {fileID: 11400000, guid: 08ff31f54b37e734798d3598b48307c9, type: 2}
       rotationSteps: 1
   entries:
-  - direction: 8
-    offset: 4
   - direction: 4
     offset: 3
   - direction: 1
-    offset: 2
-  - direction: 2
-    offset: 3
+    offset: 1
   exits:
   - direction: 4
     offset: 0

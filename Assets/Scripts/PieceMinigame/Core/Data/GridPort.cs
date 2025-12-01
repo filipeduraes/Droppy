@@ -32,5 +32,17 @@ namespace Droppy.PieceMinigame.Data
                 _ => -Vector2Int.one
             };
         }
+        
+        public Vector2Int GetPortIndex(Vector2Int gridSize)
+        {
+            return direction switch
+            {
+                PieceDirection.Right => new Vector2Int(gridSize.x, offset),
+                PieceDirection.Bottom => new Vector2Int(offset, -1),
+                PieceDirection.Left => new Vector2Int(-1, offset),
+                PieceDirection.Top => new Vector2Int(offset, gridSize.y),
+                _ => -Vector2Int.one
+            };
+        }
     }
 }
