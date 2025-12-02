@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Droppy
+namespace Droppy.WaterLevel
 {
     public class waterLevelController : MonoBehaviour 
     {

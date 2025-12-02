@@ -64,7 +64,9 @@ MonoBehaviour:
   viewModel: {fileID: 11400000, guid: 5b6f764f903925248a379f76af31076c, type: 2}
   endScreenQuotes: {fileID: 11400000, guid: d5f04f7883aee0c4891ff3b1f9c97a35, type: 2}
   purityStat: {fileID: 11400000, guid: e4605c35162d1ff4c8a0091de356df1b, type: 2}
-  secondaryPurityThreshold: 75
+  timeStat: {fileID: 11400000, guid: 7f5d82abe3de078468e16076d73bb99d, type: 2}
+  levelDuration: 60
+  secondaryPurityThreshold: 50
   tertiaryPurityThreshold: 95
 --- !u!1 &693544424539812208
 GameObject:

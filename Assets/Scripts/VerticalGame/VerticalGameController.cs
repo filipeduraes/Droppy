@@ -7,17 +7,31 @@ namespace Droppy.VerticalGame
 {
     public class VerticalGameController : MonoBehaviour
     {
+        [Header("UI & Quotes")]
         [SerializeField] private EndScreenViewModel viewModel;
         [SerializeField] private EndScreenResultQuotes endScreenQuotes;
+
+        [Header("Stats Assets")]
+        [Tooltip("O Stat que representa a pureza da água.")]
         [SerializeField] private Stat purityStat;
 
-        [Header("Purity Thresholds (Objetivos Adicionais)")]
-        [Tooltip("Pureza mínima para ganhar a 2ª Estrela.")]
+        [Tooltip("Arraste o Stat 'LevelTime' aqui.")]
+        [SerializeField] private Stat timeStat;
+
+        [Header("Configurações da Fase")]
+        [Tooltip("Tempo total em segundos.")]
+        [SerializeField] private float levelDuration = 60f;
+
+        [Header("Objetivos (Pureza)")]
         [SerializeField] private float secondaryPurityThreshold = 50f;
-        [Tooltip("Pureza mínima para ganhar a 3ª Estrela.")]
         [SerializeField] private float tertiaryPurityThreshold = 95f;
 
         private bool isLevelFinished = false;
+
+        private void Start()
+        {
+            InitializeTimer();
+        }
 
         private void OnEnable()
         {
@@ -29,15 +43,43 @@ namespace Droppy.VerticalGame
             StatManager.OnStatModified -= OnStatChanged;
         }
 
-        private void OnStatChanged(string statID)
+        private void Update()
         {
-            if (isLevelFinished || purityStat == null || statID != purityStat.ID)
+            if (isLevelFinished) return;
+            ProcessTimer();
+        }
+
+        private void InitializeTimer()
+        {
+            if (timeStat != null)
             {
-                return;
+                var modifier = new StatModifier(StatModifierType.Set, levelDuration);
+                StatManager.Modify(timeStat, modifier);
             }
-            if (StatManager.Read(purityStat) <= 0f)
+        }
+
+        private void ProcessTimer()
+        {
+            if (timeStat == null) return;
+
+            var modifier = new StatModifier(StatModifierType.Add, -Time.deltaTime);
+            StatManager.Modify(timeStat, modifier);
+
+            if (StatManager.Read(timeStat) <= 0f)
             {
                 HandleLevelFinished(false);
+            }
+        }
+
+        private void OnStatChanged(string statID)
+        {
+            if (isLevelFinished) return;
+            if (purityStat != null && statID == purityStat.ID)
+            {
+                if (StatManager.Read(purityStat) <= 0f)
+                {
+                    HandleLevelFinished(false);
+                }
             }
         }
 
@@ -46,27 +88,21 @@ namespace Droppy.VerticalGame
             HandleLevelFinished(true);
         }
 
-
         private void HandleLevelFinished(bool isVictory)
         {
             if (isLevelFinished) return;
             isLevelFinished = true;
 
             if (isVictory)
-            {
                 GameOverWithVictory();
-            }
             else
-            {
                 GameOverWithDefeat();
-            }
         }
 
         private void GameOverWithVictory()
         {
             if (purityStat == null)
             {
-                Debug.LogError("Purity Stat não atribuído! Impossível calcular estrelas com base na Pureza.");
                 viewModel.RequestVictory(endScreenQuotes, 1);
                 return;
             }
@@ -74,14 +110,8 @@ namespace Droppy.VerticalGame
             float finalPurity = StatManager.Read(purityStat);
             int starCount = 1;
 
-            if (finalPurity >= secondaryPurityThreshold)
-            {
-                starCount++;
-            }
-            if (finalPurity >= tertiaryPurityThreshold)
-            {
-                starCount++;
-            }
+            if (finalPurity >= secondaryPurityThreshold) starCount++;
+            if (finalPurity >= tertiaryPurityThreshold) starCount++;
 
             viewModel.RequestVictory(endScreenQuotes, starCount);
         }
