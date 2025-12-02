@@ -15,10 +15,17 @@ MonoBehaviour:
   victoryStarQuotes:
   - quotes:
     - 1 estrela
+    - "Sou \xE1gua ou sou caf\xE9? N\xE3o d\xE1 nem para saber mais"
+    - Cheguei! Mas vou precisar de um filtro industrial agora.
   - quotes:
     - 2 estrelas
+    - Ufa! Cheguei... mas preciso urgente de um banho.
+    - "Algu\xE9m tem um sab\xE3o a\xED? A coisa ficou feia no caminho."
   - quotes:
     - 3 estrelas
+    - Brilhando como um diamante!
+    - Nenhuma sujeira ousa encostar em mim!
   defeatQuotes:
     quotes:
     - Sua gotinha ficou muito suja! Tente novamente
+    - A pureza se perdeu completamente. Tente evitar o lixo.

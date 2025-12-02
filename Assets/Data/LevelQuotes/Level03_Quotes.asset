@@ -15,10 +15,16 @@ MonoBehaviour:
   victoryStarQuotes:
   - quotes:
     - 1 estrela
+    - Sem vazamentos. Mas faltou filtrar e distribuir.
   - quotes:
     - 2 estrelas
+    - Bom trabalho! O sistema fluiu bem, mas faltou um detalhe.
+    - "Abastecimento total! Pena que a \xE1gua n\xE3o foi filtrada"
   - quotes:
     - 3 estrelas
+    - "Engenharia Hidr\xE1ulica n\xEDvel Maximo!"
+    - "Todas as sa\xEDdas abastecidas com \xE1gua cristalina!"
   defeatQuotes:
     quotes:
-    - Perdeu
+    - "Algu\xE9m chame o encanador! Deu ruim."
+    - "Tanto desperd\xEDcio... A \xE1gua fugiu."
