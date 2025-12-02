@@ -7,7 +7,7 @@ namespace Droppy.Player
     public class HorizontalDroppyController : PlayerController
     {
         [Header("Movement Settings")]
-        [Tooltip("The maximum horizontal speed of the droplet (units per second).")]
+        [Tooltip("The maximum horizontal speed of the droplet (unidades por segundo).")]
         [SerializeField] private float movementSpeed = 7f;
         
         [Header("Screen Bounds")]
@@ -16,8 +16,15 @@ namespace Droppy.Player
         [Header("Jump Settings")]
         [SerializeField] private float jumpForce = 400f;
         
+        [Header("Ground Check")]
+        [Tooltip("A LayerMask que define o que é considerado chão.")]
+        [SerializeField] private LayerMask groundLayer;
+        [Tooltip("Distância máxima que o raycast irá percorrer para checar o chão.")]
+        [SerializeField] private float groundCheckDistance = 0.1f;
+        
         private Rigidbody2D _rigidbody2D; 
         private Camera _mainCamera;
+        private bool _isGrounded = false;
 
         protected void Awake()
         {
@@ -47,15 +54,24 @@ namespace Droppy.Player
             base.OnDisable(); 
         }
         
-        private void OnJump()
+        private void FixedUpdate() 
         {
-            _rigidbody2D.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            CheckIfGrounded();
         }
 
         private void LateUpdate()
         {
-            if (!_rigidbody2D) return;
             ClampPosition();
+        }
+
+        private void OnJump()
+        {
+            if (_isGrounded)
+            {
+                _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, 0f);
+                
+                _rigidbody2D.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            }
         }
 
         private void OnMovementStart()
@@ -81,6 +97,20 @@ namespace Droppy.Player
             );
             
             _rigidbody2D.velocity = targetVelocity;
+        }
+        
+        private void CheckIfGrounded()
+        {
+            Vector2 origin = transform.position;
+            
+            RaycastHit2D hit = Physics2D.Raycast(
+                origin, 
+                Vector2.down, 
+                groundCheckDistance, 
+                groundLayer
+            );
+            
+            _isGrounded = hit.collider;
         }
         
         private void ClampPosition()
