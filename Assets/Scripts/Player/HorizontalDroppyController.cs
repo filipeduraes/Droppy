@@ -14,17 +14,19 @@ namespace Droppy.Player
         [SerializeField] private float screenPadding = 0.5f;
         
         [Header("Jump Settings")]
-        [SerializeField] private float jumpForce = 400f;
+        [SerializeField] private float jumpForce = 5f;
         
         [Header("Ground Check")]
         [Tooltip("A LayerMask que define o que é considerado chão.")]
         [SerializeField] private LayerMask groundLayer;
         [Tooltip("Distância máxima que o raycast irá percorrer para checar o chão.")]
-        [SerializeField] private float groundCheckDistance = 0.1f;
+        [SerializeField] private float groundCheckDistance = 0.2f;
         
         private Rigidbody2D _rigidbody2D; 
         private Camera _mainCamera;
         private bool _isGrounded = false;
+        
+        private float _currentMoveDirection = 0f; 
 
         protected void Awake()
         {
@@ -57,11 +59,24 @@ namespace Droppy.Player
         private void FixedUpdate() 
         {
             CheckIfGrounded();
+            HandleHorizontalMovement(); 
         }
 
         private void LateUpdate()
         {
-            ClampPosition();
+            if (!_mainCamera) return;
+    
+            ClampPosition(); 
+        }
+        
+        private void OnMovementStart()
+        {
+            _currentMoveDirection = input.MoveInput.x;
+        }
+
+        private void OnMovementEnd()
+        {
+            _currentMoveDirection = 0f;
         }
 
         private void OnJump()
@@ -69,22 +84,12 @@ namespace Droppy.Player
             if (_isGrounded)
             {
                 _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, 0f);
-                
+        
                 _rigidbody2D.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
             }
         }
-
-        private void OnMovementStart()
-        {
-            ApplyHorizontalMovement();
-        }
-
-        private void OnMovementEnd()
-        {
-            _rigidbody2D.velocity = Vector2.zero;
-        }
         
-        private void ApplyHorizontalMovement()
+        private void HandleHorizontalMovement()
         {
             if (_rigidbody2D.IsSleeping()) 
             {
@@ -92,13 +97,13 @@ namespace Droppy.Player
             }
 
             Vector2 targetVelocity = new Vector2(
-                input.MoveInput.x * movementSpeed, 
+                _currentMoveDirection * movementSpeed, 
                 _rigidbody2D.velocity.y 
             );
             
             _rigidbody2D.velocity = targetVelocity;
         }
-        
+
         private void CheckIfGrounded()
         {
             Vector2 origin = transform.position;
