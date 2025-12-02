@@ -454,8 +454,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelSequence:
-  - {fileID: 4158045264625507649, guid: ec6f51be63205d946babca19f37b5668, type: 3}
   - {fileID: 2556134743077185624, guid: 3c675df59d7d95a44bd73a592ab0bb7c, type: 3}
+  - {fileID: 4158045264625507649, guid: ec6f51be63205d946babca19f37b5668, type: 3}
   - {fileID: 4985420556378424752, guid: 156f5cf0be73ee148969cc38f2d81314, type: 3}
   - {fileID: 5321038696775741435, guid: b95bc3031ab761440806aecbbaeaf705, type: 3}
   fadeImage: {fileID: 729263371}

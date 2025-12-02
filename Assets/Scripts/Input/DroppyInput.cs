@@ -11,6 +11,8 @@ namespace Droppy.Input
         public event Action OnMoveStarted = delegate { };
         public event Action OnMoveCanceled = delegate { };
         
+        public event Action OnJumpStarted = delegate { };
+        
         public event Action OnInteractStarted = delegate { };
         public event Action OnInteractCanceled = delegate { };
         
@@ -35,6 +37,8 @@ namespace Droppy.Input
             controls.Player.Move.started += SendMoveStarted;
             controls.Player.Move.canceled += SendMoveCanceled;
             
+            controls.Player.Jump.started += SendJumpStarted;
+            
             controls.Player.Interact.started += SendInteractStarted;
             controls.Player.Interact.canceled += SendInteractCanceled;
 
@@ -47,6 +51,8 @@ namespace Droppy.Input
         {
             controls.Player.Move.started -= SendMoveStarted;
             controls.Player.Move.canceled -= SendMoveCanceled;
+            
+            controls.Player.Jump.started -= SendJumpStarted;
             
             controls.Player.Interact.started -= SendInteractStarted;
             controls.Player.Interact.canceled -= SendInteractCanceled;
@@ -65,6 +71,11 @@ namespace Droppy.Input
         private void SendMoveCanceled(InputAction.CallbackContext context)
         {
             OnMoveCanceled();
+        }
+        
+        private void SendJumpStarted(InputAction.CallbackContext context)
+        {
+            OnJumpStarted();
         }
 
         

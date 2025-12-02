@@ -13,6 +13,9 @@ namespace Droppy.Player
         [Header("Screen Bounds")]
         [SerializeField] private float screenPadding = 0.5f;
         
+        [Header("Jump Settings")]
+        [SerializeField] private float jumpForce = 400f;
+        
         private Rigidbody2D _rigidbody2D; 
         private Camera _mainCamera;
 
@@ -32,14 +35,21 @@ namespace Droppy.Player
             
             input.OnMoveStarted += OnMovementStart;
             input.OnMoveCanceled += OnMovementEnd;
+            input.OnJumpStarted += OnJump;
         }
 
         protected override void OnDisable()
         {
             input.OnMoveStarted -= OnMovementStart;
             input.OnMoveCanceled -= OnMovementEnd;
+            input.OnJumpStarted -= OnJump;
 
             base.OnDisable(); 
+        }
+        
+        private void OnJump()
+        {
+            _rigidbody2D.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
         }
 
         private void LateUpdate()
