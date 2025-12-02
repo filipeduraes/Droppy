@@ -13,7 +13,7 @@ namespace Droppy.VerticalGame
 
         [Header("Purity Thresholds (Objetivos Adicionais)")]
         [Tooltip("Pureza mínima para ganhar a 2ª Estrela.")]
-        [SerializeField] private float secondaryPurityThreshold = 75f;
+        [SerializeField] private float secondaryPurityThreshold = 50f;
         [Tooltip("Pureza mínima para ganhar a 3ª Estrela.")]
         [SerializeField] private float tertiaryPurityThreshold = 95f;
 
