@@ -2,7 +2,8 @@
     "name": "Droppy.PieceMinigame.Editor",
     "rootNamespace": "Droppy.PieceMinigame.Editor",
     "references": [
-        "GUID:0782169d440d78b4eb50baae90d68002"
+        "GUID:0782169d440d78b4eb50baae90d68002",
+        "GUID:ee1c39d5f8f43b34f82f22d313ce3fd5"
     ],
     "includePlatforms": [
         "Editor"
