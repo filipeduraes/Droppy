@@ -19,10 +19,6 @@ namespace Droppy.Obstacle
 
         [Header("Dependencies")]
         [SerializeField] private Rigidbody2D body;
-        [SerializeField] private Animator animator;
-
-        [Header("Animations")]
-        [SerializeField] private string deathAnimationStateName = "Death";
 
         private bool isDuringDeathSequence = false;
         private float markerY = 0.0f;
