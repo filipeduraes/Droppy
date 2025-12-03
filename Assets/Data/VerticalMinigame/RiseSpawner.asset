@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3c41fb21465a5794e8736d667a488ec2, type: 3}
-  m_Name: ObstacleSpawner
+  m_Name: RiseSpawner
   m_EditorClassIdentifier: 
   spawnables:
-  - prefab: {fileID: 41027504816061811, guid: eb79b45427064e04ba5f890bf49fb018, type: 3}
+  - prefab: {fileID: 8221988484796149495, guid: 4c46344c0ddc08545945258866a777f8, type: 3}
     weight: 1
   minSpawnInterval: 1
   maxSpawnInterval: 3

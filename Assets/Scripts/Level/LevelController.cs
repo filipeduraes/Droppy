@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Droppy.Shared;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -57,8 +58,8 @@ namespace Droppy.Level
             
             currentLevel = instantiateOperation.Result[0];
             currentLevel.transform.SetParent(transform);
-            
-            yield return FadeTransition(1.0f, 0.0f);
+
+            yield return fadeImage.InterpolateAlpha(1.0f, 0.0f, fadeDuration);
             fadeImage.gameObject.SetActive(false);
         }
 
@@ -67,38 +68,13 @@ namespace Droppy.Level
             if (currentLevel != null)
             {
                 fadeImage.gameObject.SetActive(true);
-                yield return FadeTransition(0.0f, 1.0f);
+                yield return fadeImage.InterpolateAlpha(0.0f, 1.0f, fadeDuration);
                 Destroy(currentLevel.gameObject);
             }
             else
             {
-                SetFadeImageAlpha(1.0f);
+                fadeImage.SetAlpha(1.0f);
             }
-        }
-
-        private IEnumerator FadeTransition(float initialAlpha, float finalAlpha)
-        {
-            float timer = 0.0f;
-            
-            SetFadeImageAlpha(initialAlpha);
-            
-            while (timer < fadeDuration)
-            {
-                float alpha = Mathf.Lerp(initialAlpha, finalAlpha, timer / fadeDuration);
-                SetFadeImageAlpha(alpha);
-
-                timer += Time.deltaTime;
-                yield return null;
-            }
-            
-            SetFadeImageAlpha(finalAlpha);
-        }
-
-        private void SetFadeImageAlpha(float alpha)
-        {
-            Color fadeImageColor = fadeImage.color;
-            fadeImageColor.a = alpha;
-            fadeImage.color = fadeImageColor;
         }
     }
 }
