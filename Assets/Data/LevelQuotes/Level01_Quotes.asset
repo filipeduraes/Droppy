@@ -10,21 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bd9e75e0e1104e6880cb41d0032732c0, type: 3}
-  m_Name: Level03_Quotes
+  m_Name: Level01_Quotes
   m_EditorClassIdentifier: 
   victoryStarQuotes:
   - quotes:
     - 1 estrela
-    - Sem vazamentos. Mas faltou filtrar e distribuir.
+    - "Sou \xE1gua ou sou caf\xE9? N\xE3o d\xE1 nem para saber mais"
+    - Cheguei! Mas vou precisar de um filtro industrial agora.
   - quotes:
     - 2 estrelas
-    - Bom trabalho! O sistema fluiu bem, mas faltou um detalhe.
-    - "Abastecimento total! Pena que a \xE1gua n\xE3o foi filtrada"
+    - Ufa! Cheguei... mas preciso urgente de um banho.
+    - "Algu\xE9m tem um sab\xE3o a\xED? A coisa ficou feia no caminho."
   - quotes:
     - 3 estrelas
-    - "Engenharia Hidr\xE1ulica n\xEDvel Maximo!"
-    - "Todas as sa\xEDdas abastecidas com \xE1gua cristalina!"
+    - Brilhando como um diamante!
+    - Nenhuma sujeira ousa encostar em mim!
   defeatQuotes:
     quotes:
-    - "Algu\xE9m chame o encanador! Deu ruim."
-    - "Tanto desperd\xEDcio... A \xE1gua fugiu."
+    - Sua gotinha ficou muito suja! Tente novamente
+    - A pureza se perdeu completamente. Tente evitar o lixo.

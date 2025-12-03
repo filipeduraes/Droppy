@@ -10,21 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bd9e75e0e1104e6880cb41d0032732c0, type: 3}
-  m_Name: Level03_Quotes
+  m_Name: Level02_Quotes
   m_EditorClassIdentifier: 
   victoryStarQuotes:
   - quotes:
     - 1 estrela
-    - Sem vazamentos. Mas faltou filtrar e distribuir.
+    - "Quase que sua gotinha vai embora! Voc\xEA consegue melhor!"
+    - "Sobrou s\xF3 o pingo do 'i'."
   - quotes:
     - 2 estrelas
-    - Bom trabalho! O sistema fluiu bem, mas faltou um detalhe.
-    - "Abastecimento total! Pena que a \xE1gua n\xE3o foi filtrada"
+    - "O copo est\xE1 meio cheio... ou meio vazio?"
+    - "Volume aceit\xE1vel. Ainda d\xE1 para molhar!"
   - quotes:
     - 3 estrelas
-    - "Engenharia Hidr\xE1ulica n\xEDvel Maximo!"
-    - "Todas as sa\xEDdas abastecidas com \xE1gua cristalina!"
+    - "Nenhuma gota deixada para tr\xE1s!"
+    - "Cheia de vida. Pontua\xE7\xE3o m\xE1xima!"
   defeatQuotes:
     quotes:
-    - "Algu\xE9m chame o encanador! Deu ruim."
-    - "Tanto desperd\xEDcio... A \xE1gua fugiu."
+    - "O seu n\xEDvel de \xE1gua ficou muito baixo! Tente novamente!"
+    - "Secou! N\xE3o sobrou nem uma gota para contar hist\xF3ria."

@@ -10,21 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bd9e75e0e1104e6880cb41d0032732c0, type: 3}
-  m_Name: Level03_Quotes
+  m_Name: Level04_Quotes
   m_EditorClassIdentifier: 
   victoryStarQuotes:
   - quotes:
     - 1 estrela
-    - Sem vazamentos. Mas faltou filtrar e distribuir.
+    - "Passou raspando! Pot\xE1vel, mas com gosto estranho."
+    - "Ainda est\xE1 meio turva, mas serve."
   - quotes:
     - 2 estrelas
-    - Bom trabalho! O sistema fluiu bem, mas faltou um detalhe.
-    - "Abastecimento total! Pena que a \xE1gua n\xE3o foi filtrada"
+    - Clara e sem cheiro. Pronta para o copo.
+    - "Muito boa! Mas ainda d\xE1 para brilhar mais"
   - quotes:
     - 3 estrelas
-    - "Engenharia Hidr\xE1ulica n\xEDvel Maximo!"
-    - "Todas as sa\xEDdas abastecidas com \xE1gua cristalina!"
+    - Qualidade de nascente! 100% Cristalina.
+    - "Transpar\xEAncia absoluta. Perfei\xE7\xE3o."
   defeatQuotes:
     quotes:
-    - "Algu\xE9m chame o encanador! Deu ruim."
-    - "Tanto desperd\xEDcio... A \xE1gua fugiu."
+    - "Impr\xF3pria para consumo. Reprovada no teste."
+    - "Risco Biol\xF3gico! N\xE3o beba isso."
