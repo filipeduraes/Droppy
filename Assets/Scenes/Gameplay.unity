@@ -457,7 +457,7 @@ MonoBehaviour:
   - {fileID: 5122977213941386095, guid: ec6f51be63205d946babca19f37b5668, type: 3}
   - {fileID: 2556134743077185624, guid: 3c675df59d7d95a44bd73a592ab0bb7c, type: 3}
   - {fileID: 4985420556378424752, guid: 156f5cf0be73ee148969cc38f2d81314, type: 3}
-  - {fileID: 5321038696775741435, guid: b95bc3031ab761440806aecbbaeaf705, type: 3}
+  - {fileID: 8713255118499087229, guid: b95bc3031ab761440806aecbbaeaf705, type: 3}
   fadeImage: {fileID: 729263371}
   fadeDuration: 1
 --- !u!4 &680456216
@@ -906,7 +906,7 @@ Transform:
   m_GameObject: {fileID: 2084021772}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 858.0034, y: 231.26993, z: -1.4282857}
+  m_LocalPosition: {x: 1.213539, y: -0.25866967, z: -1.4282857}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
