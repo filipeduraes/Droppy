@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -44,7 +45,8 @@ namespace Droppy.FaucetsMinigame
 
         private void ResetTimer()
         {
-            timer = Random.Range(minTime, maxTime);
+            timer = UnityEngine.Random.Range(minTime, maxTime);
+
         }
 
         private void OpenRandomFaucet()
@@ -54,7 +56,7 @@ namespace Droppy.FaucetsMinigame
             if (closed.Count == 0)
                 return;
 
-            FaucetController chosen = closed[Random.Range(0, closed.Count)];
+            FaucetController chosen = closed[UnityEngine.Random.Range(0, closed.Count)];
 
             chosen.Open();
             activeFaucets.Add(chosen);
@@ -64,5 +66,7 @@ namespace Droppy.FaucetsMinigame
         {
             activeFaucets.Remove(faucet);
         }
+
+
     }
 }
