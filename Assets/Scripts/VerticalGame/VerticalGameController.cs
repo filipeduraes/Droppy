@@ -1,7 +1,7 @@
 using UnityEngine;
 using Droppy.UI.ViewModel;
 using Droppy.StatSystem;
-using System;
+using System.Collections;
 
 namespace Droppy.VerticalGame
 {
@@ -26,11 +26,11 @@ namespace Droppy.VerticalGame
         [SerializeField] private float secondaryPurityThreshold = 50f;
         [SerializeField] private float tertiaryPurityThreshold = 95f;
 
-        private bool isLevelFinished = false;
+        private Coroutine _timerCoroutine;
 
         private void Start()
         {
-            InitializeTimer();
+            StartTimer();
         }
 
         private void OnEnable()
@@ -42,65 +42,60 @@ namespace Droppy.VerticalGame
         {
             StatManager.OnStatModified -= OnStatChanged;
         }
-
-        private void Update()
-        {
-            if (isLevelFinished) return;
-            ProcessTimer();
-        }
-
-        private void InitializeTimer()
+        private void StartTimer()
         {
             if (timeStat != null)
             {
-                var modifier = new StatModifier(StatModifierType.Set, levelDuration);
-                StatManager.Modify(timeStat, modifier);
+                _timerCoroutine = StartCoroutine(LevelTimerRoutine());
             }
         }
 
-        private void ProcessTimer()
+        private IEnumerator LevelTimerRoutine()
         {
-            if (timeStat == null) return;
+            StatModifier setModifier = new StatModifier(StatModifierType.Set, levelDuration);
+            StatManager.Modify(timeStat, setModifier);
 
-            var modifier = new StatModifier(StatModifierType.Add, -Time.deltaTime);
-            StatManager.Modify(timeStat, modifier);
-
-            if (StatManager.Read(timeStat) <= 0f)
+            while (StatManager.Read(timeStat) > 0f)
             {
-                HandleLevelFinished(false);
+                yield return null;
+
+                StatModifier subModifier = new StatModifier(StatModifierType.Add, -Time.deltaTime);
+                StatManager.Modify(timeStat, subModifier);
             }
+
+            GameOverWithDefeat();
         }
 
         private void OnStatChanged(string statID)
         {
-            if (isLevelFinished) return;
             if (purityStat != null && statID == purityStat.ID)
             {
                 if (StatManager.Read(purityStat) <= 0f)
                 {
-                    HandleLevelFinished(false);
+                    GameOverWithDefeat();
                 }
             }
         }
 
         public void ReportGoalReached()
         {
-            HandleLevelFinished(true);
+            GameOverWithVictory();
         }
-
-        private void HandleLevelFinished(bool isVictory)
+        private void StopGameLogic()
         {
-            if (isLevelFinished) return;
-            isLevelFinished = true;
+            if (_timerCoroutine != null)
+            {
+                StopCoroutine(_timerCoroutine);
+                _timerCoroutine = null;
+            }
 
-            if (isVictory)
-                GameOverWithVictory();
-            else
-                GameOverWithDefeat();
+            StatManager.OnStatModified -= OnStatChanged;
         }
 
         private void GameOverWithVictory()
         {
+            StopGameLogic();
+
             if (purityStat == null)
             {
                 viewModel.RequestVictory(endScreenQuotes, 1);
@@ -118,6 +113,7 @@ namespace Droppy.VerticalGame
 
         private void GameOverWithDefeat()
         {
+            StopGameLogic();
             viewModel.RequestDefeat(endScreenQuotes);
         }
     }

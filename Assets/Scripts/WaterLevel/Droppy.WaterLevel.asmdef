@@ -1,3 +1,16 @@
 {
-	"name": "Droppy.WaterLevel"
+	"name": "Droppy.WaterLevel",
+	"references":[
+		"Droppy.StatSystem",
+        "Droppy.UI.ViewModel"
+	],
+	"includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }
