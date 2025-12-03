@@ -2,6 +2,8 @@
     "name": "Droppy.VerticalScrollerMinigame.Level",
     "rootNamespace": "",
     "references": [
+        "Droppy.StatSystem",
+        "Droppy.UI.ViewModel",
         "GUID:9fb82ef2d318c08419447efd7cce5e85",
         "GUID:e72182252477b194e9dbcb57676de71d",
         "GUID:73e01b9957cafa846bac66e174b2e0dd"

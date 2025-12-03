@@ -72,8 +72,14 @@ namespace Droppy.WaterLevel
 
             float finalWaterLevel = StatManager.Read(waterStat);
             int starCount = 1;
-            if (finalWaterLevel >= twoStarsWaterThreshold) starCount++;
-            if (finalWaterLevel >= threeStarsWaterThreshold) starCount++;
+            if (finalWaterLevel >= twoStarsWaterThreshold)
+            {
+                starCount++;
+            }
+            if (finalWaterLevel >= threeStarsWaterThreshold)
+            {
+                starCount++;
+            }
 
             viewModel.RequestVictory(endScreenQuotes, starCount);
         }
