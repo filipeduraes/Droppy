@@ -10,9 +10,11 @@ namespace Droppy.FaucetsMinigame
     {
         [Header("Settings")]
         [SerializeField] private float requiredHoldTime = 1.2f;
+        [SerializeField] private Animator animator;
+        [SerializeField] private string openAnimationState = "Open";
+        [SerializeField] private string closeAnimationState = "Close";
 
         [Header("Dependencies")]
-        [SerializeField] private GameObject water;
         [SerializeField] private StatModifierTime modifier;
 
         public event Action OnStartClosing = delegate { };
@@ -21,14 +23,16 @@ namespace Droppy.FaucetsMinigame
         
         private bool isOpened = false;
         private Coroutine holdCoroutine;
-
+        
         public void SetOpen(bool newIsOpened)
         {
             if (isOpened != newIsOpened)
             {
                 isOpened = newIsOpened;
-                water.SetActive(isOpened);
                 modifier.enabled = isOpened;
+                
+                string animationState = isOpened ? openAnimationState : closeAnimationState;
+                animator.Play(animationState);
 
                 if (!isOpened)
                 {
@@ -57,6 +61,12 @@ namespace Droppy.FaucetsMinigame
             {
                 StopCoroutine(holdCoroutine);
             }
+        }
+        
+        [ContextMenu("Open")]
+        private void Open()
+        {
+            SetOpen(true);
         }
 
         private IEnumerator CloseSequence()
