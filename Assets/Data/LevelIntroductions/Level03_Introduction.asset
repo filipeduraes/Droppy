@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1809aec58ac41aface0b30ab64030aa, type: 3}
   m_Name: Level03_Introduction
   m_EditorClassIdentifier: 
-  title: A Grande Chuva
-  description: "A gotinha est\xE1 caindo! \nDesvie da sujeira e passe pelos filtros
-    para que a chuva n\xE3o fique \xE1cida."
-  image: {fileID: 21300000, guid: 7150dc342d4bb0c43abaec9bbad77906, type: 3}
+  title: "Esta\xE7\xE3o de Tratamento"
+  description: "Gire os canos e conduza a gotinha pelos filtros da esta\xE7\xE3o
+    sem vazamentos."
+  image: {fileID: 21300000, guid: 4f5d1a1ebf887424ab125da4850c1e4f, type: 3}
