@@ -5,7 +5,7 @@ using Droppy.Shared;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Droppy.Level
+namespace Droppy.LevelSystem
 {
     public class LevelController : MonoBehaviour
     {

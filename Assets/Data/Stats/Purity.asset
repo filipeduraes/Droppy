@@ -15,3 +15,6 @@ MonoBehaviour:
   id: Purity
   displayName: Pureza
   initialAmount: 100
+  clampValue: 1
+  clampMin: 0
+  clampMax: 100

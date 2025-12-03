@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-namespace Droppy.Level
+namespace Droppy.LevelSystem
 {
     public class SceneLoader : MonoBehaviour 
     {

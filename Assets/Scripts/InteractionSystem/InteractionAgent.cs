@@ -9,6 +9,7 @@ namespace Droppy.InteractionSystem
         
         private void OnTriggerEnter2D(Collider2D other)
         {
+            currentInteractables.Add(other.gameObject);
             IEnterInteractableArea[] enterInteractables = other.GetComponents<IEnterInteractableArea>();
 
             foreach (IEnterInteractableArea enterInteractable in enterInteractables)

@@ -72,8 +72,6 @@ MonoBehaviour:
   statModifierTrigger: {fileID: -4545394416908472236}
   obstacleCollider: {fileID: -1281271083008275559}
   body: {fileID: -1598445967865235479}
-  animator: {fileID: 9193561178584311691}
-  deathAnimationStateName: Death
 --- !u!114 &8428370275465932888
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -150,7 +148,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.25
 --- !u!1 &5647100413623042152
 GameObject:
   m_ObjectHideFlags: 0
