@@ -10,6 +10,8 @@ namespace Droppy.PieceMinigame.Runtime
         [SerializeField] private SpriteRenderer visual;
 
         public PieceDirection Direction { get; private set; }
+        public bool IsFull { get; private set; }
+        public bool IsLocked => pieceData.IsLocked;
         
         public Vector2Int Index { get; private set; }
         private PieceData pieceData;
@@ -23,10 +25,19 @@ namespace Droppy.PieceMinigame.Runtime
             Direction = pieceData.DefaultDirections.RotateClockwise(cellData.RotationSteps);
             transform.Rotate(-Vector3.forward, cellData.RotationSteps * 90.0f);
         }
+
+        public void Fill()
+        {
+            visual.sprite = pieceData.FullSprite;
+            IsFull = true;
+        }
         
         public void Interact(GameObject agent)
         {
-            RotateClockwise();
+            if (!IsFull)
+            {
+                RotateClockwise();
+            }
         }
 
         private void RotateClockwise()

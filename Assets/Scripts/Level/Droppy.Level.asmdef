@@ -1,7 +1,10 @@
 {
     "name": "Droppy.Level",
     "rootNamespace": "Droppy.Level",
-    "references": [],
+    "references": [
+        "GUID:ee1c39d5f8f43b34f82f22d313ce3fd5",
+        "GUID:270a0727451ff224bba670c78283e56a"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

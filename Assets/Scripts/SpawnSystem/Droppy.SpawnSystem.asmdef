@@ -2,7 +2,8 @@
     "name": "Droppy.SpawnSystem",
     "rootNamespace": "",
     "references": [
-        "GUID:cbd241c69fba31f4699fe18ca25a53b4"
+        "GUID:cbd241c69fba31f4699fe18ca25a53b4",
+        "GUID:ee1c39d5f8f43b34f82f22d313ce3fd5"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

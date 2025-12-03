@@ -105,6 +105,7 @@ GameObject:
   m_Component:
   - component: {fileID: 424920530971516611}
   - component: {fileID: 4985420556378424752}
+  - component: {fileID: 36073942425998688}
   m_Layer: 0
   m_Name: Level03_Pipes
   m_TagString: Untagged
@@ -142,6 +143,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 314fbeff3b864138bb6cfd7946d01a3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  viewModel: {fileID: 11400000, guid: f6aeb7aa5540ba64dad995c5cf7b1d28, type: 2}
+  data: {fileID: 11400000, guid: b56f05fff621f6e48a7652bacef5f686, type: 2}
+--- !u!114 &36073942425998688
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2574817720373371305}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d0fc96e38770d64bb000ba55b4afc84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flowController: {fileID: 3162299336133908061}
+  gridContainer: {fileID: 4860617076456175727}
+  viewModel: {fileID: 11400000, guid: 5b6f764f903925248a379f76af31076c, type: 2}
+  endScreenQuotes: {fileID: 11400000, guid: e071c141d4ea5d2489853f7429af1cc5, type: 2}
 --- !u!1 &3451597678178725684
 GameObject:
   m_ObjectHideFlags: 0
@@ -154,6 +173,7 @@ GameObject:
   - component: {fileID: 4860617076456175727}
   - component: {fileID: 4307812496727926208}
   - component: {fileID: 3162299336133908061}
+  - component: {fileID: 3648706526578500993}
   m_Layer: 0
   m_Name: Grid
   m_TagString: Untagged
@@ -206,6 +226,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   container: {fileID: 4860617076456175727}
+  flowController: {fileID: 3162299336133908061}
+  portSize: 0.15
+  visitedPortSize: 0.25
+  fontSize: 20
 --- !u!114 &3162299336133908061
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -218,6 +242,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05a74011d1c74a638f1d8701c47eb091, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gridContainer: {fileID: 4860617076456175727}
+  secondsBeforeStartFlow: 5
+  secondsBetweenUpdates: 1
+--- !u!114 &3648706526578500993
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3451597678178725684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e3757fff85d4244822e3dd7e7eb87a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flowController: {fileID: 3162299336133908061}
   gridContainer: {fileID: 4860617076456175727}
 --- !u!1 &5471062214313213972
 GameObject:

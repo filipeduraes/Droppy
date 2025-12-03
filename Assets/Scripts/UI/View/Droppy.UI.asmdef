@@ -1,0 +1,19 @@
+{
+    "name": "Droppy.UI",
+    "rootNamespace": "Droppy.UI",
+    "references": [
+        "GUID:29d42cea2fe0ea647ab647f1cb95cf68",
+        "GUID:6055be8ebefd69e48b49212b09b47b2f",
+        "GUID:270a0727451ff224bba670c78283e56a",
+        "GUID:ee1c39d5f8f43b34f82f22d313ce3fd5"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
