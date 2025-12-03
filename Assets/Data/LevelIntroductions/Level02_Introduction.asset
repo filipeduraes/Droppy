@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1809aec58ac41aface0b30ab64030aa, type: 3}
   m_Name: Level02_Introduction
   m_EditorClassIdentifier: 
-  title: A Grande Chuva
-  description: "A gotinha est\xE1 caindo! \nDesvie da sujeira e passe pelos filtros
-    para que a chuva n\xE3o fique \xE1cida."
-  image: {fileID: 21300000, guid: 7150dc342d4bb0c43abaec9bbad77906, type: 3}
+  title: "Corrida Contra o Desperd\xEDcio"
+  description: "Feche as torneiras para evitar desperd\xEDcio e use os baldes para
+    reaproveitar a \xE1gua."
+  image: {fileID: 21300000, guid: 2da0924330e279544993caac3bc3158a, type: 3}
