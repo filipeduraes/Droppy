@@ -803,7 +803,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9117702915600419348}
-  - component: {fileID: 788005734071591192}
   m_Layer: 0
   m_Name: Torneiras
   m_TagString: Untagged
@@ -826,18 +825,3 @@ Transform:
   m_Children: []
   m_Father: {fileID: 3461335166404509023}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &788005734071591192
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7997880441835740436}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d8c29971a212865408351a9102b9d782, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  faucetPrefab: {fileID: 270465744745618042, guid: c9b7abd601629824db108b1d3a6e3af5, type: 3}
-  spawnArea: {fileID: 3105087259593974305}
-  maxSimultaneous: 10

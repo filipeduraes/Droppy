@@ -456,6 +456,8 @@ MonoBehaviour:
   levelSequence:
   - {fileID: 4158045264625507649, guid: ec6f51be63205d946babca19f37b5668, type: 3}
   - {fileID: 2556134743077185624, guid: 3c675df59d7d95a44bd73a592ab0bb7c, type: 3}
+  - {fileID: 4985420556378424752, guid: 156f5cf0be73ee148969cc38f2d81314, type: 3}
+  - {fileID: 5321038696775741435, guid: b95bc3031ab761440806aecbbaeaf705, type: 3}
   fadeImage: {fileID: 729263371}
   fadeDuration: 1
 --- !u!4 &680456216
@@ -776,7 +778,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 3
+  orthographic size: 4
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -801,7 +803,7 @@ Transform:
   m_GameObject: {fileID: 2084021772}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 27.354736, z: 168.26198}
+  m_LocalPosition: {x: 0, y: 27.354736, z: 159.69026}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
