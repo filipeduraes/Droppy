@@ -9,12 +9,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 700116068847418696}
-  - component: {fileID: 6930207315850179767}
+  - component: {fileID: 2630588864005492664}
   - component: {fileID: 2822483637838584302}
-  - component: {fileID: 327144906945293233}
+  - component: {fileID: 6930207315850179767}
   - component: {fileID: 3014233447432203504}
-  m_Layer: 0
-  m_Name: Torneira Prefab
+  m_Layer: 7
+  m_Name: Faucet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -36,6 +36,38 @@ Transform:
   - {fileID: 373714472032216632}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2630588864005492664
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 270465744745618042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 231933a1211e95c4a8098558a0326b9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  requiredHoldTime: 1.2
+  water: {fileID: 8346744009344723144}
+  modifier: {fileID: 2822483637838584302}
+--- !u!114 &2822483637838584302
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 270465744745618042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b2f8d48b2d1c8743b6c690015e53096, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetStat: {fileID: 11400000, guid: f94bd6f587c83864a87be9b2235f8a10, type: 2}
+  statModifier:
+    type: 2
+    amount: -1
+  intervalSeconds: 2
 --- !u!212 &6930207315850179767
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -88,38 +120,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &2822483637838584302
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 270465744745618042}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b2f8d48b2d1c8743b6c690015e53096, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetStat: {fileID: 11400000, guid: f94bd6f587c83864a87be9b2235f8a10, type: 2}
-  statModifier:
-    type: 2
-    amount: -1
-  intervalSeconds: 2
---- !u!114 &327144906945293233
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 270465744745618042}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e0e7a95047dba64db4ba35c37e3048b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  manager: {fileID: 0}
-  water: {fileID: 8346744009344723144}
-  modifier: {fileID: 2822483637838584302}
 --- !u!61 &3014233447432203504
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -149,10 +149,10 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 1}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -163,7 +163,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 9.8, y: 12.25}
+  m_Size: {x: 2, y: 2}
   m_EdgeRadius: 0
 --- !u!1 &8346744009344723144
 GameObject:
@@ -175,7 +175,7 @@ GameObject:
   m_Component:
   - component: {fileID: 373714472032216632}
   - component: {fileID: 6527798736243314107}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Water
   m_TagString: Untagged
   m_Icon: {fileID: 0}

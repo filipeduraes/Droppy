@@ -1,35 +1,36 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
+using Droppy.Shared;
 using UnityEngine;
 
 namespace Droppy.FaucetsMinigame
 {
     public class FaucetsManager : MonoBehaviour
     {
-        [Header("Torneiras existentes na cena")]
-        [SerializeField] private List<FaucetController> faucets;
-
-        [Header("Intervalo entre aberturas aleatórias")]
+        [SerializeField] private List<Faucet> faucets;
         [SerializeField] private float minTime = 1.5f;
         [SerializeField] private float maxTime = 3.5f;
 
-        private readonly List<FaucetController> activeFaucets = new();
-        private float timer;
+        private readonly List<Faucet> closedFaucets = new();
+        private float timer = 0;
 
         private void OnEnable()
         {
-            FaucetController.OnFaucetClosed += HandleFaucetClosed;
+            foreach (Faucet faucet in faucets)
+            {
+               closedFaucets.Add(faucet);
+               faucet.SetOpen(false);
+               faucet.OnClosed += HandleClosed;
+            }
+            
+            StartTimer();
         }
 
         private void OnDisable()
         {
-            FaucetController.OnFaucetClosed -= HandleFaucetClosed;
-        }
-
-        private void Start()
-        {
-            ResetTimer();
+            foreach (Faucet faucet in faucets)
+            {
+                faucet.OnClosed -= HandleClosed;
+            }
         }
 
         private void Update()
@@ -39,34 +40,33 @@ namespace Droppy.FaucetsMinigame
             if (timer <= 0f)
             {
                 OpenRandomFaucet();
-                ResetTimer();
+                StartTimer();
             }
         }
 
-        private void ResetTimer()
+        private void StartTimer()
         {
-            timer = UnityEngine.Random.Range(minTime, maxTime);
-
+            timer = Random.Range(minTime, maxTime);
         }
 
         private void OpenRandomFaucet()
         {
-            List<FaucetController> closed = faucets.Where(f => !f.IsOpen).ToList();
-
-            if (closed.Count == 0)
+            if (closedFaucets.Count == 0)
+            {
                 return;
+            }
 
-            FaucetController chosen = closed[UnityEngine.Random.Range(0, closed.Count)];
-
-            chosen.Open();
-            activeFaucets.Add(chosen);
+            Faucet chosen = closedFaucets.GetRandomElement();
+            chosen.SetOpen(true);
+            closedFaucets.Remove(chosen);
         }
 
-        private void HandleFaucetClosed(FaucetController faucet)
+        private void HandleClosed(Faucet faucet)
         {
-            activeFaucets.Remove(faucet);
+            if (!closedFaucets.Contains(faucet))
+            {
+                closedFaucets.Add(faucet);
+            }
         }
-
-
     }
 }
