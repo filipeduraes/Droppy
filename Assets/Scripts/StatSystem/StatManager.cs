@@ -1,5 +1,6 @@
 using System;
 using IdeaToGame.PersistenceSystem;
+using UnityEngine;
 
 namespace Droppy.StatSystem
 {
@@ -25,6 +26,11 @@ namespace Droppy.StatSystem
                 _ => currentStatValue
             };
 
+            if (stat.ClampValue)
+            {
+                finalStatValue = Mathf.Clamp(finalStatValue, stat.ClampMin, stat.ClampMax);
+            }
+            
             Persistence.StoreData(GetStatKey(stat), finalStatValue);
             OnStatModified(stat.ID);
         }

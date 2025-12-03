@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using Droppy.Shared;
 using IdeaToGame.ObjectPooling;
 
 
@@ -10,7 +11,13 @@ namespace Droppy.SpawnSystem
         [SerializeField] private SpawnerData data;
         [SerializeField] private List<Transform> spawnPoints = new();
         [SerializeField] private bool destroyAllOnDisable = true;
+        [SerializeField] private bool startOnAwake = false;
+        [SerializeField] private bool preventSpawnOnSamePoint = false;
 
+        private readonly Dictionary<Transform, Transform> occupiedSlots = new();
+        private List<Transform> freeSlots;
+
+        private bool isRunning = false;
         private float lastSpawnTime;
         private float totalWeight;
 
@@ -24,6 +31,16 @@ namespace Droppy.SpawnSystem
                 {
                     totalWeight += spawnable.Weight;
                 }
+            }
+
+            if (preventSpawnOnSamePoint)
+            {
+                freeSlots.AddRange(spawnPoints);
+            }
+
+            if (startOnAwake)
+            {
+                StartSpawner();
             }
         }
 
@@ -39,14 +56,34 @@ namespace Droppy.SpawnSystem
 
         private void Update()
         {
-            if (Time.time > lastSpawnTime)
+            if (isRunning && Time.time > lastSpawnTime)
             {
                 SpawnObject();
             }
         }
+        
+        public void StartSpawner()
+        {
+            isRunning = true;
+        }
+
+        public void StopSpawner()
+        {
+            isRunning = false;
+        }
 
         private void SpawnObject()
         {
+            if (preventSpawnOnSamePoint)
+            {
+                UpdateOccupiedSlots();
+
+                if (occupiedSlots.Count == spawnPoints.Count)
+                {
+                    return;
+                }
+            }
+            
             GameObject prefabToSpawn = ChooseSpawnable();
             Transform spawnPoint = ChooseSpawnPoint();
             Transform spawnedTransform = ObjectPool.GetFromPool(prefabToSpawn.transform);
@@ -55,6 +92,12 @@ namespace Droppy.SpawnSystem
             
             float interval = Random.Range(data.MinSpawnInterval, data.MaxSpawnInterval);
             lastSpawnTime = Time.time + interval;
+
+            if (preventSpawnOnSamePoint)
+            {
+                occupiedSlots[spawnPoint] = spawnedTransform;
+                freeSlots.Remove(spawnPoint);
+            }
         }
         
         private GameObject ChooseSpawnable()
@@ -83,11 +126,34 @@ namespace Droppy.SpawnSystem
         {
             if (spawnPoints != null && spawnPoints.Count != 0)
             {
-                int index = Random.Range(0, spawnPoints.Count);
-                return spawnPoints[index];
+                if (preventSpawnOnSamePoint)
+                {
+                    return freeSlots.GetRandomElement();
+                }
+                
+                return spawnPoints.GetRandomElement();
             }
 
             return null;
+        }
+
+        private void UpdateOccupiedSlots()
+        {
+            HashSet<Transform> slotsToRemove = new();
+            
+            foreach ((Transform slot, Transform spawnedObject) in occupiedSlots)
+            {
+                if (!spawnedObject.gameObject.activeSelf)
+                {
+                    slotsToRemove.Add(slot);
+                }
+            }
+
+            foreach (Transform slot in slotsToRemove)
+            {
+                occupiedSlots.Remove(slot);
+                freeSlots.Add(slot);
+            }
         }
     }
 }
