@@ -3,40 +3,47 @@ using Droppy.ServiceLocatorSystem;
 
 namespace Droppy.Player 
 {
-    [RequireComponent(typeof(Rigidbody2D))] 
+    public enum PlayerType
+    {
+        VerticalScroller,
+        Platformer
+    }
+    
     public class HorizontalDroppyController : PlayerController
     {
         [Header("Movement Settings")]
-        [Tooltip("The maximum horizontal speed of the droplet (unidades por segundo).")]
         [SerializeField] private float movementSpeed = 7f;
+        [SerializeField] private PlayerType playerType = PlayerType.VerticalScroller;
+        [SerializeField] private Rigidbody2D body;
+        [SerializeField] private Animator animator;
         
         [Header("Screen Bounds")]
         [SerializeField] private float screenPadding = 0.5f;
         
-        [Header("Jump Settings")]
-        [Tooltip("If true, enables jumping and ground checking logic.")]
-        [SerializeField] private bool jumpEnabled = true;
-        [SerializeField] private float jumpForce = 400f;
+        [Header("Platformer Settings")]
+        [SerializeField] private float jumpVelocity = 1.0f;
+        [SerializeField] private float fallGravity = 3.0f;
+        [SerializeField] private float jumpGravity = 1.0f;
+        [SerializeField] private float walkGravity = 0.0f;
+        [SerializeField] private float minJumpTime = 0.2f;
         
         [Header("Ground Check")]
-        [Tooltip("A LayerMask que define o que é considerado chão.")]
         [SerializeField] private LayerMask groundLayer;
-        [Tooltip("Distância máxima que o raycast irá percorrer para checar o chão.")]
         [SerializeField] private float groundCheckDistance = 0.1f;
         
-        private Rigidbody2D _rigidbody2D; 
-        private Camera _mainCamera;
-        private bool _isGrounded = false;
-        private float _currentMoveDirection = 0f; 
-
-        protected void Awake()
-        {
-            _rigidbody2D = GetComponent<Rigidbody2D>();
-        }
+        private Camera mainCamera;
+        private bool isGrounded = false;
+        private bool isFalling = false;
+        private bool jumpCanceled = false;
+        private float timeFromLastJump = 0.0f;
+        private float currentMoveDirection = 0f;
         
+        private static readonly int IsMovingParameter = Animator.StringToHash("IsMoving");
+        private static readonly int XDirectionParameter = Animator.StringToHash("XDirection");
+
         private void Start()
         {
-            ServiceLocator.TryGetService(out _mainCamera);
+            ServiceLocator.TryGetService(out mainCamera);
         }
 
         protected override void OnEnable()
@@ -46,100 +53,132 @@ namespace Droppy.Player
             input.OnMoveStarted += OnMovementStart;
             input.OnMoveCanceled += OnMovementEnd;
             
-            if (jumpEnabled)
+            if (playerType == PlayerType.Platformer)
             {
                 input.OnJumpStarted += OnJump;
+                input.OnJumpCanceled += CancelJump;
             }
         }
 
         protected override void OnDisable()
         {
+            base.OnDisable(); 
+            
             input.OnMoveStarted -= OnMovementStart;
             input.OnMoveCanceled -= OnMovementEnd;
             
-            if (jumpEnabled)
+            if (playerType == PlayerType.Platformer)
             {
                 input.OnJumpStarted -= OnJump;
+                input.OnJumpCanceled -= CancelJump;
             }
-
-            base.OnDisable(); 
         }
-        
+
         private void FixedUpdate() 
         {
-            if (jumpEnabled)
+            if (playerType == PlayerType.Platformer)
             {
                 CheckIfGrounded();
+
+                bool isJumping = !isGrounded && !isFalling;
+                bool jumpWasCanceled = timeFromLastJump >= minJumpTime && jumpCanceled;
+                bool isStartingToFall = body.velocity.y < 0;
+                bool canApplyFallGravity = isJumping && (jumpWasCanceled || isStartingToFall);
+                bool finishedFall = isFalling && isGrounded;
+                
+                if (canApplyFallGravity)
+                {
+                    isFalling = true;
+                    body.gravityScale = fallGravity;
+                }
+
+                if (finishedFall)
+                {
+                    isFalling = false;
+                    body.gravityScale = walkGravity;
+                }
+            }
+            else if (playerType == PlayerType.VerticalScroller)
+            {
+                ClampPosition(); 
             }
             
             HandleHorizontalMovement(); 
         }
 
-        private void LateUpdate()
-        {
-            if (!_mainCamera) return;
-            ClampPosition(); 
-        }
-
         private void OnMovementStart()
         {
-            _currentMoveDirection = input.MoveInput.x;
+            currentMoveDirection = input.MoveInput.x;
         }
 
         private void OnMovementEnd()
         {
-            _currentMoveDirection = 0f;
+            currentMoveDirection = 0f;
         }
 
         private void OnJump()
         {
-            if (_isGrounded)
+            if (isGrounded)
             {
-                _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, 0f);
+                Vector2 velocity = body.velocity;
+                velocity.y = jumpVelocity;
+                body.velocity = velocity;
+                body.gravityScale = jumpGravity;
+
+                timeFromLastJump = Time.time;
+            }
+        }
         
-                _rigidbody2D.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+        private void CancelJump()
+        {
+            if (!isFalling && !isGrounded)
+            {
+                if (timeFromLastJump < minJumpTime)
+                {
+                    jumpCanceled = true;
+                    return;
+                }
+                
+                Vector2 velocity = body.velocity;
+                velocity.y = 0.0f;
+                body.velocity = velocity;
+                body.gravityScale = fallGravity;
             }
         }
         
         private void HandleHorizontalMovement()
         {
-            if (_rigidbody2D.IsSleeping()) 
-            {
-                _rigidbody2D.WakeUp();
-            }
-
-            Vector2 targetVelocity = new Vector2(
-                _currentMoveDirection * movementSpeed, 
-                _rigidbody2D.velocity.y 
-            );
+            Vector2 targetVelocity = body.velocity;
+            targetVelocity.x = currentMoveDirection * movementSpeed;
             
-            _rigidbody2D.velocity = targetVelocity;
+            body.velocity = targetVelocity;
+
+            animator.SetBool(IsMovingParameter, body.velocity.x != 0 && isGrounded);
+
+            if (body.velocity.x != 0)
+            {
+                animator.SetFloat(XDirectionParameter, body.velocity.x);
+            }
         }
 
         private void CheckIfGrounded()
         {
             Vector2 origin = transform.position;
             
-            RaycastHit2D hit = Physics2D.Raycast(
-                origin, 
-                Vector2.down, 
-                groundCheckDistance, 
-                groundLayer
-            );
+            RaycastHit2D hit = Physics2D.Raycast(origin, Vector2.down, groundCheckDistance, groundLayer);
             
-            _isGrounded = hit.collider;
+            isGrounded = hit.collider;
         }
         
         private void ClampPosition()
         {
-            Vector2 screenBounds = _mainCamera.ScreenToWorldPoint(
-                new Vector3(Screen.width, Screen.height, _mainCamera.transform.position.z)
-            );
+            Vector3 screenBoundsPosition = new(Screen.width, Screen.height, mainCamera.transform.position.z);
+            Vector2 screenBounds = mainCamera.ScreenToWorldPoint(screenBoundsPosition);
 
             Vector3 currentPosition = transform.position;
 
-            float minX = -screenBounds.x + screenPadding;
-            float maxX = screenBounds.x - screenPadding;
+            float minX = mainCamera.transform.position.x + -screenBounds.x + screenPadding;
+            float maxX = mainCamera.transform.position.x + screenBounds.x - screenPadding;
 
             float clampedX = Mathf.Clamp(currentPosition.x, minX, maxX);
             

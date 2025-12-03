@@ -160,7 +160,19 @@ MonoBehaviour:
   input: {fileID: 6418123335356367300}
   interactionAgent: {fileID: 3081259400468177472}
   movementSpeed: 7
+  playerType: 0
+  body: {fileID: 7045540717463097311}
+  animator: {fileID: 2801751712236884261}
   screenPadding: 1
+  jumpVelocity: 1
+  fallGravity: 3
+  jumpGravity: 1
+  walkGravity: 0
+  minJumpTime: 0.2
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  groundCheckDistance: 0.1
 --- !u!114 &6418123335356367300
 MonoBehaviour:
   m_ObjectHideFlags: 0
