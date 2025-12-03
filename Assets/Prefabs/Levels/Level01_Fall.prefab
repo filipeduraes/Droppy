@@ -744,6 +744,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: VerticalDroppy
       objectReference: {fileID: 0}
+    - target: {fileID: 8643099537550013140, guid: 50a7b45fcc1bf1f48973844b50ea5c2e, type: 3}
+      propertyPath: jumpEnabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

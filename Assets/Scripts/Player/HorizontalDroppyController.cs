@@ -14,18 +14,19 @@ namespace Droppy.Player
         [SerializeField] private float screenPadding = 0.5f;
         
         [Header("Jump Settings")]
-        [SerializeField] private float jumpForce = 5f;
+        [Tooltip("If true, enables jumping and ground checking logic.")]
+        [SerializeField] private bool jumpEnabled = true;
+        [SerializeField] private float jumpForce = 400f;
         
         [Header("Ground Check")]
         [Tooltip("A LayerMask que define o que é considerado chão.")]
         [SerializeField] private LayerMask groundLayer;
         [Tooltip("Distância máxima que o raycast irá percorrer para checar o chão.")]
-        [SerializeField] private float groundCheckDistance = 0.2f;
+        [SerializeField] private float groundCheckDistance = 0.1f;
         
         private Rigidbody2D _rigidbody2D; 
         private Camera _mainCamera;
         private bool _isGrounded = false;
-        
         private float _currentMoveDirection = 0f; 
 
         protected void Awake()
@@ -44,31 +45,42 @@ namespace Droppy.Player
             
             input.OnMoveStarted += OnMovementStart;
             input.OnMoveCanceled += OnMovementEnd;
-            input.OnJumpStarted += OnJump;
+            
+            if (jumpEnabled)
+            {
+                input.OnJumpStarted += OnJump;
+            }
         }
 
         protected override void OnDisable()
         {
             input.OnMoveStarted -= OnMovementStart;
             input.OnMoveCanceled -= OnMovementEnd;
-            input.OnJumpStarted -= OnJump;
+            
+            if (jumpEnabled)
+            {
+                input.OnJumpStarted -= OnJump;
+            }
 
             base.OnDisable(); 
         }
         
         private void FixedUpdate() 
         {
-            CheckIfGrounded();
+            if (jumpEnabled)
+            {
+                CheckIfGrounded();
+            }
+            
             HandleHorizontalMovement(); 
         }
 
         private void LateUpdate()
         {
             if (!_mainCamera) return;
-    
             ClampPosition(); 
         }
-        
+
         private void OnMovementStart()
         {
             _currentMoveDirection = input.MoveInput.x;
