@@ -177,6 +177,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3461335166404509023}
   - component: {fileID: 2556134743077185624}
+  - component: {fileID: 1187024467378301098}
   m_Layer: 0
   m_Name: Level02_Faucets
   m_TagString: Untagged
@@ -221,6 +222,23 @@ MonoBehaviour:
   viewModel: {fileID: 11400000, guid: f6aeb7aa5540ba64dad995c5cf7b1d28, type: 2}
   data: {fileID: 11400000, guid: ab2211d4648f0bb40934cf3b2c15ae39, type: 2}
   timeBeforeLevelStart: 2
+--- !u!114 &1187024467378301098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6199485753731328110}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f60ca26702e4b1e4f9f9e59188cddebe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  viewModel: {fileID: 11400000, guid: 5b6f764f903925248a379f76af31076c, type: 2}
+  endScreenQuotes: {fileID: 11400000, guid: 334b7a82586fa45428f68301a15aab4f, type: 2}
+  waterStat: {fileID: 11400000, guid: f94bd6f587c83864a87be9b2235f8a10, type: 2}
+  twoStarsWaterThreshold: 50
+  threeStarsWaterThreshold: 90
 --- !u!1 &7552531646630899133
 GameObject:
   m_ObjectHideFlags: 0

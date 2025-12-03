@@ -153,11 +153,14 @@ namespace Droppy.Player
             
             body.velocity = targetVelocity;
 
-            animator.SetBool(IsMovingParameter, body.velocity.x != 0 && isGrounded);
-
-            if (body.velocity.x != 0)
+            if (playerType == PlayerType.Platformer)
             {
-                animator.SetFloat(XDirectionParameter, body.velocity.x);
+                animator.SetBool(IsMovingParameter, body.velocity.x != 0 && isGrounded);
+
+                if (body.velocity.x != 0)
+                {
+                    animator.SetFloat(XDirectionParameter, body.velocity.x);
+                }
             }
         }
 

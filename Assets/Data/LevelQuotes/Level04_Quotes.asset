@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd9e75e0e1104e6880cb41d0032732c0, type: 3}
+  m_Name: Level04_Quotes
+  m_EditorClassIdentifier: 
+  victoryStarQuotes:
+  - quotes:
+    - 1 estrela
+    - "Passou raspando! Pot\xE1vel, mas com gosto estranho."
+    - "Ainda est\xE1 meio turva, mas serve."
+  - quotes:
+    - 2 estrelas
+    - Clara e sem cheiro. Pronta para o copo.
+    - "Muito boa! Mas ainda d\xE1 para brilhar mais"
+  - quotes:
+    - 3 estrelas
+    - Qualidade de nascente! 100% Cristalina.
+    - "Transpar\xEAncia absoluta. Perfei\xE7\xE3o."
+  defeatQuotes:
+    quotes:
+    - "Impr\xF3pria para consumo. Reprovada no teste."
+    - "Risco Biol\xF3gico! N\xE3o beba isso."

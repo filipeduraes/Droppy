@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd9e75e0e1104e6880cb41d0032732c0, type: 3}
+  m_Name: Level01_Quotes
+  m_EditorClassIdentifier: 
+  victoryStarQuotes:
+  - quotes:
+    - 1 estrela
+    - "Sou \xE1gua ou sou caf\xE9? N\xE3o d\xE1 nem para saber mais"
+    - Cheguei! Mas vou precisar de um filtro industrial agora.
+  - quotes:
+    - 2 estrelas
+    - Ufa! Cheguei... mas preciso urgente de um banho.
+    - "Algu\xE9m tem um sab\xE3o a\xED? A coisa ficou feia no caminho."
+  - quotes:
+    - 3 estrelas
+    - Brilhando como um diamante!
+    - Nenhuma sujeira ousa encostar em mim!
+  defeatQuotes:
+    quotes:
+    - Sua gotinha ficou muito suja! Tente novamente
+    - A pureza se perdeu completamente. Tente evitar o lixo.

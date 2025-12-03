@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd9e75e0e1104e6880cb41d0032732c0, type: 3}
+  m_Name: Level02_Quotes
+  m_EditorClassIdentifier: 
+  victoryStarQuotes:
+  - quotes:
+    - 1 estrela
+    - "Quase que sua gotinha vai embora! Voc\xEA consegue melhor!"
+    - "Sobrou s\xF3 o pingo do 'i'."
+  - quotes:
+    - 2 estrelas
+    - "O copo est\xE1 meio cheio... ou meio vazio?"
+    - "Volume aceit\xE1vel. Ainda d\xE1 para molhar!"
+  - quotes:
+    - 3 estrelas
+    - "Nenhuma gota deixada para tr\xE1s!"
+    - "Cheia de vida. Pontua\xE7\xE3o m\xE1xima!"
+  defeatQuotes:
+    quotes:
+    - "O seu n\xEDvel de \xE1gua ficou muito baixo! Tente novamente!"
+    - "Secou! N\xE3o sobrou nem uma gota para contar hist\xF3ria."

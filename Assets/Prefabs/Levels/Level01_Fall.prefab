@@ -409,6 +409,7 @@ GameObject:
   - component: {fileID: 989079832946548018}
   - component: {fileID: 5122977213941386095}
   - component: {fileID: 2003711062951703725}
+  - component: {fileID: 7003720325437481061}
   m_Layer: 0
   m_Name: Level01_Fall
   m_TagString: Untagged
@@ -467,6 +468,25 @@ MonoBehaviour:
   modifier:
     type: 0
     amount: 100
+--- !u!114 &7003720325437481061
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6523549400735856041}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db707d1ca564d51449d34436cb7a4b84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  viewModel: {fileID: 11400000, guid: 5b6f764f903925248a379f76af31076c, type: 2}
+  endScreenQuotes: {fileID: 11400000, guid: 8053c6862c764c848b01e2ccd1fee2d7, type: 2}
+  purityStat: {fileID: 11400000, guid: e4605c35162d1ff4c8a0091de356df1b, type: 2}
+  timeStat: {fileID: 11400000, guid: 7f5d82abe3de078468e16076d73bb99d, type: 2}
+  levelDuration: 60
+  secondaryPurityThreshold: 50
+  tertiaryPurityThreshold: 95
 --- !u!1 &6597330772710121504
 GameObject:
   m_ObjectHideFlags: 0
