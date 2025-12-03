@@ -10,6 +10,7 @@
   <Project Path="Droppy.Obstacle.csproj" />
   <Project Path="Droppy.InteractionSystem.csproj" />
   <Project Path="Droppy.PieceMinigame.Data.csproj" />
+  <Project Path="Droppy.WaterLevel.csproj" />
   <Project Path="Droppy.Level.csproj" />
   <Project Path="Droppy.VerticalGame.csproj" />
   <Project Path="Droppy.Input.csproj" />
@@ -17,7 +18,6 @@
   <Project Path="Droppy.UI.ViewModel.csproj" />
   <Project Path="Droppy.VerticalScrollerMinigame.Level.csproj" />
   <Project Path="Droppy.PieceMinigame.Editor.csproj" />
-  <Project Path="Droppy.WaterLevel.csproj" />
   <Project Path="Droppy.UI.csproj" />
   <Project Path="Droppy.UIBridge.csproj" />
 </Solution>

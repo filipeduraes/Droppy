@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77101eda14e02524c956dc2087055318, type: 3}
   m_Name: LevelTimer
   m_EditorClassIdentifier: 
-  id: level_time
-  displayName: Timer
+  id: 
+  displayName: 
   initialAmount: 0
+  clampValue: 0
+  clampMin: 0
+  clampMax: 100
