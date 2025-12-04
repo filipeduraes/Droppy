@@ -13,7 +13,6 @@ namespace Droppy.FaucetsMinigame
         
         [Header("Animation")]
         [SerializeField] private Animator animator;
-        [SerializeField] private string showAnimationState = "Show";
         [SerializeField] private string hideAnimationState = "Hide";
 
         private void Awake()

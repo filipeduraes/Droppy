@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using Droppy.UI.ViewModel;
 using Droppy.StatSystem;
@@ -12,25 +13,22 @@ namespace Droppy.VerticalGame
         [SerializeField] private EndScreenResultQuotes endScreenQuotes;
 
         [Header("Stats Assets")]
-        [Tooltip("O Stat que representa a pureza da água.")]
         [SerializeField] private Stat purityStat;
-
-        [Tooltip("Arraste o Stat 'LevelTime' aqui.")]
         [SerializeField] private Stat timeStat;
 
-        [Header("Configurações da Fase")]
-        [Tooltip("Tempo total em segundos.")]
+        [Header("ConfiguraÃ§Ãµes da Fase")]
         [SerializeField] private float levelDuration = 60f;
 
         [Header("Objetivos (Pureza)")]
         [SerializeField] private float secondaryPurityThreshold = 50f;
         [SerializeField] private float tertiaryPurityThreshold = 95f;
 
-        private Coroutine _timerCoroutine;
+        public event Action OnLevelFinished = delegate { }; 
+        private Coroutine timerCoroutine;
 
         private void Start()
         {
-            StartTimer();
+            StatManager.Modify(timeStat, new StatModifier(StatModifierType.Set, levelDuration));
         }
 
         private void OnEnable()
@@ -42,28 +40,29 @@ namespace Droppy.VerticalGame
         {
             StatManager.OnStatModified -= OnStatChanged;
         }
-        private void StartTimer()
+        
+        public void StartTimer()
         {
             if (timeStat != null)
             {
-                _timerCoroutine = StartCoroutine(LevelTimerRoutine());
+                timerCoroutine = StartCoroutine(LevelTimerRoutine());
             }
         }
 
         private IEnumerator LevelTimerRoutine()
         {
-            StatModifier setModifier = new StatModifier(StatModifierType.Set, levelDuration);
+            StatModifier setModifier = new(StatModifierType.Set, levelDuration);
             StatManager.Modify(timeStat, setModifier);
 
             while (StatManager.Read(timeStat) > 0f)
             {
                 yield return null;
 
-                StatModifier subModifier = new StatModifier(StatModifierType.Add, -Time.deltaTime);
+                StatModifier subModifier = new(StatModifierType.Add, -Time.deltaTime);
                 StatManager.Modify(timeStat, subModifier);
             }
 
-            GameOverWithDefeat();
+            GameOverWithVictory();
         }
 
         private void OnStatChanged(string statID)
@@ -77,19 +76,16 @@ namespace Droppy.VerticalGame
             }
         }
 
-        public void ReportGoalReached()
-        {
-            GameOverWithVictory();
-        }
         private void StopGameLogic()
         {
-            if (_timerCoroutine != null)
+            if (timerCoroutine != null)
             {
-                StopCoroutine(_timerCoroutine);
-                _timerCoroutine = null;
+                StopCoroutine(timerCoroutine);
+                timerCoroutine = null;
             }
 
             StatManager.OnStatModified -= OnStatChanged;
+            OnLevelFinished();
         }
 
         private void GameOverWithVictory()
@@ -105,8 +101,15 @@ namespace Droppy.VerticalGame
             float finalPurity = StatManager.Read(purityStat);
             int starCount = 1;
 
-            if (finalPurity >= secondaryPurityThreshold) starCount++;
-            if (finalPurity >= tertiaryPurityThreshold) starCount++;
+            if (finalPurity >= secondaryPurityThreshold)
+            {
+                starCount++;
+            }
+
+            if (finalPurity >= tertiaryPurityThreshold)
+            {
+                starCount++;
+            }
 
             viewModel.RequestVictory(endScreenQuotes, starCount);
         }
