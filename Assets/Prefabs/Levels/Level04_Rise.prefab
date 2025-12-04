@@ -52,7 +52,7 @@ MonoBehaviour:
   viewModel: {fileID: 11400000, guid: f6aeb7aa5540ba64dad995c5cf7b1d28, type: 2}
   data: {fileID: 11400000, guid: ac2a72d8b3fe061478a5f06d2f1e872f, type: 2}
   timeBeforeLevelStart: 2
-  input: {fileID: 0}
+  input: {fileID: 5377616747197604615}
   spawner: {fileID: 6538270168207619567}
   controller: {fileID: 2233970860228237951}
 --- !u!114 &2233970860228237951
@@ -758,6 +758,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4246100312884726220, guid: a3bb30f1189070a428222845456cad69, type: 3}
   m_PrefabInstance: {fileID: 1133815504857070735}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5377616747197604615 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4980205763020611464, guid: a3bb30f1189070a428222845456cad69, type: 3}
+  m_PrefabInstance: {fileID: 1133815504857070735}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba644732327d41c18d0d1204567079c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &6821972831171422192
 PrefabInstance:
   m_ObjectHideFlags: 0
