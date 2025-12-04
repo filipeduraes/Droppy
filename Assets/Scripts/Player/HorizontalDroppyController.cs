@@ -36,7 +36,6 @@ namespace Droppy.Player
         private bool isFalling = false;
         private bool jumpCanceled = false;
         private float timeFromLastJump = 0.0f;
-        private float currentMoveDirection = 0f;
         
         private static readonly int IsMovingParameter = Animator.StringToHash("IsMoving");
         private static readonly int XDirectionParameter = Animator.StringToHash("XDirection");
@@ -50,9 +49,6 @@ namespace Droppy.Player
         {
             base.OnEnable(); 
             
-            input.OnMoveStarted += OnMovementStart;
-            input.OnMoveCanceled += OnMovementEnd;
-            
             if (playerType == PlayerType.Platformer)
             {
                 input.OnJumpStarted += OnJump;
@@ -63,9 +59,6 @@ namespace Droppy.Player
         protected override void OnDisable()
         {
             base.OnDisable(); 
-            
-            input.OnMoveStarted -= OnMovementStart;
-            input.OnMoveCanceled -= OnMovementEnd;
             
             if (playerType == PlayerType.Platformer)
             {
@@ -106,16 +99,6 @@ namespace Droppy.Player
             HandleHorizontalMovement(); 
         }
 
-        private void OnMovementStart()
-        {
-            currentMoveDirection = input.MoveInput.x;
-        }
-
-        private void OnMovementEnd()
-        {
-            currentMoveDirection = 0f;
-        }
-
         private void OnJump()
         {
             if (isGrounded)
@@ -149,7 +132,7 @@ namespace Droppy.Player
         private void HandleHorizontalMovement()
         {
             Vector2 targetVelocity = body.velocity;
-            targetVelocity.x = currentMoveDirection * movementSpeed;
+            targetVelocity.x = input.MoveInput.x * movementSpeed;
             
             body.velocity = targetVelocity;
 

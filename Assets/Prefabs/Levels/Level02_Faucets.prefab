@@ -1977,8 +1977,8 @@ MonoBehaviour:
   - {fileID: 7996212217902564756}
   - {fileID: 1424925521813560232}
   - {fileID: 4602414799990764274}
-  minTime: 3
-  maxTime: 8
+  minTime: 2
+  maxTime: 6
 --- !u!1 &6199485753731328110
 GameObject:
   m_ObjectHideFlags: 0
