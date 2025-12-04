@@ -360,7 +360,7 @@ GameObject:
   - component: {fileID: 6653667030159867302}
   - component: {fileID: 5403716668588531057}
   - component: {fileID: 6388791942419141340}
-  - component: {fileID: 7745243709267721904}
+  - component: {fileID: 6567950462653351185}
   m_Layer: 5
   m_Name: WaterTankUI
   m_TagString: Untagged
@@ -427,7 +427,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &7745243709267721904
+--- !u!114 &6567950462653351185
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -436,9 +436,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 6502937734901672580}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 953ee5f6fbef69f40974ff5879763523, type: 3}
+  m_Script: {fileID: 11500000, guid: 67e6e0d893b527f428380f9ff002643d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fillImage: {fileID: 0}
-  waterStat: {fileID: 0}
-  waterColor: {r: 0.1, g: 0.55, b: 1, a: 1}
+  stat: {fileID: 11400000, guid: f94bd6f587c83864a87be9b2235f8a10, type: 2}
+  slider: {fileID: 8190087772560736581}
