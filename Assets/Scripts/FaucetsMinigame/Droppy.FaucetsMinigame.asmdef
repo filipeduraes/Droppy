@@ -2,11 +2,13 @@
     "name": "Droppy.FaucetsMinigame",
     "rootNamespace": "Droppy.FaucetsMinigame",
     "references": [
-        "Droppy.UI.ViewModel",
+        "GUID:270a0727451ff224bba670c78283e56a",
         "GUID:29d42cea2fe0ea647ab647f1cb95cf68",
         "GUID:9fb82ef2d318c08419447efd7cce5e85",
         "GUID:716b1a0c855727848a15597efd36e8c3",
-        "GUID:ee1c39d5f8f43b34f82f22d313ce3fd5"
+        "GUID:ee1c39d5f8f43b34f82f22d313ce3fd5",
+        "GUID:73e01b9957cafa846bac66e174b2e0dd",
+        "GUID:e72182252477b194e9dbcb57676de71d"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
