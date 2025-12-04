@@ -7,6 +7,8 @@ namespace Droppy.StatSystem
     public static class StatManager
     {
         public static event Action<string> OnStatModified = delegate { };
+        public static event System.Action<float> OnWaterLevelChanged;
+
 
         public static float Read(Stat stat)
         {
@@ -26,15 +28,13 @@ namespace Droppy.StatSystem
                 _ => currentStatValue
             };
 
-            if (stat.ClampValue)
-            {
-                finalStatValue = Mathf.Clamp(finalStatValue, stat.ClampMin, stat.ClampMax);
-            }
-            
             Persistence.StoreData(GetStatKey(stat), finalStatValue);
+
+            if (stat.ID == "WaterLevel")
+                OnWaterLevelChanged?.Invoke(finalStatValue);
+
             OnStatModified(stat.ID);
         }
-        
         private static string GetStatKey(Stat stat)
         {
             return $"StatSystem.{stat.ID}";
