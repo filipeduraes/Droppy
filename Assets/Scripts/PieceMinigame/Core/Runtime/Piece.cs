@@ -34,7 +34,7 @@ namespace Droppy.PieceMinigame.Runtime
         
         public void Interact(GameObject agent)
         {
-            if (!IsFull)
+            if (!IsLocked && !IsFull)
             {
                 RotateClockwise();
             }

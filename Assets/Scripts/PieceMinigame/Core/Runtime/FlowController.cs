@@ -26,6 +26,7 @@ namespace Droppy.PieceMinigame.Runtime
         [SerializeField] private float secondsBetweenUpdates = 1.0f;
 
         public event Action OnFlowUpdate = delegate { };
+        public event Action OnFlowStarted = delegate { };
         public event Action<FlowInformation> OnFlowLeaked = delegate { };
         public event Action<FlowInformation> OnPortFlow = delegate { };
         public event Action OnFlowFinished = delegate { };
@@ -59,6 +60,9 @@ namespace Droppy.PieceMinigame.Runtime
             VisitedPorts = new HashSet<Vector2Int>();
 
             yield return new WaitForSeconds(secondsBeforeStartFlow);
+
+            OnFlowStarted();
+            
             FindHeadsFromPorts();
             OnFlowUpdate();
             

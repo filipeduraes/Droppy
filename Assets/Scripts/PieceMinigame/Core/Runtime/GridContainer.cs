@@ -15,8 +15,12 @@ namespace Droppy.PieceMinigame.Runtime
 
         [Header("Prefabs")] 
         [SerializeField] private Piece piecePrefab;
+        [SerializeField] private SpriteRenderer entryPrefab;
+        [SerializeField] private SpriteRenderer exitPrefab;
 
         public Dictionary<Vector2Int, Piece> Pieces { get; } = new();
+        public Dictionary<Vector2Int, SpriteRenderer> Entries { get; } = new();
+        public Dictionary<Vector2Int, SpriteRenderer> Exits { get; } = new();
         public CellData[,] RuntimeGrid { get; private set; }
         public GridData Grid => grid;
         public float CellSize => cellSize;
@@ -88,6 +92,27 @@ namespace Droppy.PieceMinigame.Runtime
                         Pieces[new Vector2Int(x, y)] = pieceInstance;
                     }
                 }
+            }
+
+            SpawnPorts(grid.Entries, entryPrefab, Entries);
+            SpawnPorts(grid.Exits, exitPrefab, Exits);
+        }
+
+        private void SpawnPorts(IEnumerable<GridPort> ports, SpriteRenderer portPrefab, Dictionary<Vector2Int, SpriteRenderer> portsMap)
+        {
+            foreach (GridPort entry in ports)
+            {
+                Vector2Int entryPortIndex = entry.GetPortIndex(Grid.Size);
+                Vector2Int adjacentPortIndex = entry.GetAdjacentIndex(grid.Size);
+                
+                Vector2 direction = adjacentPortIndex - entryPortIndex;
+                direction = direction.normalized;
+                
+                Quaternion rotation = Quaternion.FromToRotation(Vector2.up, direction);
+                Vector3 entryPosition = GetCellCenterPosition(entryPortIndex.x, entryPortIndex.y);
+
+                SpriteRenderer portSpriteRenderer = Instantiate(portPrefab, entryPosition, rotation, transform);
+                portsMap[entryPortIndex] = portSpriteRenderer;
             }
         }
     }

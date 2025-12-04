@@ -145,6 +145,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   viewModel: {fileID: 11400000, guid: f6aeb7aa5540ba64dad995c5cf7b1d28, type: 2}
   data: {fileID: 11400000, guid: b56f05fff621f6e48a7652bacef5f686, type: 2}
+  timeBeforeLevelStart: 2
 --- !u!114 &36073942425998688
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -213,6 +214,8 @@ MonoBehaviour:
   offset: {x: 0, y: 0}
   applyCenterOffset: 1
   piecePrefab: {fileID: 4898598612272341335, guid: f66af551794e58f498cc4ea2c9e0652a, type: 3}
+  entryPrefab: {fileID: 5220807988875117628, guid: 86b058618641be841bcc3c6505b6bf1f, type: 3}
+  exitPrefab: {fileID: 5220807988875117628, guid: e248c1ab5f2725942bedd63668cbc655, type: 3}
 --- !u!114 &4307812496727926208
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -259,6 +262,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   flowController: {fileID: 3162299336133908061}
   gridContainer: {fileID: 4860617076456175727}
+  openedEntrySprite: {fileID: 1839245994, guid: 852d98bcaaedab74587bfb170bc13df9, type: 3}
+  fullExitSprite: {fileID: 1180941640, guid: 852d98bcaaedab74587bfb170bc13df9, type: 3}
 --- !u!1 &5471062214313213972
 GameObject:
   m_ObjectHideFlags: 0
