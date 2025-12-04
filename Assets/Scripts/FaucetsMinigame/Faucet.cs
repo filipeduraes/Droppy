@@ -25,23 +25,25 @@ namespace Droppy.FaucetsMinigame
         public event Action OnEnterInteraction = delegate { };
         public event Action OnExitInteraction = delegate { };
 
-        public bool IsOpened { get; private set; } = true;
+        public bool IsOpened { get; private set; } = false;
         private Coroutine holdCoroutine;
+
+        private void Awake()
+        {
+            SetOpen(false);
+        }
 
         public void SetOpen(bool newIsOpened)
         {
-            if (IsOpened != newIsOpened)
-            {
-                IsOpened = newIsOpened;
-                modifier.enabled = IsOpened;
-                
-                string animationState = IsOpened ? openAnimationState : closeAnimationState;
-                animator.Play(animationState);
+            IsOpened = newIsOpened;
+            modifier.enabled = IsOpened;
+            
+            string animationState = IsOpened ? openAnimationState : closeAnimationState;
+            animator.Play(animationState);
 
-                if (!IsOpened)
-                {
-                    OnClosed(this);
-                }
+            if (!IsOpened)
+            {
+                OnClosed(this);
             }
         }
 

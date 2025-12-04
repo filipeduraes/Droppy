@@ -15,7 +15,7 @@ namespace Droppy.SpawnSystem
         [SerializeField] private bool preventSpawnOnSamePoint = false;
 
         private readonly Dictionary<Transform, Transform> occupiedSlots = new();
-        private List<Transform> freeSlots;
+        private readonly List<Transform> freeSlots = new();
 
         private bool isRunning = false;
         private float lastSpawnTime;

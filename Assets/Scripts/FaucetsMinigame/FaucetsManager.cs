@@ -18,7 +18,6 @@ namespace Droppy.FaucetsMinigame
             foreach (Faucet faucet in faucets)
             {
                closedFaucets.Add(faucet);
-               faucet.SetOpen(false);
                faucet.OnClosed += HandleClosed;
             }
             
