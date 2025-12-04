@@ -276,7 +276,7 @@ namespace Droppy.Input
                 {
                     ""name"": """",
                     ""id"": ""dea2d574-9239-4e7a-b1c0-56a1caeb7a73"",
-                    ""path"": ""<Keyboard>/k"",
+                    ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",

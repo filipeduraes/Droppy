@@ -29,7 +29,7 @@ namespace Droppy.InteractionSystem
                     enterInteractable.ExitInteraction(gameObject);
                 }
                 
-                currentInteractables.Remove(gameObject);
+                currentInteractables.Remove(other.gameObject);
             }
         }
 

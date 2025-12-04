@@ -1,3 +1,5 @@
+using System.Collections;
+using Droppy.Shared;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,19 +8,18 @@ namespace Droppy.FaucetsMinigame
     public class FaucetProgressBar : MonoBehaviour
     {
         [SerializeField] private Faucet faucet;
-        [SerializeField] private Image fillImage;
-        [SerializeField] private GameObject root;
+        [SerializeField] private Slider slider;
+        [SerializeField] private Transform root;
+        
+        [Header("Animation")]
+        [SerializeField] private Animator animator;
+        [SerializeField] private string showAnimationState = "Show";
+        [SerializeField] private string hideAnimationState = "Hide";
 
         private void Awake()
         {
-            if (faucet == null)
-                faucet = GetComponentInParent<Faucet>();
-
-            if (root == null)
-                root = fillImage.transform.parent.gameObject;
-
-            root.SetActive(false);
-            fillImage.fillAmount = 0f;
+            root.gameObject.SetActive(false);
+            slider.value = 0f;
 
             faucet.OnStartClosing += OnStart;
             faucet.OnClosingProgress += OnProgress;
@@ -36,25 +37,31 @@ namespace Droppy.FaucetsMinigame
 
         private void OnStart()
         {
-            fillImage.fillAmount = 0f;
-            root.SetActive(true);
+            slider.value = 0f;
+            root.gameObject.SetActive(true);
         }
 
         private void OnProgress(float value)
         {
-            fillImage.fillAmount = value;
+            slider.value = value;
         }
 
         private void OnFail()
         {
-            fillImage.fillAmount = 0f;
-            root.SetActive(false);
+            slider.value = 0f;
+            StartCoroutine(HideSlider());
         }
 
         private void OnClosedEvent(Faucet f)
         {
-            fillImage.fillAmount = 1f;
-            root.SetActive(false);
+            slider.value = 1f;
+            StartCoroutine(HideSlider());
+        }
+
+        private IEnumerator HideSlider()
+        {
+            yield return animator.PlayAnimationAndWait(hideAnimationState);
+            root.gameObject.SetActive(false);
         }
     }
 }
