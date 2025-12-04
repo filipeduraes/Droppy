@@ -167,7 +167,7 @@ MonoBehaviour:
   jumpVelocity: 1
   fallGravity: 3
   jumpGravity: 1
-  walkGravity: 0
+  walkGravity: 1
   minJumpTime: 0.2
   groundLayer:
     serializedVersion: 2
