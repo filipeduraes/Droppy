@@ -6,7 +6,7 @@ using Droppy.InteractionSystem;
 
 namespace Droppy.FaucetsMinigame
 {
-    public class Faucet : MonoBehaviour, IHoldInteractable
+    public class Faucet : MonoBehaviour, IHoldInteractable, IEnterInteractableArea, IExitInteractableArea
     {
         [Header("Settings")]
         [SerializeField] private float requiredHoldTime = 1.2f;
@@ -20,21 +20,25 @@ namespace Droppy.FaucetsMinigame
         public event Action OnStartClosing = delegate { };
         public event Action OnClosingFailed = delegate { };
         public event Action<Faucet> OnClosed = delegate { };
+        public event Action<float> OnClosingProgress = delegate { };
         
-        private bool isOpened = false;
+        public event Action OnEnterInteraction = delegate { };
+        public event Action OnExitInteraction = delegate { };
+
+        public bool IsOpened { get; private set; } = false;
         private Coroutine holdCoroutine;
         
         public void SetOpen(bool newIsOpened)
         {
-            if (isOpened != newIsOpened)
+            if (IsOpened != newIsOpened)
             {
-                isOpened = newIsOpened;
-                modifier.enabled = isOpened;
+                IsOpened = newIsOpened;
+                modifier.enabled = IsOpened;
                 
-                string animationState = isOpened ? openAnimationState : closeAnimationState;
+                string animationState = IsOpened ? openAnimationState : closeAnimationState;
                 animator.Play(animationState);
 
-                if (!isOpened)
+                if (!IsOpened)
                 {
                     OnClosed(this);
                 }
@@ -43,7 +47,7 @@ namespace Droppy.FaucetsMinigame
 
         public void StartInteraction(GameObject agent)
         {
-            if (isOpened)
+            if (IsOpened)
             {
                 holdCoroutine = StartCoroutine(CloseSequence());
             }
@@ -51,16 +55,25 @@ namespace Droppy.FaucetsMinigame
 
         public void EndInteraction(GameObject agent)
         {
-            if (isOpened)
+            if (IsOpened)
             {
                 OnClosingFailed();
-                return;
             }
             
             if (holdCoroutine != null)
             {
                 StopCoroutine(holdCoroutine);
             }
+        }
+        
+        public void EnterInteraction(GameObject agent)
+        {
+            OnEnterInteraction();
+        }
+
+        public void ExitInteraction(GameObject agent)
+        {
+            OnExitInteraction();
         }
         
         [ContextMenu("Open")]
@@ -72,8 +85,20 @@ namespace Droppy.FaucetsMinigame
         private IEnumerator CloseSequence()
         {
             OnStartClosing();
-            yield return new WaitForSeconds(requiredHoldTime);
+
+            float elapsed = 0f;
+
+            while (elapsed < requiredHoldTime)
+            {
+                elapsed += Time.deltaTime;
+
+                float progress = Mathf.Clamp01(elapsed / requiredHoldTime);
+                OnClosingProgress(progress);
+
+                yield return null;
+            }
+
             SetOpen(false);
-        } 
+        }
     }
 }
