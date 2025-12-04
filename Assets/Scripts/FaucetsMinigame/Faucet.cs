@@ -20,7 +20,9 @@ namespace Droppy.FaucetsMinigame
         public event Action OnStartClosing = delegate { };
         public event Action OnClosingFailed = delegate { };
         public event Action<Faucet> OnClosed = delegate { };
-        
+        public event Action<float> OnClosingProgress = delegate { };
+
+
         private bool isOpened = false;
         private Coroutine holdCoroutine;
         
@@ -72,8 +74,23 @@ namespace Droppy.FaucetsMinigame
         private IEnumerator CloseSequence()
         {
             OnStartClosing();
-            yield return new WaitForSeconds(requiredHoldTime);
+
+            float elapsed = 0f;
+
+            while (elapsed < requiredHoldTime)
+            {
+                elapsed += Time.deltaTime;
+
+                float progress = Mathf.Clamp01(elapsed / requiredHoldTime);
+
+                // envia o progresso pra barra
+                OnClosingProgress?.Invoke(progress);
+
+                yield return null;
+            }
+
             SetOpen(false);
-        } 
+        }
+
     }
 }
