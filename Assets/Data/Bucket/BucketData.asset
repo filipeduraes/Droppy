@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c41fb21465a5794e8736d667a488ec2, type: 3}
   m_Name: BucketData
   m_EditorClassIdentifier: 
-  spawnables: []
-  minSpawnInterval: 1
-  maxSpawnInterval: 3
+  spawnables:
+  - prefab: {fileID: 7498999198283856302, guid: 2cccbe874673fa943bdbfead61140b62, type: 3}
+    weight: 100
+  minSpawnInterval: 6
+  maxSpawnInterval: 15

@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Droppy.Shared;
 using UnityEngine;
 
@@ -18,7 +18,6 @@ namespace Droppy.FaucetsMinigame
             foreach (Faucet faucet in faucets)
             {
                closedFaucets.Add(faucet);
-               faucet.SetOpen(false);
                faucet.OnClosed += HandleClosed;
             }
             

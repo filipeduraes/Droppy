@@ -1,7 +1,6 @@
 using UnityEngine;
 using Droppy.UI.ViewModel;
 using Droppy.StatSystem;
-using System.Collections;
 
 namespace Droppy.WaterLevel
 {
@@ -12,18 +11,15 @@ namespace Droppy.WaterLevel
         [SerializeField] private EndScreenResultQuotes endScreenQuotes;
 
         [Header("Stats Assets")]
-        [Tooltip("O Stat que representa o nível da água.")]
         [SerializeField] private Stat waterStat;
+        [SerializeField] private Stat timerStat;
 
-        [Header("Objetivos (Nível de Água)")]
+        [Header("Objetivos")]
         [SerializeField] private float twoStarsWaterThreshold = 50f;
         [SerializeField] private float threeStarsWaterThreshold = 80f;
 
-        private bool _isGameRunning = true;
-
         private void OnEnable()
         {
-            _isGameRunning = true;
             StatManager.OnStatModified += OnStatChanged;
         }
 
@@ -34,8 +30,6 @@ namespace Droppy.WaterLevel
 
         private void OnStatChanged(string statID)
         {
-            if (!_isGameRunning) return;
-
             if (waterStat != null && statID == waterStat.ID)
             {
                 if (StatManager.Read(waterStat) <= 0f)
@@ -43,19 +37,18 @@ namespace Droppy.WaterLevel
                     GameOverWithDefeat();
                 }
             }
-        }
 
-        public void FinishLevel()
-        {
-            if (_isGameRunning)
+            if (statID == timerStat.ID)
             {
-                GameOverWithVictory();
+                if (StatManager.Read(timerStat) <= 0)
+                {
+                    GameOverWithVictory();
+                }
             }
         }
 
         private void StopGameLogic()
         {
-            _isGameRunning = false;
             StatManager.OnStatModified -= OnStatChanged;
             StopAllCoroutines();
         }
@@ -72,6 +65,7 @@ namespace Droppy.WaterLevel
 
             float finalWaterLevel = StatManager.Read(waterStat);
             int starCount = 1;
+            
             if (finalWaterLevel >= twoStarsWaterThreshold)
             {
                 starCount++;
