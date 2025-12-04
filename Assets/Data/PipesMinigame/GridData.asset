@@ -12,59 +12,69 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2ecb72bb02837244906e33ef8edc63d, type: 3}
   m_Name: GridData
   m_EditorClassIdentifier: 
-  size: {x: 5, y: 5}
+  size: {x: 6, y: 5}
   grid:
   - rowCells:
+    - piece: {fileID: 11400000, guid: 507735d65178bdb46af70e1d36ed0346, type: 2}
+      rotationSteps: 2
     - piece: {fileID: 11400000, guid: 08ff31f54b37e734798d3598b48307c9, type: 2}
-      rotationSteps: 3
+      rotationSteps: 1
+    - piece: {fileID: 0}
+      rotationSteps: 0
+    - piece: {fileID: 0}
+      rotationSteps: 0
+    - piece: {fileID: 11400000, guid: 08ff31f54b37e734798d3598b48307c9, type: 2}
+      rotationSteps: 0
     - piece: {fileID: 11400000, guid: 08ff31f54b37e734798d3598b48307c9, type: 2}
       rotationSteps: 2
+  - rowCells:
     - piece: {fileID: 0}
+      rotationSteps: 0
+    - piece: {fileID: 11400000, guid: 005109c688a2a1b40914a7d1b66c8e83, type: 2}
       rotationSteps: 0
     - piece: {fileID: 0}
       rotationSteps: 0
     - piece: {fileID: 0}
+      rotationSteps: 0
+    - piece: {fileID: 11400000, guid: 507735d65178bdb46af70e1d36ed0346, type: 2}
+      rotationSteps: 0
+    - piece: {fileID: 11400000, guid: 08ff31f54b37e734798d3598b48307c9, type: 2}
+      rotationSteps: 0
+  - rowCells:
+    - piece: {fileID: 0}
+      rotationSteps: 0
+    - piece: {fileID: 11400000, guid: 507735d65178bdb46af70e1d36ed0346, type: 2}
+      rotationSteps: 2
+    - piece: {fileID: 11400000, guid: 08ff31f54b37e734798d3598b48307c9, type: 2}
+      rotationSteps: 2
+    - piece: {fileID: 11400000, guid: 507735d65178bdb46af70e1d36ed0346, type: 2}
+      rotationSteps: 0
+    - piece: {fileID: 11400000, guid: 08ff31f54b37e734798d3598b48307c9, type: 2}
+      rotationSteps: 0
+    - piece: {fileID: 11400000, guid: 507735d65178bdb46af70e1d36ed0346, type: 2}
       rotationSteps: 0
   - rowCells:
     - piece: {fileID: 11400000, guid: 507735d65178bdb46af70e1d36ed0346, type: 2}
+      rotationSteps: 1
+    - piece: {fileID: 11400000, guid: 0dddee3c6470c0847a63622eaf076838, type: 2}
+      rotationSteps: 0
+    - piece: {fileID: 11400000, guid: 08ff31f54b37e734798d3598b48307c9, type: 2}
+      rotationSteps: 1
+    - piece: {fileID: 0}
+      rotationSteps: 0
+    - piece: {fileID: 0}
       rotationSteps: 0
     - piece: {fileID: 11400000, guid: 0dddee3c6470c0847a63622eaf076838, type: 2}
-      rotationSteps: 3
-    - piece: {fileID: 11400000, guid: 507735d65178bdb46af70e1d36ed0346, type: 2}
-      rotationSteps: 1
-    - piece: {fileID: 11400000, guid: 507735d65178bdb46af70e1d36ed0346, type: 2}
-      rotationSteps: 1
-    - piece: {fileID: 11400000, guid: 0dddee3c6470c0847a63622eaf076838, type: 2}
-      rotationSteps: 2
+      rotationSteps: 0
   - rowCells:
-    - piece: {fileID: 11400000, guid: 0dddee3c6470c0847a63622eaf076838, type: 2}
-      rotationSteps: 3
-    - piece: {fileID: 11400000, guid: b35b03fcba3702e41a45e480dc76ad13, type: 2}
+    - piece: {fileID: 0}
+      rotationSteps: 0
+    - piece: {fileID: 11400000, guid: 08ff31f54b37e734798d3598b48307c9, type: 2}
       rotationSteps: 2
     - piece: {fileID: 11400000, guid: 005109c688a2a1b40914a7d1b66c8e83, type: 2}
       rotationSteps: 1
-    - piece: {fileID: 11400000, guid: 08ff31f54b37e734798d3598b48307c9, type: 2}
-      rotationSteps: 2
     - piece: {fileID: 11400000, guid: 507735d65178bdb46af70e1d36ed0346, type: 2}
       rotationSteps: 0
-  - rowCells:
-    - piece: {fileID: 11400000, guid: 0dddee3c6470c0847a63622eaf076838, type: 2}
-      rotationSteps: 1
-    - piece: {fileID: 11400000, guid: 08ff31f54b37e734798d3598b48307c9, type: 2}
-      rotationSteps: 0
-    - piece: {fileID: 11400000, guid: 507735d65178bdb46af70e1d36ed0346, type: 2}
-      rotationSteps: 1
-    - piece: {fileID: 11400000, guid: 08ff31f54b37e734798d3598b48307c9, type: 2}
-      rotationSteps: 1
-    - piece: {fileID: 11400000, guid: 0dddee3c6470c0847a63622eaf076838, type: 2}
-      rotationSteps: 3
-  - rowCells:
-    - piece: {fileID: 11400000, guid: 08ff31f54b37e734798d3598b48307c9, type: 2}
-      rotationSteps: 0
-    - piece: {fileID: 11400000, guid: 507735d65178bdb46af70e1d36ed0346, type: 2}
-      rotationSteps: 1
-    - piece: {fileID: 11400000, guid: 507735d65178bdb46af70e1d36ed0346, type: 2}
-      rotationSteps: 1
     - piece: {fileID: 11400000, guid: 507735d65178bdb46af70e1d36ed0346, type: 2}
       rotationSteps: 1
     - piece: {fileID: 11400000, guid: 08ff31f54b37e734798d3598b48307c9, type: 2}

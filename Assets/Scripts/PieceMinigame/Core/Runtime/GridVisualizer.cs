@@ -64,7 +64,7 @@ namespace Droppy.PieceMinigame.Runtime
             
             for (int x = 0; x <= Grid.Size.x; x++)
             {
-                if (x != Grid.Size.y)
+                if (x != Grid.Size.x)
                 {
                     DrawLabelGizmos(x.ToString(), container.GetCellCenterPosition(x, -1), Color.green, Vector2.zero, fontSize);
                 }

@@ -39,7 +39,7 @@ namespace Droppy.PieceMinigame.Runtime
         private HashSet<Vector2Int> visited;
         private Coroutine flowCoroutine;
 
-        private void Start()
+        public void StartFlow()
         {
             flowCoroutine = StartCoroutine(FlowThroughGrid());
         }
