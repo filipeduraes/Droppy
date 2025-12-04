@@ -95,10 +95,10 @@ GameObject:
   - component: {fileID: 1668520475060785575}
   - component: {fileID: 3736623540461957391}
   - component: {fileID: 8222272689408563358}
+  - component: {fileID: 5694407608411817212}
   - component: {fileID: 7081137573684886184}
   - component: {fileID: 6881662518879556185}
   - component: {fileID: 5925809230994299072}
-  - component: {fileID: 5694407608411817212}
   m_Layer: 7
   m_Name: Bucket
   m_TagString: Untagged
@@ -134,7 +134,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f557938cf7e02244897b961297d5e74c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  statToModify: {fileID: 11400000, guid: 555ec35f118fc614fb81064d04bd9f07, type: 2}
+  statToModify: {fileID: 11400000, guid: f94bd6f587c83864a87be9b2235f8a10, type: 2}
   statModifier:
     type: 2
     amount: 5
@@ -151,8 +151,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animationStateName: Vanish
-  animator: {fileID: 0}
-  objectCollider: {fileID: 0}
+  animator: {fileID: 7081137573684886184}
+  objectCollider: {fileID: 5925809230994299072}
+--- !u!114 &5694407608411817212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7498999198283856302}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a719c73fac514b11bbe406876b8bbe60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeToDeactivate: 15
+  animationStateName: Vanish
+  animator: {fileID: 7081137573684886184}
 --- !u!95 &7081137573684886184
 Animator:
   serializedVersion: 5
@@ -236,17 +251,3 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.9
---- !u!114 &5694407608411817212
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7498999198283856302}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a719c73fac514b11bbe406876b8bbe60, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  timeToDeactivate: 3
-  objectAnimator: {fileID: 0}
