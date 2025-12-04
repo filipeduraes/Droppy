@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using Droppy.Input;
 using Droppy.InteractionSystem;

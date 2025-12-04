@@ -1,5 +1,3 @@
-using System.Collections;
-using Droppy.Shared;
 using UnityEngine;
 
 namespace Droppy.Obstacle

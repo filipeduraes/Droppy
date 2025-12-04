@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: Level_Timer
   displayName: Timer
-  initialAmount: 0
-  clampValue: 0
+  initialAmount: 60
+  clampValue: 1
   clampMin: 0
-  clampMax: 100
+  clampMax: 1000

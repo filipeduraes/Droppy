@@ -2039,6 +2039,7 @@ MonoBehaviour:
   timeBeforeLevelStart: 2
   input: {fileID: 5717252042026429431}
   faucetsManager: {fileID: 914824584116371838}
+  waterLevelController: {fileID: 2874065047380316500}
   bucketSpawner: {fileID: 692982699694239126}
   timeModifier: {fileID: 2217444305727352644}
 --- !u!114 &4552853412432518545
@@ -2107,7 +2108,7 @@ MonoBehaviour:
   stat: {fileID: 11400000, guid: b0fd2ce0eb9377a42a8695915e705409, type: 2}
   modifier:
     type: 1
-    amount: 60
+    amount: 30
 --- !u!1 &7552531646630899133
 GameObject:
   m_ObjectHideFlags: 0

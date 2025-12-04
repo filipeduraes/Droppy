@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3590562877601235705}
   - component: {fileID: 8359514695708069675}
   - component: {fileID: 2233970860228237951}
+  - component: {fileID: 8502043426439221578}
   m_Layer: 0
   m_Name: Level04_Rise
   m_TagString: Untagged
@@ -71,9 +72,25 @@ MonoBehaviour:
   endScreenQuotes: {fileID: 11400000, guid: d5f04f7883aee0c4891ff3b1f9c97a35, type: 2}
   purityStat: {fileID: 11400000, guid: e4605c35162d1ff4c8a0091de356df1b, type: 2}
   timeStat: {fileID: 11400000, guid: b0fd2ce0eb9377a42a8695915e705409, type: 2}
-  levelDuration: 60
+  levelDuration: 30
   secondaryPurityThreshold: 50
   tertiaryPurityThreshold: 95
+--- !u!114 &8502043426439221578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 311389985853286102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d749409d640741f4b2132d7e08d051aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stat: {fileID: 11400000, guid: e4605c35162d1ff4c8a0091de356df1b, type: 2}
+  modifier:
+    type: 0
+    amount: 0
 --- !u!1 &693544424539812208
 GameObject:
   m_ObjectHideFlags: 0

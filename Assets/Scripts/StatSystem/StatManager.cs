@@ -1,6 +1,5 @@
 using System;
 using IdeaToGame.PersistenceSystem;
-using UnityEngine;
 
 namespace Droppy.StatSystem
 {

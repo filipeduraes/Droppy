@@ -249,7 +249,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gridContainer: {fileID: 4860617076456175727}
-  secondsBeforeStartFlow: 20
+  secondsBeforeStartFlow: 13
   secondsBetweenUpdates: 1
 --- !u!114 &3648706526578500993
 MonoBehaviour:

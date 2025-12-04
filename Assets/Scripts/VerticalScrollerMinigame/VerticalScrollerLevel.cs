@@ -1,4 +1,3 @@
-using System;
 using Droppy.Input;
 using Droppy.LevelSystem;
 using Droppy.SpawnSystem;

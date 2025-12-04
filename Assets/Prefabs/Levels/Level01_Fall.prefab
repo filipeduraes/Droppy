@@ -487,7 +487,7 @@ MonoBehaviour:
   endScreenQuotes: {fileID: 11400000, guid: 8053c6862c764c848b01e2ccd1fee2d7, type: 2}
   purityStat: {fileID: 11400000, guid: e4605c35162d1ff4c8a0091de356df1b, type: 2}
   timeStat: {fileID: 11400000, guid: b0fd2ce0eb9377a42a8695915e705409, type: 2}
-  levelDuration: 60
+  levelDuration: 30
   secondaryPurityThreshold: 50
   tertiaryPurityThreshold: 95
 --- !u!1 &6597330772710121504

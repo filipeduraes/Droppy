@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using Droppy.UI.ViewModel;
 using Droppy.StatSystem;
@@ -18,6 +19,8 @@ namespace Droppy.WaterLevel
         [SerializeField] private float twoStarsWaterThreshold = 50f;
         [SerializeField] private float threeStarsWaterThreshold = 80f;
 
+        public event Action OnLevelFinished = delegate { };
+        
         private void OnEnable()
         {
             StatManager.OnStatModified += OnStatChanged;
@@ -51,17 +54,12 @@ namespace Droppy.WaterLevel
         {
             StatManager.OnStatModified -= OnStatChanged;
             StopAllCoroutines();
+            OnLevelFinished();
         }
 
         private void GameOverWithVictory()
         {
             StopGameLogic();
-
-            if (waterStat == null)
-            {
-                viewModel.RequestVictory(endScreenQuotes, 1);
-                return;
-            }
 
             float finalWaterLevel = StatManager.Read(waterStat);
             int starCount = 1;

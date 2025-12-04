@@ -1,4 +1,3 @@
-using System;
 using Droppy.Input;
 using Droppy.PieceMinigame.Runtime;
 using UnityEngine;
