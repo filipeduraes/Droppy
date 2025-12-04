@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19aa306fea8440de8911607f424a433a, type: 3}
   m_Name: StraightFilter
   m_EditorClassIdentifier: 
-  sprite: {fileID: 0}
-  defaultDirections: 5
+  sprite: {fileID: 1322627087, guid: 852d98bcaaedab74587bfb170bc13df9, type: 3}
+  fullSprite: {fileID: 551511990, guid: 852d98bcaaedab74587bfb170bc13df9, type: 3}
+  defaultDirections: 10
   isLocked: 1
