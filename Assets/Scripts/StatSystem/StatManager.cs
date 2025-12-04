@@ -26,15 +26,11 @@ namespace Droppy.StatSystem
                 _ => currentStatValue
             };
 
-            if (stat.ClampValue)
-            {
-                finalStatValue = Mathf.Clamp(finalStatValue, stat.ClampMin, stat.ClampMax);
-            }
-            
             Persistence.StoreData(GetStatKey(stat), finalStatValue);
+
             OnStatModified(stat.ID);
         }
-        
+            
         private static string GetStatKey(Stat stat)
         {
             return $"StatSystem.{stat.ID}";

@@ -25,9 +25,9 @@ namespace Droppy.FaucetsMinigame
         public event Action OnEnterInteraction = delegate { };
         public event Action OnExitInteraction = delegate { };
 
-        public bool IsOpened { get; private set; } = false;
+        public bool IsOpened { get; private set; } = true;
         private Coroutine holdCoroutine;
-        
+
         public void SetOpen(bool newIsOpened)
         {
             if (IsOpened != newIsOpened)
