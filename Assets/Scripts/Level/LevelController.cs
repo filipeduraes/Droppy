@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Droppy.Shared;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace Droppy.LevelSystem
@@ -12,6 +13,7 @@ namespace Droppy.LevelSystem
         [SerializeField] private List<Level> levelSequence;
         [SerializeField] private Image fadeImage;
         [SerializeField] private float fadeDuration = 1.0f;
+        [SerializeField] private int sceneToLoadAfterSequence = 0;
 
         public event Action OnLevelSequenceFinished = delegate { };
 
@@ -43,6 +45,8 @@ namespace Droppy.LevelSystem
             if (currentLevelIndex >= levelSequence.Count)
             {
                 OnLevelSequenceFinished();
+                yield return fadeImage.InterpolateAlpha(0.0f, 1.0f, fadeDuration);
+                SceneManager.LoadSceneAsync(sceneToLoadAfterSequence);
                 yield break;
             }
 
