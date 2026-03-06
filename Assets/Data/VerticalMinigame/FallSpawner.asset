@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnables:
   - prefab: {fileID: 41027504816061811, guid: eb79b45427064e04ba5f890bf49fb018, type: 3}
-    weight: 90
+    weight: 80
   - prefab: {fileID: 41027504816061811, guid: b46c51b95a66673edbd4db7f7711b669, type: 3}
-    weight: 10
+    weight: 20
   minSpawnInterval: 1
   maxSpawnInterval: 2
