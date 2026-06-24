@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Droppy.PieceMinigame.Data;
@@ -14,19 +15,56 @@ namespace Droppy.PieceMinigame.Level
         [SerializeField] private EndScreenViewModel viewModel;
         [SerializeField] private EndScreenResultQuotes endScreenQuotes;
 
-        private void OnEnable()
+        private IFlowController controller;
+        private IGridContainer container;
+        private IEndScreenViewModel endScreenViewModel;
+        
+        private void Awake()
         {
-            flowController.OnFlowFinished += CalculateResultsAndFinish;
+            if (flowController != null)
+            {
+                SetFlowController(flowController);
+            }
+
+            if (gridContainer != null)
+            {
+                SetGridContainer(gridContainer);
+            }
+
+            if (viewModel != null)
+            {
+                SetEndScreenViewModel(viewModel);
+            }
         }
 
-        private void OnDisable()
+        private void Start()
         {
-            flowController.OnFlowFinished -= CalculateResultsAndFinish;
+            controller.OnFlowFinished += CalculateResultsAndFinish;
+        }
+
+        private void OnDestroy()
+        {
+            controller.OnFlowFinished -= CalculateResultsAndFinish;
+        }
+        
+        public void SetFlowController(IFlowController newFlowController)
+        {
+            controller = newFlowController;
+        }
+
+        public void SetGridContainer(IGridContainer newGridContainer)
+        {
+            container = newGridContainer;
+        }
+
+        public void SetEndScreenViewModel(IEndScreenViewModel newEndScreenViewModel)
+        {
+            endScreenViewModel = newEndScreenViewModel;
         }
         
         private void CalculateResultsAndFinish()
         {
-            if (flowController.Leaked)
+            if (controller.Leaked)
             {
                 GameOverWithRetry();
             }
@@ -38,8 +76,8 @@ namespace Droppy.PieceMinigame.Level
 
         private void GameOverWithVictory()
         {
-            HashSet<Vector2Int> visitedPorts = flowController.VisitedPorts;
-            GridData grid = gridContainer.Grid;
+            HashSet<Vector2Int> visitedPorts = controller.VisitedPorts;
+            GridData grid = container.Grid;
 
             bool allExitsWereVisited = grid.Exits.TrueForAll(PortWasVisited);
             int starCount = 1;
@@ -49,7 +87,7 @@ namespace Droppy.PieceMinigame.Level
                 starCount++;
             }
 
-            bool allLockedPiecesWereVisited = gridContainer.Pieces.Where(piece => piece.Value.IsLocked)
+            bool allLockedPiecesWereVisited = container.Pieces.Where(piece => piece.Value.IsLocked)
                 .All(piece => piece.Value.IsFull);
 
             if (allLockedPiecesWereVisited)
@@ -57,7 +95,7 @@ namespace Droppy.PieceMinigame.Level
                 starCount++;
             }
             
-            viewModel.RequestVictory(endScreenQuotes, starCount);
+            endScreenViewModel.RequestVictory(endScreenQuotes, starCount);
             return;
 
             bool PortWasVisited(GridPort port)
@@ -68,7 +106,7 @@ namespace Droppy.PieceMinigame.Level
 
         private void GameOverWithRetry()
         {
-            viewModel.RequestDefeat(endScreenQuotes);
+            endScreenViewModel.RequestDefeat(endScreenQuotes);
         }
     }
 }

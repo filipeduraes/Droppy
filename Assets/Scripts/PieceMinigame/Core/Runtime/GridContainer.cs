@@ -5,7 +5,21 @@ using UnityEngine;
 
 namespace Droppy.PieceMinigame.Runtime
 {
-    public class GridContainer : MonoBehaviour
+    public interface IGridContainer
+    {
+        GridData Grid { get; }
+        Dictionary<Vector2Int, IPiece> Pieces { get; }
+        Dictionary<Vector2Int, SpriteRenderer> Entries { get; }
+        Dictionary<Vector2Int, SpriteRenderer> Exits { get; }
+        float CellSize { get; }
+
+        Vector3 GetPortBorderPosition(GridPort port);
+        Vector3 GetBorderPosition(int x, int y, PieceDirection direction);
+        Vector3 GetCellCenterPosition(int x, int y);
+        Vector3 GetCellPosition(int x, int y);
+    }
+    
+    public class GridContainer : MonoBehaviour, IGridContainer
     {
         [Header("Grid")]
         [SerializeField] private GridData grid;
@@ -18,7 +32,7 @@ namespace Droppy.PieceMinigame.Runtime
         [SerializeField] private SpriteRenderer entryPrefab;
         [SerializeField] private SpriteRenderer exitPrefab;
 
-        public Dictionary<Vector2Int, Piece> Pieces { get; } = new();
+        public Dictionary<Vector2Int, IPiece> Pieces { get; } = new();
         public Dictionary<Vector2Int, SpriteRenderer> Entries { get; } = new();
         public Dictionary<Vector2Int, SpriteRenderer> Exits { get; } = new();
         public CellData[,] RuntimeGrid { get; private set; }

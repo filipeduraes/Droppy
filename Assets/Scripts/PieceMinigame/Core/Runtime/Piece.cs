@@ -5,7 +5,18 @@ using UnityEngine;
 
 namespace Droppy.PieceMinigame.Runtime
 {
-    public class Piece : MonoBehaviour, IInteractable
+    public interface IPiece
+    {
+        PieceDirection Direction { get; }
+        bool IsFull { get; }
+        bool IsLocked { get; }
+        
+        void Populate(CellData cellData, Vector2Int pieceIndex);
+        void Fill();
+        void Interact(GameObject agent);
+    }
+    
+    public class Piece : MonoBehaviour, IInteractable, IPiece
     {
         [SerializeField] private SpriteRenderer visual;
 

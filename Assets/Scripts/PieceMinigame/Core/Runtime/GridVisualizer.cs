@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Droppy.PieceMinigame.Data;
 using Droppy.PieceMinigame.Shared;
 using UnityEngine;
@@ -13,12 +14,21 @@ namespace Droppy.PieceMinigame.Runtime
         [SerializeField] private float visitedPortSize = 0.35f;
         [SerializeField] private float fontSize = 15f;
 
-        private float CellSize => container != null ? container.CellSize : 1.0f;
-        private GridData Grid => container != null ? container.Grid : null;
-        
+        private float CellSize => gridContainer != null ? gridContainer.CellSize : 1.0f;
+        private GridData Grid => gridContainer != null ? gridContainer.Grid : null;
+
+        private IFlowController controller;
+        private IGridContainer gridContainer;
+
+        private void Awake()
+        {
+            SetFlowController(flowController);
+            SetGridContainer(container);
+        }
+
         private void OnDrawGizmos()
         {
-            if (container == null || Grid == null)
+            if (gridContainer == null || Grid == null)
             {
                 return;
             }
@@ -33,18 +43,28 @@ namespace Droppy.PieceMinigame.Runtime
             DrawPorts(Grid.Exits);
         }
 
+        public void SetFlowController(IFlowController newFlowController)
+        {
+            controller = newFlowController;
+        }
+
+        public void SetGridContainer(IGridContainer newGridContainer)
+        {
+            gridContainer = newGridContainer;
+        }
+
         private void DrawPorts(List<GridPort> ports)
         {
             foreach (GridPort port in ports)
             {
                 float radius = portSize;
                 
-                if (flowController != null && flowController.VisitedPorts != null && flowController.VisitedPorts.Contains(port.GetPortIndex(Grid.Size)))
+                if (controller != null && controller.VisitedPorts != null && controller.VisitedPorts.Contains(port.GetPortIndex(Grid.Size)))
                 {
                     radius = visitedPortSize;
                 }
                 
-                Gizmos.DrawSphere(container.GetPortBorderPosition(port), radius);
+                Gizmos.DrawSphere(gridContainer.GetPortBorderPosition(port), radius);
             }
         }
 
@@ -56,20 +76,20 @@ namespace Droppy.PieceMinigame.Runtime
             {
                 if (y != Grid.Size.y)
                 {
-                    DrawLabelGizmos(y.ToString(), container.GetCellCenterPosition(-1, y), Color.green, Vector2.zero, fontSize);
+                    DrawLabelGizmos(y.ToString(), gridContainer.GetCellCenterPosition(-1, y), Color.green, Vector2.zero, fontSize);
                 }
                 
-                Gizmos.DrawLine(container.GetCellPosition(0, y), container.GetCellPosition(Grid.Size.x, y));
+                Gizmos.DrawLine(gridContainer.GetCellPosition(0, y), gridContainer.GetCellPosition(Grid.Size.x, y));
             }
             
             for (int x = 0; x <= Grid.Size.x; x++)
             {
                 if (x != Grid.Size.x)
                 {
-                    DrawLabelGizmos(x.ToString(), container.GetCellCenterPosition(x, -1), Color.green, Vector2.zero, fontSize);
+                    DrawLabelGizmos(x.ToString(), gridContainer.GetCellCenterPosition(x, -1), Color.green, Vector2.zero, fontSize);
                 }
                 
-                Gizmos.DrawLine(container.GetCellPosition(x, 0), container.GetCellPosition(x, Grid.Size.y));
+                Gizmos.DrawLine(gridContainer.GetCellPosition(x, 0), gridContainer.GetCellPosition(x, Grid.Size.y));
             }
         }
         
@@ -88,7 +108,7 @@ namespace Droppy.PieceMinigame.Runtime
                         Gizmos.color = cell.Piece.IsLocked ? Color.red : Color.blue;
                         PieceDirection directions = cell.Piece.DefaultDirections.RotateClockwise(cell.RotationSteps);
                         
-                        Vector3 centerPosition = container.GetCellCenterPosition(x, y);
+                        Vector3 centerPosition = gridContainer.GetCellCenterPosition(x, y);
                         DrawPieceConnectionsGizmos(directions, centerPosition);
                     }
                 }

@@ -19,7 +19,23 @@ namespace Droppy.PieceMinigame.Runtime
         }
     }
     
-    public class FlowController : MonoBehaviour
+    public interface IFlowController
+    {
+        event Action OnFlowUpdate;
+        event Action OnFlowStarted;
+        event Action<FlowInformation> OnFlowLeaked;
+        event Action<FlowInformation> OnPortFlow;
+        event Action OnFlowFinished;
+        
+        bool Leaked { get; }
+        IEnumerable<Vector2Int> Visited { get; }
+        HashSet<Vector2Int> VisitedPorts { get; }
+
+        void StartFlow();
+        void Stop();
+    }
+    
+    public class FlowController : MonoBehaviour, IFlowController
     {
         [SerializeField] private GridContainer gridContainer;
         [SerializeField] private float secondsBeforeStartFlow = 5.0f;
@@ -106,7 +122,7 @@ namespace Droppy.PieceMinigame.Runtime
                     Vector2Int directionFromPortToAdjacent = adjacentIndex - portIndex;
                     PieceDirection direction = directionFromPortToAdjacent.ToPieceDirection(); 
                     
-                    Piece adjacentPiece = gridContainer.Pieces[adjacentIndex];
+                    IPiece adjacentPiece = gridContainer.Pieces[adjacentIndex];
                     bool isValidDirection = (direction.Opposite() & adjacentPiece.Direction) != 0;
 
                     if (isValidDirection)
@@ -137,7 +153,7 @@ namespace Droppy.PieceMinigame.Runtime
                         continue;
                     }
                     
-                    Piece headPiece = gridContainer.Pieces[head];
+                    IPiece headPiece = gridContainer.Pieces[head];
                     Vector2Int directionToAdjacent = adjacentIndex - head;
                     
                     PieceDirection direction = directionToAdjacent.ToPieceDirection();
@@ -161,7 +177,7 @@ namespace Droppy.PieceMinigame.Runtime
                         continue;
                     }
 
-                    Piece adjacentPiece = gridContainer.Pieces[adjacentIndex];
+                    IPiece adjacentPiece = gridContainer.Pieces[adjacentIndex];
                     PieceDirection oppositeDirection = direction.Opposite();
                     
                     bool adjacentPieceIsConnected = (oppositeDirection & adjacentPiece.Direction) != 0;
