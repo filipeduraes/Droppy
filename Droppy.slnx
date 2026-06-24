@@ -18,4 +18,5 @@
   <Project Path="Droppy.PieceMinigame.Editor.csproj" />
   <Project Path="Droppy.UI.csproj" />
   <Project Path="Droppy.UIBridge.csproj" />
+  <Project Path="Droppy.Tests.EditMode.csproj" />
 </Solution>

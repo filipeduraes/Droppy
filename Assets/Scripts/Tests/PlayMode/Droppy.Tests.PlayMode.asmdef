@@ -1,0 +1,28 @@
+{
+    "name": "Droppy.Tests.PlayMode",
+    "rootNamespace": "Droppy.Tests.PlayMode",
+    "references": [
+        "GUID:0acc523941302664db1f4e527237feb3",
+        "GUID:27619889b8ba8c24980f49ee34dbb44a",
+        "GUID:73e01b9957cafa846bac66e174b2e0dd",
+        "GUID:270a0727451ff224bba670c78283e56a",
+        "GUID:29d42cea2fe0ea647ab647f1cb95cf68",
+        "GUID:ee0f8503ac5bc254da6d1ff7c6f31018",
+        "GUID:9fb82ef2d318c08419447efd7cce5e85",
+        "GUID:e72182252477b194e9dbcb57676de71d",
+        "GUID:44028a378a1450b448cb91813706e965"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

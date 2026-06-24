@@ -4,7 +4,33 @@ using UnityEngine.InputSystem;
 
 namespace Droppy.Input
 {
-    public class DroppyInput : MonoBehaviour
+    public interface IDroppyInput
+    {
+        event Action<Vector2> OnPointerStarted;
+        event Action OnMoveStarted;
+        event Action OnMoveCanceled;
+        
+        event Action OnJumpStarted;
+        event Action OnJumpCanceled;
+        
+        event Action OnInteractStarted;
+        event Action OnInteractCanceled;
+        
+        Vector2 MoveInput { get; }
+        
+        void Enable();
+        void Disable();
+        
+        void SendMoveStarted();
+        void SendMoveCanceled();
+        void SendJumpStarted();
+        void SendJumpCanceled();
+        void SendInteractStarted();
+        void SendInteractCanceled();
+        void SendPointerStarted(Vector2 position);
+    }
+    
+    public class DroppyInput : MonoBehaviour, IDroppyInput
     {
         public event Action<Vector2> OnPointerStarted = delegate { };
         
@@ -18,9 +44,7 @@ namespace Droppy.Input
         public event Action OnInteractCanceled = delegate { };
         
         public Vector2 MoveInput => controls.Player.Move.ReadValue<Vector2>();
-        
-        public DroppyControls Controls => controls; 
-        
+
         private DroppyControls controls;
 
         private void Awake()
@@ -64,45 +88,72 @@ namespace Droppy.Input
             
             controls.Disable();
         }
+        
+        public void Enable()
+        {
+            enabled = true;
+        }
 
-
-        private void SendMoveStarted(InputAction.CallbackContext context)
+        public void Disable()
+        {
+            enabled = false;
+        }
+        
+        public void SendMoveStarted()
         {
             OnMoveStarted();
         }
-        
-        private void SendMoveCanceled(InputAction.CallbackContext context)
+
+        public void SendMoveCanceled()
         {
             OnMoveCanceled();
         }
-        
-        
-        private void SendJumpStarted(InputAction.CallbackContext context)
+
+        public void SendJumpStarted()
         {
             OnJumpStarted();
         }
-        
-        private void SendJumpCanceled(InputAction.CallbackContext context)
+
+        public void SendJumpCanceled()
         {
             OnJumpCanceled();
         }
 
-        
-        private void SendInteractStarted(InputAction.CallbackContext context)
+        public void SendInteractStarted()
         {
             OnInteractStarted();
         }
-        
-        private void SendInteractCanceled(InputAction.CallbackContext context)
+
+        public void SendInteractCanceled()
         {
             OnInteractCanceled();
         }
-        
-        
+
+        public void SendPointerStarted(Vector2 position)
+        {
+            OnPointerStarted(position);
+        }
+
+
+        private void SendMoveStarted(InputAction.CallbackContext context) => SendMoveStarted();
+
+        private void SendMoveCanceled(InputAction.CallbackContext context) => SendMoveCanceled();
+
+
+        private void SendJumpStarted(InputAction.CallbackContext context) => SendJumpStarted();
+
+        private void SendJumpCanceled(InputAction.CallbackContext context) => SendJumpCanceled();
+
+
+        private void SendInteractStarted(InputAction.CallbackContext context) => SendInteractStarted();
+
+        private void SendInteractCanceled(InputAction.CallbackContext context) => SendInteractCanceled();
+
+
         private void SendPointerStarted(InputAction.CallbackContext context)
         {
             Vector2 position = controls.Player.PointerPosition.ReadValue<Vector2>();
-            OnPointerStarted(position);
+            SendPointerStarted(position);
         }
     }
 }

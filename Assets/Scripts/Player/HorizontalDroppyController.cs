@@ -30,7 +30,7 @@ namespace Droppy.Player
         [Header("Ground Check")]
         [SerializeField] private LayerMask groundLayer;
         [SerializeField] private float groundCheckDistance = 0.1f;
-        
+
         private Camera mainCamera;
         private bool isGrounded = false;
         private bool isFalling = false;
@@ -39,7 +39,7 @@ namespace Droppy.Player
         
         private static readonly int IsMovingParameter = Animator.StringToHash("IsMoving");
         private static readonly int XDirectionParameter = Animator.StringToHash("XDirection");
-
+        
         private void Start()
         {
             ServiceLocator.TryGetService(out mainCamera);
@@ -51,8 +51,8 @@ namespace Droppy.Player
             
             if (playerType == PlayerType.Platformer)
             {
-                input.OnJumpStarted += OnJump;
-                input.OnJumpCanceled += CancelJump;
+                DroppyInput.OnJumpStarted += OnJump;
+                DroppyInput.OnJumpCanceled += CancelJump;
             }
         }
 
@@ -62,8 +62,8 @@ namespace Droppy.Player
             
             if (playerType == PlayerType.Platformer)
             {
-                input.OnJumpStarted -= OnJump;
-                input.OnJumpCanceled -= CancelJump;
+                DroppyInput.OnJumpStarted -= OnJump;
+                DroppyInput.OnJumpCanceled -= CancelJump;
             }
         }
 
@@ -132,7 +132,7 @@ namespace Droppy.Player
         private void HandleHorizontalMovement()
         {
             Vector2 targetVelocity = body.velocity;
-            targetVelocity.x = input.MoveInput.x * movementSpeed;
+            targetVelocity.x = DroppyInput.MoveInput.x * movementSpeed;
             
             body.velocity = targetVelocity;
 

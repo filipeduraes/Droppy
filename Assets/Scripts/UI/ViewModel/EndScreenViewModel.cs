@@ -3,8 +3,14 @@ using UnityEngine;
 
 namespace Droppy.UI.ViewModel
 {
+    public interface IEndScreenViewModel
+    {
+        void RequestVictory(EndScreenResultQuotes newQuotes, int newStarCount);
+        void RequestDefeat(EndScreenResultQuotes newQuotes);
+    }
+    
     [CreateAssetMenu(fileName = "End Screen View Model", menuName = "Droppy/View Model/End Screen", order = 0)]
-    public class EndScreenViewModel : ScriptableObject
+    public class EndScreenViewModel : ScriptableObject, IEndScreenViewModel
     {
         [SerializeField] private EndScreenResultQuotes quotes;
         [SerializeField] private int starCount = 3;

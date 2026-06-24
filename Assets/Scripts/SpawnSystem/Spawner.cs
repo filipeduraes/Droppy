@@ -6,7 +6,13 @@ using IdeaToGame.ObjectPooling;
 
 namespace Droppy.SpawnSystem
 {
-    public class Spawner : MonoBehaviour
+    public interface ISpawner
+    {
+        void StartSpawner();
+        void StopSpawner();
+    }
+    
+    public class Spawner : MonoBehaviour, ISpawner
     {
         [SerializeField] private SpawnerData data;
         [SerializeField] private List<Transform> spawnPoints = new();

@@ -1,3 +1,4 @@
+using System;
 using Droppy.Input;
 using Droppy.LevelSystem;
 using Droppy.SpawnSystem;
@@ -12,8 +13,18 @@ namespace Droppy.VerticalScrollerMinigame.LevelController
         [SerializeField] private DroppyInput input;
         [SerializeField] private Spawner spawner;
         [SerializeField] private VerticalGameController controller;
+        
+        private ISpawner obstacleSpawner;
+        private IDroppyInput droppyInput;
 
-        private void Awake()
+        protected override void Awake()
+        {
+            base.Awake();
+            SetDroppyInput(input);
+            SetObstacleSpawner(spawner);
+        }
+
+        private void Start()
         {
             StopLevel();
             controller.OnLevelFinished += StopLevel;
@@ -24,17 +35,27 @@ namespace Droppy.VerticalScrollerMinigame.LevelController
             controller.OnLevelFinished -= StopLevel;
         }
 
+        public void SetDroppyInput(IDroppyInput newInput)
+        {
+            droppyInput = newInput;
+        }
+
+        public void SetObstacleSpawner(ISpawner newSpawner)
+        {
+            obstacleSpawner = newSpawner;
+        }
+
         protected override void OnFinishIntroduction()
         {
-            input.enabled = true;
-            spawner.StartSpawner();
+            droppyInput.Enable();
+            obstacleSpawner.StartSpawner();
             controller.StartTimer();
         }
         
         private void StopLevel()
         {
-            input.enabled = false;
-            spawner.StopSpawner();
+            droppyInput.Disable();
+            obstacleSpawner.StopSpawner();
         }
     }
 }

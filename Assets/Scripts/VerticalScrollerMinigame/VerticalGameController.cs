@@ -25,10 +25,16 @@ namespace Droppy.VerticalGame
 
         public event Action OnLevelFinished = delegate { }; 
         private Coroutine timerCoroutine;
+        private IEndScreenViewModel endScreenViewModel;
+
+        private void Awake()
+        {
+            SetEndScreenViewModel(viewModel);
+        }
 
         private void Start()
         {
-            StatManager.Modify(timeStat, new StatModifier(StatModifierType.Set, levelDuration));
+            SetLevelDuration(levelDuration);
         }
 
         private void OnEnable()
@@ -39,6 +45,17 @@ namespace Droppy.VerticalGame
         private void OnDisable()
         {
             StatManager.OnStatModified -= OnStatChanged;
+        }
+
+        public void SetLevelDuration(float newLevelDuration)
+        {
+            levelDuration = newLevelDuration;
+            StatManager.Modify(timeStat, new StatModifier(StatModifierType.Set, levelDuration));
+        }
+
+        public void SetEndScreenViewModel(IEndScreenViewModel newEndScreenViewModel)
+        {
+            endScreenViewModel = newEndScreenViewModel;
         }
         
         public void StartTimer()
@@ -94,7 +111,7 @@ namespace Droppy.VerticalGame
 
             if (purityStat == null)
             {
-                viewModel.RequestVictory(endScreenQuotes, 1);
+                endScreenViewModel.RequestVictory(endScreenQuotes, 1);
                 return;
             }
 
@@ -111,13 +128,13 @@ namespace Droppy.VerticalGame
                 starCount++;
             }
 
-            viewModel.RequestVictory(endScreenQuotes, starCount);
+            endScreenViewModel.RequestVictory(endScreenQuotes, starCount);
         }
 
         private void GameOverWithDefeat()
         {
             StopGameLogic();
-            viewModel.RequestDefeat(endScreenQuotes);
+            endScreenViewModel.RequestDefeat(endScreenQuotes);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using Droppy.UI.ViewModel;
 using UnityEngine;
 
@@ -10,6 +11,21 @@ namespace Droppy.LevelSystem
         [SerializeField] private LevelIntroductionViewModel viewModel;
         [SerializeField] private LevelIntroductionData data;
         [SerializeField] private float timeBeforeLevelStart = 2.0f;
+
+        protected virtual void Awake()
+        {
+            SetLevelIntroduction(viewModel);
+        }
+
+        public void SetLevelIntroduction(LevelIntroductionViewModel newViewModel)
+        {
+            viewModel = newViewModel;
+        }
+        
+        public void SetTimeBeforeLevelStart(float newTimeBeforeLevelStart)
+        {
+            timeBeforeLevelStart = newTimeBeforeLevelStart;
+        }
         
         public void StartLevel()
         {
@@ -29,7 +45,7 @@ namespace Droppy.LevelSystem
             yield return new WaitForSeconds(timeBeforeLevelStart);
             OnFinishIntroduction();
         }
-
+        
         protected virtual void OnFinishIntroduction() { }
     }
 }

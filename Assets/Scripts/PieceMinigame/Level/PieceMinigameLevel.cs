@@ -9,8 +9,9 @@ namespace Droppy.PieceMinigame.Level
         [SerializeField] private FlowController flowController;
         [SerializeField] private DroppyInput droppyInput;
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             droppyInput.enabled = false;
         }
 

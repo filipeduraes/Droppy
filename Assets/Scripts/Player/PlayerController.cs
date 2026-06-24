@@ -1,3 +1,4 @@
+using System;
 using Droppy.Input;
 using Droppy.InteractionSystem;
 using UnityEngine;
@@ -8,17 +9,29 @@ namespace Droppy.Player
     {
         [SerializeField] protected DroppyInput input;
         [SerializeField] private InteractionAgent interactionAgent;
+
+        protected IDroppyInput DroppyInput;
         
+        private void Awake()
+        {
+            SetDroppyInput(input);
+        }
+
         protected virtual void OnEnable()
         {
-            input.OnInteractStarted += interactionAgent.StartInteraction;
-            input.OnInteractCanceled += interactionAgent.EndInteraction;
+            DroppyInput.OnInteractStarted += interactionAgent.StartInteraction;
+            DroppyInput.OnInteractCanceled += interactionAgent.EndInteraction;
         }
 
         protected virtual void OnDisable()
         {
-            input.OnInteractStarted -= interactionAgent.StartInteraction;
-            input.OnInteractCanceled -= interactionAgent.EndInteraction;
+            DroppyInput.OnInteractStarted -= interactionAgent.StartInteraction;
+            DroppyInput.OnInteractCanceled -= interactionAgent.EndInteraction;
+        }
+
+        public void SetDroppyInput(IDroppyInput newDroppyInput)
+        {
+            DroppyInput = newDroppyInput;
         }
     }
 }

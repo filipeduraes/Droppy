@@ -10,6 +10,12 @@ namespace Droppy.Player
         [SerializeField] private DroppyInput input;
         
         private Camera mainCamera;
+        private IDroppyInput droppyInput;
+
+        private void Awake()
+        {
+            SetDroppyInput(input);
+        }
 
         private void Start()
         {
@@ -18,12 +24,17 @@ namespace Droppy.Player
 
         private void OnEnable()
         {
-            input.OnPointerStarted += TryInteract;
+            droppyInput.OnPointerStarted += TryInteract;
         }
 
         private void OnDisable()
         {
-            input.OnPointerStarted -= TryInteract;
+            droppyInput.OnPointerStarted -= TryInteract;
+        }
+
+        public void SetDroppyInput(IDroppyInput newInput)
+        {
+            droppyInput = newInput;
         }
 
         private void TryInteract(Vector2 pointerPosition)
