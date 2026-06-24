@@ -12,7 +12,7 @@ namespace Droppy.StatSystem
         public StatModifierType Type => type;
         public float Amount => amount;
 
-        public StatModifier(StatModifierType type, float amount)
+        public StatModifier(StatModifierType type, float amount = 0.0f)
         {
             this.type = type;
             this.amount = amount;

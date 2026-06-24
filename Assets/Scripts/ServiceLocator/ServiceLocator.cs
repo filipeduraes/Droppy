@@ -12,6 +12,11 @@ namespace Droppy.ServiceLocatorSystem
         {
             Services[service.GetType()] = service;
         }
+
+        public static void Unregister(Component service)
+        {
+            Services.Remove(service.GetType());
+        }
         
         public static bool TryGetService<T>(out T service) where T : Component
         {

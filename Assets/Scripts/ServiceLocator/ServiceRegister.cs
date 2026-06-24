@@ -10,5 +10,10 @@ namespace Droppy.ServiceLocatorSystem
         {
             ServiceLocator.Register(service);
         }
+
+        private void OnDestroy()
+        {
+            ServiceLocator.Unregister(service);
+        }
     }
 }
