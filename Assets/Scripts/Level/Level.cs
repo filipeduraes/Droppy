@@ -19,12 +19,18 @@ namespace Droppy.LevelSystem
         
         private void OnEnable()
         {
-            pauseScreenViewModel.OnPauseRequested += TogglePause;
+            if (pauseScreenViewModel != null)
+            {
+                pauseScreenViewModel.OnPauseRequested += TogglePause;
+            }
         }
 
         private void OnDisable()
         {
-            pauseScreenViewModel.OnPauseRequested -= TogglePause;
+            if (pauseScreenViewModel != null)
+            {
+                pauseScreenViewModel.OnPauseRequested -= TogglePause;
+            }
         }
 
         public void SetLevelIntroduction(LevelIntroductionViewModel newViewModel)
@@ -39,7 +45,10 @@ namespace Droppy.LevelSystem
         
         public void StartLevel()
         {
-            pauseScreenViewModel.SetIsPauseEnabled(false);
+            if (pauseScreenViewModel != null)
+            {
+                pauseScreenViewModel.SetIsPauseEnabled(false);
+            }
             viewModel.StartLevelIntroduction(data);
             viewModel.OnLevelIntroductionFinished += FinishIntroduction;
         }
@@ -54,7 +63,10 @@ namespace Droppy.LevelSystem
         private IEnumerator WaitAndStart()
         {
             yield return new WaitForSeconds(timeBeforeLevelStart);
-            pauseScreenViewModel.SetIsPauseEnabled(true);
+            if (pauseScreenViewModel != null)
+            {
+                pauseScreenViewModel.SetIsPauseEnabled(true);
+            }
             Resume();
         }
 
