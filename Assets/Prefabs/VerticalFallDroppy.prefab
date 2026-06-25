@@ -159,6 +159,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: {fileID: 6418123335356367300}
   interactionAgent: {fileID: 3081259400468177472}
+  pauseScreenViewModel: {fileID: 11400000, guid: 7f39f4fcaecd689caa4776e331b8ddb9, type: 2}
   movementSpeed: 7
   playerType: 0
   body: {fileID: 7045540717463097311}

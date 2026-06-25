@@ -2034,6 +2034,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a9fda8677c1130448f5648c7158b9e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pauseScreenViewModel: {fileID: 11400000, guid: 7f39f4fcaecd689caa4776e331b8ddb9, type: 2}
   viewModel: {fileID: 11400000, guid: f6aeb7aa5540ba64dad995c5cf7b1d28, type: 2}
   data: {fileID: 11400000, guid: ab2211d4648f0bb40934cf3b2c15ae39, type: 2}
   timeBeforeLevelStart: 2

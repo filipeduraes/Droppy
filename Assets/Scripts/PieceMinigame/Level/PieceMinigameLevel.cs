@@ -34,10 +34,18 @@ namespace Droppy.PieceMinigame.Level
             input = newInput;
         }
 
-        protected override void OnFinishIntroduction()
+        public override void Resume()
         {
+            base.Resume();
             input.Enable();
-            controller.StartFlow();
+            controller.ResumeFlow();
+        }
+
+        public override void Pause()
+        {
+            base.Pause();
+            input.Disable();
+            controller.PauseFlow();
         }
     }
 }

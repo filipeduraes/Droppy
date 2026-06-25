@@ -15,6 +15,8 @@ namespace Droppy.Input
         
         event Action OnInteractStarted;
         event Action OnInteractCanceled;
+
+        event Action OnPauseStarted;
         
         Vector2 MoveInput { get; }
         
@@ -27,6 +29,7 @@ namespace Droppy.Input
         void SendJumpCanceled();
         void SendInteractStarted();
         void SendInteractCanceled();
+        void SendPauseStarted();
         void SendPointerStarted(Vector2 position);
     }
     
@@ -42,6 +45,7 @@ namespace Droppy.Input
         
         public event Action OnInteractStarted = delegate { };
         public event Action OnInteractCanceled = delegate { };
+        public event Action OnPauseStarted = delegate { };
         
         public Vector2 MoveInput => controls.Player.Move.ReadValue<Vector2>();
 
@@ -59,6 +63,20 @@ namespace Droppy.Input
 
         private void OnEnable()
         {
+            Enable();
+            SubscribeGlobalInput();
+            controls.Enable();
+        }
+        
+        private void OnDisable()
+        {
+            Disable();
+            UnsubscribeGlobalInput();
+            controls.Disable();
+        }
+
+        private void SubscribeGameInput()
+        {
             controls.Player.Move.started += SendMoveStarted;
             controls.Player.Move.canceled += SendMoveCanceled;
             
@@ -69,11 +87,14 @@ namespace Droppy.Input
             controls.Player.Interact.canceled += SendInteractCanceled;
 
             controls.Player.Pointer.started += SendPointerStarted;
-            
-            controls.Enable();
         }
 
-        private void OnDisable()
+        private void SubscribeGlobalInput()
+        {
+            controls.Player.Pause.started += SendPauseStarted;
+        }
+
+        private void UnsubscribeGameInput()
         {
             controls.Player.Move.started -= SendMoveStarted;
             controls.Player.Move.canceled -= SendMoveCanceled;
@@ -85,18 +106,21 @@ namespace Droppy.Input
             controls.Player.Interact.canceled -= SendInteractCanceled;
             
             controls.Player.Pointer.started -= SendPointerStarted;
-            
-            controls.Disable();
+        }
+
+        private void UnsubscribeGlobalInput()
+        {
+            controls.Player.Pause.started -= SendPauseStarted;
         }
         
         public void Enable()
         {
-            enabled = true;
+            SubscribeGameInput();
         }
 
         public void Disable()
         {
-            enabled = false;
+            UnsubscribeGameInput();
         }
         
         public void SendMoveStarted()
@@ -129,6 +153,11 @@ namespace Droppy.Input
             OnInteractCanceled();
         }
 
+        public void SendPauseStarted()
+        {
+            OnPauseStarted();
+        }
+
         public void SendPointerStarted(Vector2 position)
         {
             OnPointerStarted(position);
@@ -148,6 +177,8 @@ namespace Droppy.Input
         private void SendInteractStarted(InputAction.CallbackContext context) => SendInteractStarted();
 
         private void SendInteractCanceled(InputAction.CallbackContext context) => SendInteractCanceled();
+        
+        private void SendPauseStarted(InputAction.CallbackContext context) => SendPauseStarted();
 
 
         private void SendPointerStarted(InputAction.CallbackContext context)

@@ -2,7 +2,6 @@ using System;
 using Droppy.StatSystem;
 using IdeaToGame.PersistenceSystem;
 using NUnit.Framework;
-using UnityEngine;
 using UnityEngine.TestTools.Utils;
 
 namespace Droppy.Tests.EditMode
@@ -129,8 +128,7 @@ namespace Droppy.Tests.EditMode
         [TestCase(10.0f, -5.0f, 5.0f)]
         [TestCase(-10.0f, -10.0f, -20.0f)]
         [TestCase(7.5f, 2.5f, 10.0f)]
-        public void Add_Stat_Modifier_Sums_Amount_To_Current_Value(
-            float initialAmount, float addAmount, float expected)
+        public void Add_Stat_Modifier_Sums_Amount_To_Current_Value(float initialAmount, float addAmount, float expected)
         {
             Stat stat = Stat.Create("TestStat", "TestStat", initialAmount);
  

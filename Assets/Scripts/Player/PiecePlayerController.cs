@@ -2,12 +2,14 @@ using UnityEngine;
 using Droppy.Input;
 using Droppy.InteractionSystem;
 using Droppy.ServiceLocatorSystem;
+using Droppy.UI.ViewModel;
 
 namespace Droppy.Player
 {
     public class PiecePlayerController : MonoBehaviour 
     {
         [SerializeField] private DroppyInput input;
+        [SerializeField] private PauseScreenViewModel pauseScreenViewModel;
         
         private Camera mainCamera;
         private IDroppyInput droppyInput;
@@ -25,11 +27,13 @@ namespace Droppy.Player
         private void OnEnable()
         {
             droppyInput.OnPointerStarted += TryInteract;
+            droppyInput.OnPauseStarted += TogglePause;
         }
 
         private void OnDisable()
         {
             droppyInput.OnPointerStarted -= TryInteract;
+            droppyInput.OnPauseStarted -= TogglePause;
         }
 
         public void SetDroppyInput(IDroppyInput newInput)
@@ -51,6 +55,11 @@ namespace Droppy.Player
             {
                 interactable.Interact(gameObject);
             }
+        }
+        
+        private void TogglePause()
+        {
+            pauseScreenViewModel.RequestPause();
         }
     }
 }

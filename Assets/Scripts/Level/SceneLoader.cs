@@ -20,6 +20,7 @@ namespace Droppy.LevelSystem
         private IEnumerator HideAndLoadSceneCoroutine()
         {
             yield return fadeImage.InterpolateAlpha(0.0f, 1.0f, fadeDuration);
+            Time.timeScale = 1.0f;
             SceneManager.LoadScene(sceneBuildIndex);
         }
     }

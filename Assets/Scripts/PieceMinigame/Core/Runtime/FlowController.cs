@@ -31,7 +31,8 @@ namespace Droppy.PieceMinigame.Runtime
         IEnumerable<Vector2Int> Visited { get; }
         HashSet<Vector2Int> VisitedPorts { get; }
 
-        void StartFlow();
+        void ResumeFlow();
+        void PauseFlow();
         void Stop();
     }
     
@@ -54,10 +55,21 @@ namespace Droppy.PieceMinigame.Runtime
         private Queue<Vector2Int> searchHeads;
         private HashSet<Vector2Int> visited;
         private Coroutine flowCoroutine;
+        private bool flowIsPaused = false;
 
-        public void StartFlow()
+        public void ResumeFlow()
         {
-            flowCoroutine = StartCoroutine(FlowThroughGrid());
+            flowIsPaused = false;
+            
+            if (flowCoroutine == null)
+            {
+                flowCoroutine = StartCoroutine(FlowThroughGrid());
+            }
+        }
+
+        public void PauseFlow()
+        {
+            flowIsPaused = true;
         }
         
         public void Stop()
@@ -75,7 +87,10 @@ namespace Droppy.PieceMinigame.Runtime
             visited = new HashSet<Vector2Int>();
             VisitedPorts = new HashSet<Vector2Int>();
 
+            WaitUntil waitUntilNotPaused = new WaitUntil(() => !flowIsPaused);
+            
             yield return new WaitForSeconds(secondsBeforeStartFlow);
+            yield return waitUntilNotPaused;
 
             OnFlowStarted();
             
@@ -83,6 +98,7 @@ namespace Droppy.PieceMinigame.Runtime
             OnFlowUpdate();
             
             yield return new WaitForSeconds(secondsBetweenUpdates);
+            yield return waitUntilNotPaused;
 
             while (searchHeads.Count > 0)
             {
@@ -96,6 +112,7 @@ namespace Droppy.PieceMinigame.Runtime
                 }
 
                 yield return new WaitForSeconds(secondsBetweenUpdates);
+                yield return waitUntilNotPaused;
 
                 foreach (Vector2Int head in currentHeads)
                 {
@@ -104,6 +121,7 @@ namespace Droppy.PieceMinigame.Runtime
 
                 OnFlowUpdate();
                 yield return new WaitForSeconds(secondsBetweenUpdates);
+                yield return waitUntilNotPaused;
             }
 
             OnFlowFinished();

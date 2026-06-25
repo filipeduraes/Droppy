@@ -26,6 +26,7 @@ namespace Droppy.VerticalGame
         public event Action OnLevelFinished = delegate { }; 
         private Coroutine timerCoroutine;
         private IEndScreenViewModel endScreenViewModel;
+        private bool timerIsPaused = false;
 
         private void Awake()
         {
@@ -60,10 +61,17 @@ namespace Droppy.VerticalGame
         
         public void StartTimer()
         {
-            if (timeStat != null)
+            timerIsPaused = false;
+            
+            if (timeStat != null && timerCoroutine == null)
             {
                 timerCoroutine = StartCoroutine(LevelTimerRoutine());
             }
+        }
+        
+        public void PauseTimer()
+        {
+            timerIsPaused = true;
         }
 
         private IEnumerator LevelTimerRoutine()
@@ -77,6 +85,11 @@ namespace Droppy.VerticalGame
 
                 StatModifier subModifier = new(StatModifierType.Add, -Time.deltaTime);
                 StatManager.Modify(timeStat, subModifier);
+
+                if (timerIsPaused)
+                {
+                    yield return new WaitUntil(() => !timerIsPaused);
+                }
             }
 
             GameOverWithVictory();

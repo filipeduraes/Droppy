@@ -1,5 +1,6 @@
+using System;
 using System.Collections;
-using Droppy.Input;
+using System.Reflection;
 using Droppy.SpawnSystem;
 using Droppy.StatSystem;
 using Droppy.UI.ViewModel;
@@ -10,6 +11,7 @@ using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
 using UnityEngine.TestTools.Utils;
+using Object = UnityEngine.Object;
 
 namespace Droppy.Tests.PlayMode
 {
@@ -22,13 +24,13 @@ namespace Droppy.Tests.PlayMode
 
         private GameObject controllerGo;
         private VerticalGameController controller;
-        private FakeEndScreenViewModel fakeViewModel;
+        private MockEndScreenViewModel mockViewModel;
 
         private GameObject levelGo;
         private VerticalScrollerLevel level;
-        private FakeDroppyInput fakeInput;
-        private FakeSpawner fakeSpawner;
-        private LevelIntroductionViewModel fakeLevelViewModel;
+        private MockDroppyInput mockInput;
+        private MockSpawner mockSpawner;
+        private LevelIntroductionViewModel mockLevelViewModel;
 
         [SetUp]
         public void SetUp()
@@ -38,32 +40,33 @@ namespace Droppy.Tests.PlayMode
             purityStat = Stat.Create("Purity", "Pureza", 100f, 0f, 100f);
             timeStat = Stat.Create("Time", "Tempo", TestLevelDuration);
 
-            fakeViewModel = new FakeEndScreenViewModel();
+            mockViewModel = new MockEndScreenViewModel();
 
             controllerGo = new GameObject("VerticalGameController");
             controller = controllerGo.AddComponent<VerticalGameController>();
 
-            SetPrivateField(controller, "purityStat", purityStat);
-            SetPrivateField(controller, "timeStat", timeStat);
-            SetPrivateField(controller, "secondaryPurityThreshold", 50f);
-            SetPrivateField(controller, "tertiaryPurityThreshold", 95f);
+            ReflectionUtils.SetPrivateField(controller, "purityStat", purityStat);
+            ReflectionUtils.SetPrivateField(controller, "timeStat", timeStat);
+            ReflectionUtils.SetPrivateField(controller, "secondaryPurityThreshold", 50f);
+            ReflectionUtils.SetPrivateField(controller, "tertiaryPurityThreshold", 95f);
 
-            controller.SetEndScreenViewModel(fakeViewModel);
+            controller.SetEndScreenViewModel(mockViewModel);
             controller.SetLevelDuration(TestLevelDuration);
 
-            fakeInput = new GameObject("FakeInput").AddComponent<FakeDroppyInput>();
-            fakeSpawner = new FakeSpawner();
+            mockSpawner = new MockSpawner();
 
-            fakeLevelViewModel = ScriptableObject.CreateInstance<LevelIntroductionViewModel>();
+            mockLevelViewModel = ScriptableObject.CreateInstance<LevelIntroductionViewModel>();
 
             levelGo = new GameObject("VerticalScrollerLevel");
             level = levelGo.AddComponent<VerticalScrollerLevel>();
 
-            level.SetLevelIntroduction(fakeLevelViewModel);
-            SetPrivateField(level, "controller", controller);
+            level.SetLevelIntroduction(mockLevelViewModel);
+            ReflectionUtils.SetPrivateField(level, "controller", controller);
+            
+            mockInput = new MockDroppyInput();
 
-            level.SetDroppyInput(fakeInput);
-            level.SetObstacleSpawner(fakeSpawner);
+            level.SetDroppyInput(mockInput);
+            level.SetObstacleSpawner(mockSpawner);
             level.SetTimeBeforeLevelStart(0f);
         }
 
@@ -72,8 +75,7 @@ namespace Droppy.Tests.PlayMode
         {
             Object.Destroy(controllerGo);
             Object.Destroy(levelGo);
-            Object.Destroy(fakeInput.gameObject);
-            Object.DestroyImmediate(fakeLevelViewModel);
+            Object.DestroyImmediate(mockLevelViewModel);
             Persistence.ClearAllData();
         }
 
@@ -122,8 +124,8 @@ namespace Droppy.Tests.PlayMode
             controller.StartTimer();
             yield return new WaitForSeconds(TestLevelDuration + 0.2f);
 
-            Assert.That(fakeViewModel.VictoryRequested, Is.True);
-            Assert.That(fakeViewModel.DefeatRequested,  Is.False);
+            Assert.That(mockViewModel.VictoryRequested, Is.True);
+            Assert.That(mockViewModel.DefeatRequested,  Is.False);
         }
 
         // ─── Pureza / Derrota ─────────────────────────────────────────────────────
@@ -152,8 +154,8 @@ namespace Droppy.Tests.PlayMode
             StatManager.Modify(purityStat, new StatModifier(StatModifierType.Set, 0f));
             yield return null;
 
-            Assert.That(fakeViewModel.DefeatRequested,  Is.True);
-            Assert.That(fakeViewModel.VictoryRequested, Is.False);
+            Assert.That(mockViewModel.DefeatRequested,  Is.True);
+            Assert.That(mockViewModel.VictoryRequested, Is.False);
         }
 
         [UnityTest]
@@ -165,7 +167,7 @@ namespace Droppy.Tests.PlayMode
             StatManager.Modify(purityStat, new StatModifier(StatModifierType.Set, 1f));
             yield return null;
 
-            Assert.That(fakeViewModel.DefeatRequested, Is.False);
+            Assert.That(mockViewModel.DefeatRequested, Is.False);
         }
 
         // ─── Contagem de estrelas ─────────────────────────────────────────────────
@@ -177,7 +179,7 @@ namespace Droppy.Tests.PlayMode
             controller.StartTimer();
             yield return new WaitForSeconds(TestLevelDuration + 0.2f);
 
-            Assert.That(fakeViewModel.Stars, Is.EqualTo(1));
+            Assert.That(mockViewModel.StarsCount, Is.EqualTo(1));
         }
 
         [UnityTest]
@@ -187,7 +189,7 @@ namespace Droppy.Tests.PlayMode
             controller.StartTimer();
             yield return new WaitForSeconds(TestLevelDuration + 0.2f);
 
-            Assert.That(fakeViewModel.Stars, Is.EqualTo(2));
+            Assert.That(mockViewModel.StarsCount, Is.EqualTo(2));
         }
 
         [UnityTest]
@@ -197,17 +199,17 @@ namespace Droppy.Tests.PlayMode
             controller.StartTimer();
             yield return new WaitForSeconds(TestLevelDuration + 0.2f);
 
-            Assert.That(fakeViewModel.Stars, Is.EqualTo(3));
+            Assert.That(mockViewModel.StarsCount, Is.EqualTo(3));
         }
 
         [UnityTest]
         public IEnumerator Victory_With_No_PurityStat_Gives_One_Star()
         {
-            SetPrivateField(controller, "purityStat", (Stat)null);
+            ReflectionUtils.SetPrivateField(controller, "purityStat", (Stat)null);
             controller.StartTimer();
             yield return new WaitForSeconds(TestLevelDuration + 0.2f);
 
-            Assert.That(fakeViewModel.Stars, Is.EqualTo(1));
+            Assert.That(mockViewModel.StarsCount, Is.EqualTo(1));
         }
 
         // ─── StopGameLogic ────────────────────────────────────────────────────────
@@ -249,18 +251,18 @@ namespace Droppy.Tests.PlayMode
         public IEnumerator StartLevel_Then_FinishIntroduction_Enables_Input_And_Starts_Spawner()
         {
             level.StartLevel();
-            fakeLevelViewModel.FinishLevelIntroduction();
+            mockLevelViewModel.FinishLevelIntroduction();
             yield return null; // WaitAndStart com timeBeforeLevelStart = 0
 
-            Assert.That(fakeInput.IsEnabled,   Is.True);
-            Assert.That(fakeSpawner.IsRunning, Is.True);
+            Assert.That(mockInput.IsEnabled,   Is.True);
+            Assert.That(mockSpawner.IsRunning, Is.True);
         }
 
         [UnityTest]
         public IEnumerator StartLevel_Then_FinishIntroduction_Starts_Timer()
         {
             level.StartLevel();
-            fakeLevelViewModel.FinishLevelIntroduction();
+            mockLevelViewModel.FinishLevelIntroduction();
             yield return null;
 
             // Timer decrementando confirma que StartTimer foi chamado
@@ -275,13 +277,13 @@ namespace Droppy.Tests.PlayMode
         public IEnumerator OnLevelFinished_Disables_Input_And_Stops_Spawner()
         {
             level.StartLevel();
-            fakeLevelViewModel.FinishLevelIntroduction();
+            mockLevelViewModel.FinishLevelIntroduction();
             yield return null;
 
             yield return new WaitForSeconds(TestLevelDuration + 0.2f);
 
-            Assert.That(fakeInput.IsEnabled,   Is.False);
-            Assert.That(fakeSpawner.IsRunning, Is.False);
+            Assert.That(mockInput.IsEnabled,   Is.False);
+            Assert.That(mockSpawner.IsRunning, Is.False);
         }
 
         [UnityTest]
@@ -289,67 +291,13 @@ namespace Droppy.Tests.PlayMode
         {
             yield return null;
 
-            Assert.That(fakeInput.IsEnabled,   Is.False);
-            Assert.That(fakeSpawner.IsRunning, Is.False);
+            Assert.That(mockInput.IsEnabled,   Is.False);
+            Assert.That(mockSpawner.IsRunning, Is.False);
         }
 
-        // ─── Helpers ──────────────────────────────────────────────────────────────
+        // ─── Mocks ────────────────────────────────────────────────────────────────
 
-        private static void SetPrivateField(object target, string fieldName, object value)
-        {
-            var field = target.GetType().GetField(
-                fieldName,
-                System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance
-            );
-            field?.SetValue(target, value);
-        }
-
-        // ─── Fakes ────────────────────────────────────────────────────────────────
-
-        private class FakeEndScreenViewModel : IEndScreenViewModel
-        {
-            public bool VictoryRequested { get; private set; }
-            public bool DefeatRequested  { get; private set; }
-            public int  Stars            { get; private set; }
-
-            public void RequestVictory(EndScreenResultQuotes quotes, int stars)
-            {
-                VictoryRequested = true;
-                Stars = stars;
-            }
-
-            public void RequestDefeat(EndScreenResultQuotes quotes)
-            {
-                DefeatRequested = true;
-            }
-        }
-
-        private class FakeDroppyInput : MonoBehaviour, IDroppyInput
-        {
-            public bool IsEnabled { get; private set; }
-
-            public event System.Action<Vector2> OnPointerStarted   = delegate { };
-            public event System.Action          OnMoveStarted      = delegate { };
-            public event System.Action          OnMoveCanceled     = delegate { };
-            public event System.Action          OnJumpStarted      = delegate { };
-            public event System.Action          OnJumpCanceled     = delegate { };
-            public event System.Action          OnInteractStarted  = delegate { };
-            public event System.Action          OnInteractCanceled = delegate { };
-            public Vector2 MoveInput => Vector2.zero;
-
-            public void Enable()  => IsEnabled = true;
-            public void Disable() => IsEnabled = false;
-
-            public void SendMoveStarted()             => OnMoveStarted();
-            public void SendMoveCanceled()            => OnMoveCanceled();
-            public void SendJumpStarted()             => OnJumpStarted();
-            public void SendJumpCanceled()            => OnJumpCanceled();
-            public void SendInteractStarted()         => OnInteractStarted();
-            public void SendInteractCanceled()        => OnInteractCanceled();
-            public void SendPointerStarted(Vector2 p) => OnPointerStarted(p);
-        }
-
-        private class FakeSpawner : ISpawner
+        private class MockSpawner : ISpawner
         {
             public bool IsRunning { get; private set; }
 

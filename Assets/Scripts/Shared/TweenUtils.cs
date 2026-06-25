@@ -29,7 +29,7 @@ namespace Droppy.Shared
                 float t = timer / duration;
                 lerp(Mathf.Clamp01(t));
 
-                timer += Time.deltaTime;
+                timer += Time.unscaledDeltaTime;
                 yield return null;
             }
         

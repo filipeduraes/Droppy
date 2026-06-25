@@ -24,7 +24,7 @@ namespace Droppy.LevelSystem
         {
             StartNextLevel();
         }
-        
+
         [ContextMenu("Start Next Level")]
         public void StartNextLevel()
         {

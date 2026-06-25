@@ -26,13 +26,13 @@ namespace Droppy.VerticalScrollerMinigame.LevelController
 
         private void Start()
         {
-            StopLevel();
-            controller.OnLevelFinished += StopLevel;
+            Pause();
+            controller.OnLevelFinished += Pause;
         }
 
         private void OnDestroy()
         {
-            controller.OnLevelFinished -= StopLevel;
+            controller.OnLevelFinished -= Pause;
         }
 
         public void SetDroppyInput(IDroppyInput newInput)
@@ -45,17 +45,20 @@ namespace Droppy.VerticalScrollerMinigame.LevelController
             obstacleSpawner = newSpawner;
         }
 
-        protected override void OnFinishIntroduction()
+        public override void Resume()
         {
+            base.Resume();
             droppyInput.Enable();
             obstacleSpawner.StartSpawner();
             controller.StartTimer();
         }
         
-        private void StopLevel()
+        public override void Pause()
         {
+            base.Pause();
             droppyInput.Disable();
             obstacleSpawner.StopSpawner();
+            controller.PauseTimer();
         }
     }
 }

@@ -23,13 +23,13 @@ namespace Droppy.FaucetsMinigame
             base.Awake();
             SetDroppyInput(input);
             
-            waterLevelController.OnLevelFinished += StopLevel;
-            StopLevel();
+            waterLevelController.OnLevelFinished += Pause;
+            Pause();
         }
 
         private void OnDestroy()
         {
-            waterLevelController.OnLevelFinished -= StopLevel;
+            waterLevelController.OnLevelFinished -= Pause;
         }
 
         public void SetDroppyInput(IDroppyInput newInput)
@@ -37,8 +37,9 @@ namespace Droppy.FaucetsMinigame
             droppyInput = newInput;
         }
 
-        protected override void OnFinishIntroduction()
+        public override void Resume()
         {
+            base.Resume();
             droppyInput.Enable();
             faucetsManager.enabled = true;
             timeModifier.enabled = true;
@@ -46,8 +47,9 @@ namespace Droppy.FaucetsMinigame
             bucketSpawner.StartSpawner();
         }
         
-        private void StopLevel()
+        public override void Pause()
         {
+            base.Pause();
             droppyInput.Disable();
             faucetsManager.enabled = false;
             timeModifier.enabled = false;

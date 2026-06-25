@@ -144,6 +144,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7b966432f2f1744783a8bd88c99cd6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pauseScreenViewModel: {fileID: 11400000, guid: 7f39f4fcaecd689caa4776e331b8ddb9, type: 2}
   viewModel: {fileID: 11400000, guid: f6aeb7aa5540ba64dad995c5cf7b1d28, type: 2}
   data: {fileID: 11400000, guid: b56f05fff621f6e48a7652bacef5f686, type: 2}
   timeBeforeLevelStart: 2
@@ -3946,6 +3947,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   input: {fileID: 1437642717662641823}
+  pauseScreenViewModel: {fileID: 0}
 --- !u!114 &1437642717662641823
 MonoBehaviour:
   m_ObjectHideFlags: 0
